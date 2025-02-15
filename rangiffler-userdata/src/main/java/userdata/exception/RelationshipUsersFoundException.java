@@ -1,7 +1,7 @@
-package userdata.ex;
+package userdata.exception;
 
 import userdata.data.PartnerStatus;
-import userdata.data.entity.UsersRelationshipEntity;
+import userdata.data.UsersRelationshipEntity;
 
 public class RelationshipUsersFoundException extends RuntimeException {
 
@@ -22,7 +22,7 @@ public class RelationshipUsersFoundException extends RuntimeException {
 
     @Override
     public String getMessage() {
-        return String.format("У пользователя '%s' есть связь '%s' с пользователем '%s'",
+        return String.format("User '%s' found relationship '%s' with user '%s'",
                 currentUsername, status, partnerUsername);
     }
 

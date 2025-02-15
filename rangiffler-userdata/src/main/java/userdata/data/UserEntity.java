@@ -1,10 +1,10 @@
-package userdata.data.entity;
+package userdata.data;
 
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.Accessors;
 import rangiffler.grpc.User;
-import userdata.data.PartnerStatus;
+
 
 import java.util.*;
 import java.util.stream.Collectors;

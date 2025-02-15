@@ -1,56 +1,54 @@
 package userdata.model;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
-import userdata.data.entity.UserEntity;
-import userdata.data.PartnerStatus;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import userdata.data.UserEntity;
 
 import java.nio.charset.StandardCharsets;
-import java.util.Set;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
-public record UserJson(
-        @JsonProperty("id")
-        UUID id,
-        @JsonProperty("username")
-        String username,
-        @JsonProperty("firstname")
-        String firstname,
-        @JsonProperty("lastname")
-        String lastname,
-        @JsonProperty("avatar")
-        String avatar,
-        @JsonProperty("relationships")
-        Set<String> relationships // или можете использовать другой тип, если требуется больше информации о связях
-) {
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class UserJson {
+
+    @JsonProperty("id")
+    private UUID id;
+
+    @JsonProperty("username")
+    private String username;
+
+    @JsonProperty("firstName")
+    private String firstname;
+
+    @JsonProperty("lastName")
+    private String lastname;
+
+    @JsonProperty("avatar")
+    private String avatar;
+
+    @JsonProperty("friendStatus")
+    private FriendStatus friendStatus = FriendStatus.NOT_FRIEND;
 
     public static UserJson fromEntity(UserEntity entity) {
-        Set<String> relationships = entity.getRelationshipUsersByStatus(PartnerStatus.FRIEND).stream()
-                .map(user -> user.getUsername())
-                .collect(Collectors.toSet());
-
-        return new UserJson(
-                entity.getId(),
-                entity.getUsername(),
-                entity.getFirstname(),
-                entity.getLastname(),
-                entity.getAvatar() != null && entity.getAvatar().length > 0 ? new String(entity.getAvatar(), StandardCharsets.UTF_8) : null,
-                relationships
-        );
+        UserJson usr = new UserJson();
+        byte[] avatar = entity.getAvatar();
+        usr.setId(entity.getId());
+        usr.setUsername(entity.getUsername());
+        usr.setFirstname(entity.getFirstname());
+        usr.setLastname(entity.getLastname());
+        usr.setAvatar(avatar != null && avatar.length > 0 ? new String(entity.getAvatar(), StandardCharsets.UTF_8) : null);
+        return usr;
     }
 
-    public UserEntity toEntity() {
-        UserEntity entity = new UserEntity();
-        entity.setId(id);
-        entity.setUsername(username);
-        entity.setFirstname(firstname);
-        entity.setLastname(lastname);
-        if (avatar != null) {
-            entity.setAvatar(avatar.getBytes(StandardCharsets.UTF_8));
-        }
-        // Здесь вы можете установить отношения (relationships) в зависимости от требований
-        return entity;
+    public static UserJson fromEntity(UserEntity entity, FriendStatus friendStatus) {
+        UserJson userJson = fromEntity(entity);
+        userJson.setFriendStatus(friendStatus);
+        return userJson;
     }
 }

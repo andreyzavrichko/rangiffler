@@ -1,20 +1,26 @@
 package userdata.service;
 
 import com.google.protobuf.Empty;
+
 import io.grpc.stub.StreamObserver;
 import net.devh.boot.grpc.server.service.GrpcService;
+import org.apache.kafka.clients.consumer.ConsumerRecord;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.messaging.handler.annotation.Payload;
 import rangiffler.grpc.*;
 import userdata.data.PartnerStatus;
-import userdata.data.entity.UserEntity;
-import userdata.data.entity.UsersRelationshipEntity;
+import userdata.data.UserEntity;
+import userdata.data.UsersRelationshipEntity;
 import userdata.data.repository.UserRepository;
-import userdata.ex.RelationshipUsersFoundException;
-import userdata.ex.RelationshipUsersNotFoundException;
-import userdata.ex.RelationshipWithMyselfException;
+import userdata.exception.RelationshipUsersFoundException;
+import userdata.exception.RelationshipUsersNotFoundException;
+import userdata.exception.RelationshipWithMyselfException;
+import userdata.model.UserJson;
 
 import java.util.Collection;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -23,6 +29,7 @@ import static userdata.data.PartnerStatus.*;
 
 @GrpcService
 public class UsersGrpcService extends UserdataServiceGrpc.UserdataServiceImplBase {
+    private static final Logger LOG = LoggerFactory.getLogger(UsersGrpcService.class);
 
     private final Empty defaultEmptyInstance = Empty.getDefaultInstance();
 
@@ -33,10 +40,24 @@ public class UsersGrpcService extends UserdataServiceGrpc.UserdataServiceImplBas
         this.userRepository = userRepository;
     }
 
+
+    @KafkaListener(topics = "users", groupId = "userdata")
+    public void listener(@Payload UserJson user, ConsumerRecord<String, UserJson> cr) {
+        LOG.info("### Kafka topic [users] received message: " + user.getUsername());
+        LOG.info("### Kafka consumer record: " + cr.toString());
+        UserEntity userDataEntity = new UserEntity();
+        userDataEntity.setUsername(user.getUsername());
+        UserEntity userEntity = userRepository.save(userDataEntity);
+        LOG.info(String.format(
+                "### User '%s' successfully saved to database with id: %s",
+                user.getUsername(),
+                userEntity.getId()
+        ));
+    }
+
     @Override
     public void getCurrentUser(UsernameRequest request, StreamObserver<User> responseObserver) {
         UserEntity userEntity = userRepository.findByUsername(request.getUsername());
-        assert userEntity != null;
         responseObserver.onNext(userEntity.toGrpc());
         responseObserver.onCompleted();
     }
@@ -50,7 +71,7 @@ public class UsersGrpcService extends UserdataServiceGrpc.UserdataServiceImplBas
 
     @Override
     public void updateCurrentUser(User request, StreamObserver<User> responseObserver) {
-        UserEntity userEntity = Objects.requireNonNull(userRepository.findByUsername(request.getUsername()))
+        UserEntity userEntity = userRepository.findByUsername(request.getUsername())
                 .setFirstname(request.getFirstname())
                 .setLastname(request.getLastname())
                 .setAvatar(request.getAvatarBytes().toByteArray());
@@ -61,7 +82,6 @@ public class UsersGrpcService extends UserdataServiceGrpc.UserdataServiceImplBas
     @Override
     public void deleteUser(UsernameRequest request, StreamObserver<Empty> responseObserver) {
         UserEntity entity = userRepository.findByUsername(request.getUsername());
-        assert entity != null;
         userRepository.deleteAllByRelationshipsUsersWherePartnerId(entity.getId());
         userRepository.delete(entity);
         responseObserver.onNext(defaultEmptyInstance);
@@ -75,7 +95,6 @@ public class UsersGrpcService extends UserdataServiceGrpc.UserdataServiceImplBas
 
         GetAllUsersResponse.Builder responseBuilder = GetAllUsersResponse.newBuilder();
         for (PartnerStatus status : PartnerStatus.values()) {
-            assert userEntity != null;
             Set<UserEntity> usersByStatus = userEntity.getRelationshipUsersByStatus(status);
             allUsersWithoutCurrentUser.removeAll(usersByStatus);
             responseBuilder.putUsers(status.toString(), convertToUsers(usersByStatus));
@@ -89,7 +108,6 @@ public class UsersGrpcService extends UserdataServiceGrpc.UserdataServiceImplBas
     @Override
     public void getFriends(UsernameRequest request, StreamObserver<Users> responseObserver) {
         UserEntity userEntity = userRepository.findByUsername(request.getUsername());
-        assert userEntity != null;
         responseObserver.onNext(convertToUsers(userEntity.getRelationshipUsersByStatus(FRIEND)));
         responseObserver.onCompleted();
     }
@@ -101,9 +119,7 @@ public class UsersGrpcService extends UserdataServiceGrpc.UserdataServiceImplBas
         UserEntity currentUser = userRepository.findByUsername(request.getUsername());
         UserEntity partnerUser = userRepository.findByUsername(request.getPartner().getUsername());
 
-        assert currentUser != null;
         checkThatUserHaveNotRelationship(currentUser, partnerUser);
-        assert partnerUser != null;
         checkThatUserHaveNotRelationship(partnerUser, currentUser);
 
         UsersRelationshipEntity currentUserRelationship = createUsersRelationship(currentUser, partnerUser, INVITATION_SENT);
@@ -125,9 +141,7 @@ public class UsersGrpcService extends UserdataServiceGrpc.UserdataServiceImplBas
         UserEntity currentUser = userRepository.findByUsername(request.getUsername());
         UserEntity partnerUser = userRepository.findByUsername(request.getPartner().getUsername());
 
-        assert currentUser != null;
         UsersRelationshipEntity currentUserRelationship = checkThatUserHaveRelationship(currentUser, partnerUser, INVITATION_RECEIVED);
-        assert partnerUser != null;
         UsersRelationshipEntity partnerUserRelationship = checkThatUserHaveRelationship(partnerUser, currentUser, INVITATION_SENT);
 
         currentUserRelationship.setStatus(FRIEND);
@@ -147,9 +161,7 @@ public class UsersGrpcService extends UserdataServiceGrpc.UserdataServiceImplBas
         UserEntity currentUser = userRepository.findByUsername(request.getUsername());
         UserEntity partnerUser = userRepository.findByUsername(request.getPartner().getUsername());
 
-        assert currentUser != null;
         currentUser.removeRelationship(checkThatUserHaveRelationship(currentUser, partnerUser, INVITATION_RECEIVED));
-        assert partnerUser != null;
         partnerUser.removeRelationship(checkThatUserHaveRelationship(partnerUser, currentUser, INVITATION_SENT));
 
         userRepository.save(currentUser);
@@ -166,9 +178,7 @@ public class UsersGrpcService extends UserdataServiceGrpc.UserdataServiceImplBas
         UserEntity currentUser = userRepository.findByUsername(request.getUsername());
         UserEntity partnerUser = userRepository.findByUsername(request.getPartner().getUsername());
 
-        assert currentUser != null;
         currentUser.removeRelationship(checkThatUserHaveRelationship(currentUser, partnerUser, FRIEND));
-        assert partnerUser != null;
         partnerUser.removeRelationship(checkThatUserHaveRelationship(partnerUser, currentUser, FRIEND));
 
         userRepository.save(currentUser);

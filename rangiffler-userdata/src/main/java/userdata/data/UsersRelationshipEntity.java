@@ -1,10 +1,8 @@
-package userdata.data.entity;
+package userdata.data;
 
 import jakarta.persistence.*;
 import lombok.*;
 import rangiffler.grpc.RelationshipResponse;
-import userdata.data.PartnerStatus;
-import userdata.data.UsersRelationshipId;
 
 
 @Data

@@ -1,4 +1,4 @@
-package userdata.ex;
+package userdata.exception;
 
 public class RelationshipWithMyselfException extends RuntimeException {
 
@@ -10,7 +10,7 @@ public class RelationshipWithMyselfException extends RuntimeException {
 
     @Override
     public String getMessage() {
-        return String.format("Связь с пользователем '%s' недостижима", username);
+        return String.format("Relationship with myself '%s' is impossible", username);
     }
 
 }
