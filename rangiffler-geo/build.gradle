@@ -14,10 +14,9 @@ repositories {
 
 dependencies {
     implementation project(':rangiffler-grpc-common')
-    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation "org.flywaydb:flyway-core:${project.ext.flywayVersion}"
     implementation "org.flywaydb:flyway-database-postgresql:${project.ext.flywayVersion}"
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation "net.devh:grpc-server-spring-boot-starter:${project.ext.springGrpcVersion}"
 
     runtimeOnly "org.postgresql:postgresql:${project.ext.postgresDriverVersion}"

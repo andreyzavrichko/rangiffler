@@ -1,9 +1,10 @@
 server:
   port: 9000
-  error:
-    whitelabel:
-      enabled: false
-    path: /error
+  servlet:
+    session:
+      cookie:
+        http-only: false
+        secure: false
 
 spring:
   application:
@@ -73,3 +74,4 @@ rangiffler-auth:
   base-uri: 'http://127.0.0.1:9000'
 oauth2:
   client-id: 'client'
+  client-secret: '{noop}secret'

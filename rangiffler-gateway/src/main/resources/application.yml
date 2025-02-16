@@ -7,17 +7,7 @@ server:
 spring:
   application:
     name: rangiffler-gateway
-  graphql:
-    graphiql:
-      enabled: true
-    schema:
-      introspection:
-        enabled: true
-    security:
-      oauth2:
-        resourceserver:
-          jwt:
-            issuer-uri: 'http://127.0.0.1:9000'
+
 
 logging:
   level:
@@ -25,28 +15,38 @@ logging:
     org.springframework.web: DEBUG
     org.springframework.security: DEBUG
     org.springframework.security.oauth2: DEBUG
+    net.devh.boot.grpc: DEBUG
 
 ---
 spring:
   config:
     activate:
       on-profile: 'local'
+  autoconfigure:
+    exclude:
+      - 'org.springframework.cloud.vault.config.VaultAutoConfiguration'
+      - 'org.springframework.cloud.vault.config.VaultObservationAutoConfiguration'
+      - 'org.springframework.cloud.vault.config.VaultReactiveAutoConfiguration'
   security:
     oauth2:
       resourceserver:
         jwt:
           issuer-uri: 'http://127.0.0.1:9000'
+  graphql:
+    graphiql:
+      enabled: true
+
 grpc:
   client:
     grpcUserdataClient:
-      address: 'static://localhost:9002'
+      address: 'static://localhost:8092'
       negotiationType: PLAINTEXT
     grpcGeoClient:
-      address: 'static://localhost:9004'
+      address: 'static://localhost:8091'
       negotiationType: PLAINTEXT
     grpcPhotoClient:
-      address: 'static://localhost:9006'
+      address: 'static://localhost:8093'
       negotiationType: PLAINTEXT
-      max-inbound-message-size: 10485760 # 10 MB
+
 rangiffler-front:
   base-uri: 'http://127.0.0.1:3001'

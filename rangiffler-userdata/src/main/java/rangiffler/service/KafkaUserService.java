@@ -42,7 +42,7 @@ public class KafkaUserService {
     var userCountry = countries.stream()
         .filter(s -> s.getCode().equalsIgnoreCase(countryCode))
         .findFirst()
-        .orElse(countries.get(0));
+        .orElse(countries.getFirst());
     userDataEntity.setCountryId(userCountry.getId());
 
     var userEntity = userRepository.save(userDataEntity);

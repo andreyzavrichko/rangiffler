@@ -1,12 +1,6 @@
-server:
-  port: 9003
-  error:
-    include:
-      message: true
-
 grpc:
   server:
-    port: 9004
+    port: 8091
 
 spring:
   application:
@@ -39,6 +33,7 @@ spring:
     show-sql: false
     generate-ddl: true
     open-in-view: false
+
 logging:
   level:
     root: INFO
@@ -52,10 +47,12 @@ spring:
   config:
     activate:
       on-profile: 'local'
+  autoconfigure:
+    exclude:
+      - 'org.springframework.cloud.vault.config.VaultAutoConfiguration'
+      - 'org.springframework.cloud.vault.config.VaultObservationAutoConfiguration'
+      - 'org.springframework.cloud.vault.config.VaultReactiveAutoConfiguration'
   datasource:
     url: 'jdbc:postgresql://localhost:5432/rangiffler-geo'
     username: postgres
     password: secret
-  jpa:
-    hibernate:
-      ddl-auto: validate
