@@ -12,7 +12,6 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 public class GroupedStatistic {
-
   private UUID countryId;
   private Long count;
 }
