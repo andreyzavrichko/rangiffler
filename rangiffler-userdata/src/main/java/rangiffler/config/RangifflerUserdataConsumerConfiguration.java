@@ -26,13 +26,13 @@ public class RangifflerUserdataConsumerConfiguration {
 
     @Bean
     public ConsumerFactory<String, UserJson> consumerFactory(SslBundles sslBundles) {
-        var props = kafkaProperties.getConsumer().buildProperties(sslBundles); // Pass sslBundles here
-        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092"); // Add this line
+        var props = kafkaProperties.getConsumer().buildProperties(sslBundles);
+        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, ErrorHandlingDeserializer.class);
         props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, ErrorHandlingDeserializer.class);
         props.put(ErrorHandlingDeserializer.KEY_DESERIALIZER_CLASS, StringDeserializer.class);
         props.put(ErrorHandlingDeserializer.VALUE_DESERIALIZER_CLASS, JsonDeserializer.class.getName());
-        props.put(JsonDeserializer.TRUSTED_PACKAGES, "*");
+        props.put(JsonDeserializer.TRUSTED_PACKAGES, "rangiffler.model");
         return new DefaultKafkaConsumerFactory<>(props);
     }
 

@@ -12,8 +12,12 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import rangiffler.data.UserEntity;
 import rangiffler.data.repository.UserRepository;
+import rangiffler.grpc.Country;
 import rangiffler.grpc.RangifflerGeoServiceGrpc;
 import rangiffler.model.UserJson;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 public class KafkaUserService {
@@ -22,6 +26,8 @@ public class KafkaUserService {
   private final UserRepository userRepository;
   @GrpcClient("grpcGeoClient")
   private RangifflerGeoServiceGrpc.RangifflerGeoServiceBlockingStub rangifflerGeoServiceBlockingStub;
+
+  private final List<Country> cachedCountries = new ArrayList<>();
 
   @Autowired
   public KafkaUserService(UserRepository userRepository) {
@@ -34,19 +40,33 @@ public class KafkaUserService {
     LOG.info("### Kafka topic [users] received message: {}", user);
     LOG.info("### Kafka consumer record: {}", cr);
 
-    var userDataEntity = new UserEntity();
-    userDataEntity.setUsername(user.username());
+    try {
+      // Получение данных о странах (используется кэширование)
+      List<Country> countries = getCountries();
 
-    var countryCode = user.countryCode();
-    var countries = rangifflerGeoServiceBlockingStub.getAllCountries(Empty.getDefaultInstance()).getAllCountriesList();
-    var userCountry = countries.stream()
-        .filter(s -> s.getCode().equalsIgnoreCase(countryCode))
-        .findFirst()
-        .orElse(countries.getFirst());
-    userDataEntity.setCountryId(userCountry.getId());
+      // Найти страну по коду
+      var userCountry = countries.stream()
+              .filter(s -> s.getCode().equalsIgnoreCase(user.countryCode()))
+              .findFirst()
+              .orElseThrow(() -> new IllegalStateException("Country not found for code: " + user.countryCode()));
 
-    var userEntity = userRepository.save(userDataEntity);
-    LOG.info("### User {} successfully saved to database with id: {} and country id {}", user.username(),
-        userEntity.getId(), userEntity.getCountryId());
+      // Создание и сохранение пользователя
+      var userEntity = new UserEntity();
+      userEntity.setUsername(user.username());
+      userEntity.setCountryId(userCountry.getId());
+      userRepository.save(userEntity);
+
+      LOG.info("### User {} successfully saved to database with country id {}", user.username(), userEntity.getCountryId());
+    } catch (Exception e) {
+      LOG.error("Error processing user {}: {}", user.username(), e.getMessage(), e);
+      // Возможно, стоит отправить сообщение в отдельный топик для отладки
+    }
+  }
+
+  private List<Country> getCountries() {
+    if (cachedCountries.isEmpty()) {
+      cachedCountries.addAll(rangifflerGeoServiceBlockingStub.getAllCountries(Empty.getDefaultInstance()).getAllCountriesList());
+    }
+    return cachedCountries;
   }
 }

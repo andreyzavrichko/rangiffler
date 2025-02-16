@@ -2,9 +2,12 @@ package rangiffler.exception;
 
 import java.util.NoSuchElementException;
 
+/**
+ * Исключение, которое выбрасывается, если запрос дружбы не найден.
+ */
 public class FriendshipRequestNotFoundException extends NoSuchElementException {
 
   public FriendshipRequestNotFoundException(String requester, String addressee) {
-    super("Friendship request from " + requester + " to " + addressee + " not found");
+    super("Запрос дружбы от " + requester + " к " + addressee + " не найден");
   }
 }
