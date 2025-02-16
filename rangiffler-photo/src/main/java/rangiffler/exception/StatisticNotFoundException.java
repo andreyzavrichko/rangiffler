@@ -6,6 +6,6 @@ import java.util.UUID;
 public class StatisticNotFoundException extends NoSuchElementException {
 
   public StatisticNotFoundException(UUID userId, UUID countryId) {
-    super("Statistic for user " + userId + " and countryId " + countryId + " not found");
+    super("Статистика для пользователя " + userId + " и идентификатором страны " + countryId + " не найдена");
   }
 }

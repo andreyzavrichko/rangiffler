@@ -3,6 +3,6 @@ package rangiffler.exception;
 public class IllegalPhotoAccessException extends IllegalStateException {
 
   public IllegalPhotoAccessException(String photoId, String userId) {
-    super("Photo with id " + photoId + " can't be modified by user " + userId);
+    super("Фото с идентификатором " + photoId + " не может быть модифицирован пользователем " + userId);
   }
 }
