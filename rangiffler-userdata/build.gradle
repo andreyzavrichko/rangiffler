@@ -18,6 +18,8 @@ dependencies {
     implementation "org.springframework.kafka:spring-kafka:${project.ext.springKafkaVersion}"
     implementation "net.devh:grpc-server-spring-boot-starter:${project.ext.springGrpcVersion}"
     implementation "net.devh:grpc-client-spring-boot-starter:${project.ext.springGrpcVersion}"
+
+    // Работа с базами данных
     runtimeOnly "org.postgresql:postgresql:${project.ext.postgresDriverVersion}"
     implementation "org.flywaydb:flyway-core:${project.ext.flywayVersion}"
     implementation "org.flywaydb:flyway-database-postgresql:${project.ext.flywayVersion}"
