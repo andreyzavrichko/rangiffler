@@ -5,6 +5,6 @@ import java.util.NoSuchElementException;
 public class CountryNotFoundException extends NoSuchElementException {
 
   public CountryNotFoundException(String countryAttribute) {
-    super("Country " + countryAttribute + " not found");
+    super("Страна  " + countryAttribute + " не найдена");
   }
 }

@@ -15,11 +15,20 @@ repositories {
 dependencies {
     implementation project(':rangiffler-grpc-common')
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation "org.flywaydb:flyway-core:${project.ext.flywayVersion}"
-    implementation "org.flywaydb:flyway-database-postgresql:${project.ext.flywayVersion}"
     implementation "net.devh:grpc-server-spring-boot-starter:${project.ext.springGrpcVersion}"
 
+    // Работа с базой
     runtimeOnly "org.postgresql:postgresql:${project.ext.postgresDriverVersion}"
+    implementation "org.flywaydb:flyway-core:${project.ext.flywayVersion}"
+    implementation "org.flywaydb:flyway-database-postgresql:${project.ext.flywayVersion}"
+
+    // Lombok
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    // Тестирование
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'io.grpc:grpc-testing'
 }
 
 

@@ -1,8 +1,9 @@
 package rangiffler.service;
 
 import com.google.protobuf.Empty;
-
+import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
+import lombok.extern.slf4j.Slf4j;
 import net.devh.boot.grpc.server.service.GrpcService;
 import org.springframework.beans.factory.annotation.Autowired;
 import rangiffler.data.repository.CountryRepository;
@@ -12,46 +13,66 @@ import rangiffler.mapper.CountryMapper;
 
 import java.util.UUID;
 
+@Slf4j
 @GrpcService
 public class GeoService extends RangifflerGeoServiceGrpc.RangifflerGeoServiceImplBase {
 
-  private final CountryRepository countryRepository;
+    private final CountryRepository countryRepository;
 
-  @Autowired
-  public GeoService(CountryRepository countryRepository) {
-    this.countryRepository = countryRepository;
-  }
+    @Autowired
+    public GeoService(CountryRepository countryRepository) {
+        this.countryRepository = countryRepository;
+    }
 
-  @Override
-  public void getAllCountries(Empty request, StreamObserver<AllCountriesResponse> responseObserver) {
-    var allCountriesEntities = countryRepository.findAll();
+    @Override
+    public void getAllCountries(Empty request, StreamObserver<AllCountriesResponse> responseObserver) {
+        try {
+            var responseBuilder = AllCountriesResponse.newBuilder();
+            countryRepository.findAll().forEach(country -> responseBuilder.addAllCountries(CountryMapper.toMessage(country)));
 
-    var allCountriesResponse = AllCountriesResponse.newBuilder().addAllAllCountries(
-            allCountriesEntities.stream().map(CountryMapper::toMessage).toList()
-        )
-        .build();
+            responseObserver.onNext(responseBuilder.build());
+            responseObserver.onCompleted();
+        } catch (Exception e) {
+            log.error("Ошибка при получении всех стран", e);
+            responseObserver.onError(Status.INTERNAL.withDescription("Ошибка сервера").withCause(e).asRuntimeException());
+        }
+    }
 
-    responseObserver.onNext(allCountriesResponse);
-    responseObserver.onCompleted();
-  }
+    @Override
+    public void getCountry(GetCountryRequest request, StreamObserver<Country> responseObserver) {
+        try {
+            UUID countryId = UUID.fromString(request.getId());
+            var countryEntity = countryRepository.findById(countryId)
+                    .orElseThrow(() -> new CountryNotFoundException(request.getId()));
 
-  @Override
-  public void getCountry(GetCountryRequest request, StreamObserver<Country> responseObserver) {
-    var countryEntity = countryRepository.findById(UUID.fromString(request.getId()))
-        .orElseThrow(() -> new CountryNotFoundException(request.getId()));
+            responseObserver.onNext(CountryMapper.toMessage(countryEntity));
+            responseObserver.onCompleted();
+        } catch (IllegalArgumentException e) {
+            log.warn("Передан некорректный UUID: {}", request.getId());
+            responseObserver.onError(Status.INVALID_ARGUMENT.withDescription("Некорректный формат UUID").asRuntimeException());
+        } catch (CountryNotFoundException e) {
+            log.warn("Страна не найдена: {}", request.getId());
+            responseObserver.onError(Status.NOT_FOUND.withDescription("Страна не найдена").asRuntimeException());
+        } catch (Exception e) {
+            log.error("Ошибка при получении страны с ID {}", request.getId(), e);
+            responseObserver.onError(Status.INTERNAL.withDescription("Ошибка сервера").withCause(e).asRuntimeException());
+        }
+    }
 
-    var countryResponse = CountryMapper.toMessage(countryEntity);
-    responseObserver.onNext(countryResponse);
-    responseObserver.onCompleted();
-  }
+    @Override
+    public void getCountryByCode(GetCountryByCodeRequest request, StreamObserver<Country> responseObserver) {
+        try {
+            var countryEntity = countryRepository.findByCode(request.getCode())
+                    .orElseThrow(() -> new CountryNotFoundException(request.getCode()));
 
-  @Override
-  public void getCountryByCode(GetCountryByCodeRequest request, StreamObserver<Country> responseObserver) {
-    var countryEntity = countryRepository.findByCode(request.getCode())
-        .orElseThrow(() -> new CountryNotFoundException(request.getCode()));
-
-    var countryResponse = CountryMapper.toMessage(countryEntity);
-    responseObserver.onNext(countryResponse);
-    responseObserver.onCompleted();
-  }
+            responseObserver.onNext(CountryMapper.toMessage(countryEntity));
+            responseObserver.onCompleted();
+        } catch (CountryNotFoundException e) {
+            log.warn("Страна с кодом '{}' не найдена", request.getCode());
+            responseObserver.onError(Status.NOT_FOUND.withDescription("Страна не найдена").asRuntimeException());
+        } catch (Exception e) {
+            log.error("Ошибка при получении страны с кодом {}", request.getCode(), e);
+            responseObserver.onError(Status.INTERNAL.withDescription("Ошибка сервера").withCause(e).asRuntimeException());
+        }
+    }
 }
