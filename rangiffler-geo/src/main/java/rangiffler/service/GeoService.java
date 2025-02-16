@@ -13,17 +13,32 @@ import rangiffler.mapper.CountryMapper;
 
 import java.util.UUID;
 
+/**
+ * Сервис для работы с географической информацией через gRPC.
+ * Предоставляет методы для получения информации о странах по ID, коду и для получения всех стран.
+ */
 @Slf4j
 @GrpcService
 public class GeoService extends RangifflerGeoServiceGrpc.RangifflerGeoServiceImplBase {
 
     private final CountryRepository countryRepository;
 
+    /**
+     * Конструктор сервиса для работы с географической информацией.
+     *
+     * @param countryRepository Репозиторий для работы с сущностями стран.
+     */
     @Autowired
     public GeoService(CountryRepository countryRepository) {
         this.countryRepository = countryRepository;
     }
 
+    /**
+     * Метод для получения списка всех стран.
+     *
+     * @param request Пустой запрос.
+     * @param responseObserver Наблюдатель для отправки ответа.
+     */
     @Override
     public void getAllCountries(Empty request, StreamObserver<AllCountriesResponse> responseObserver) {
         try {
@@ -38,6 +53,12 @@ public class GeoService extends RangifflerGeoServiceGrpc.RangifflerGeoServiceImp
         }
     }
 
+    /**
+     * Метод для получения информации о стране по её ID.
+     *
+     * @param request Запрос, содержащий ID страны.
+     * @param responseObserver Наблюдатель для отправки ответа.
+     */
     @Override
     public void getCountry(GetCountryRequest request, StreamObserver<Country> responseObserver) {
         try {
@@ -59,6 +80,12 @@ public class GeoService extends RangifflerGeoServiceGrpc.RangifflerGeoServiceImp
         }
     }
 
+    /**
+     * Метод для получения информации о стране по её коду.
+     *
+     * @param request Запрос, содержащий код страны.
+     * @param responseObserver Наблюдатель для отправки ответа.
+     */
     @Override
     public void getCountryByCode(GetCountryByCodeRequest request, StreamObserver<Country> responseObserver) {
         try {
