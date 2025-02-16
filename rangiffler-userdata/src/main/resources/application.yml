@@ -1,12 +1,6 @@
-server:
-  port: 9001
-  error:
-    include:
-      message: true
-
 grpc:
   server:
-    port: 9002
+    port: 8092
 
 spring:
   application:
@@ -36,29 +30,37 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     show-sql: false
     generate-ddl: true
-  sql:
-    init:
-      mode: always
+    open-in-view: false
 
 logging:
   level:
     root: INFO
-    org.springframework.web: DEBUG
+    org.springframework.web: INFO
+    org.apache.kafka: INFO
+    org.springframework.kafka: INFO
 
 ---
 spring:
   config:
     activate:
       on-profile: 'local'
-  datasource:
-    url: 'jdbc:postgresql://localhost:5432/rangiffler-userdata'
-    username: postgres
-    password: secret
-  jpa:
-    hibernate:
-      ddl-auto: validate
+  autoconfigure:
+    exclude:
+      - 'org.springframework.cloud.vault.config.VaultAutoConfiguration'
+      - 'org.springframework.cloud.vault.config.VaultObservationAutoConfiguration'
+      - 'org.springframework.cloud.vault.config.VaultReactiveAutoConfiguration'
   kafka:
     bootstrap-servers: 'localhost:9092'
     consumer:
       group-id: 'userdata'
       auto-offset-reset: earliest
+  datasource:
+    url: 'jdbc:postgresql://localhost:5432/rangiffler-userdata'
+    username: postgres
+    password: secret
+
+grpc:
+  client:
+    grpcGeoClient:
+      address: 'static://localhost:8091'
+      negotiationType: PLAINTEXT
