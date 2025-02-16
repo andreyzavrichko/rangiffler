@@ -1,6 +1,5 @@
 package rangiffler.config;
 
-
 import org.apache.catalina.filters.RequestDumperFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -21,58 +20,82 @@ import rangiffler.service.cors.CorsCustomizer;
 
 import static org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher;
 
+/**
+ * Конфигурация безопасности приложения.
+ * <p>
+ * Настройка фильтров безопасности, обработки CSRF, CORS и аутентификации/авторизации.
+ */
 @Configuration
 public class SecurityConfig {
 
-  private final CorsCustomizer corsCustomizer;
-  private final Environment environment;
+    private final CorsCustomizer corsCustomizer;
+    private final Environment environment;
 
-  @Autowired
-  public SecurityConfig(CorsCustomizer corsCustomizer, Environment environment) {
-    this.corsCustomizer = corsCustomizer;
-    this.environment = environment;
-  }
-
-  @Bean
-  public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
-    corsCustomizer.corsCustomizer(http);
-
-    if (environment.acceptsProfiles(Profiles.of("local", "staging"))) {
-      http.addFilterBefore(new SpecificRequestDumperFilter(
-          new RequestDumperFilter(),
-          "/login", "/oauth2/.*"
-      ), DisableEncodeUrlFilter.class);
+    /**
+     * Конструктор конфигурации безопасности.
+     *
+     * @param corsCustomizer объект для настройки CORS.
+     * @param environment    объект, предоставляющий доступ к настройкам среды.
+     */
+    @Autowired
+    public SecurityConfig(CorsCustomizer corsCustomizer, Environment environment) {
+        this.corsCustomizer = corsCustomizer;
+        this.environment = environment;
     }
 
-    return http.authorizeHttpRequests(customizer -> customizer
-            .requestMatchers(
-                antMatcher("/register"),
-                antMatcher("/images/**"),
-                antMatcher("/styles/**"),
-                antMatcher("/fonts/**"),
-                antMatcher("/actuator/health")
-            ).permitAll()
-            .anyRequest()
-            .authenticated()
-        )
-        .csrf(csrf -> csrf
-            .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-            // https://stackoverflow.com/a/74521360/65681
-            .csrfTokenRequestHandler(new CsrfTokenRequestAttributeHandler())
-        )
-        .addFilterAfter(new CookieCsrfFilter(), BasicAuthenticationFilter.class)
-        .formLogin(login -> login
-            .loginPage("/login")
-            .permitAll())
-        .logout(logout -> logout
-            .logoutRequestMatcher(
-                antMatcher("/logout")) // https://github.com/spring-projects/spring-authorization-server/issues/266
-            .deleteCookies("JSESSIONID", "XSRF-TOKEN")
-            .invalidateHttpSession(true)
-            .clearAuthentication(true)
-            .logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler(HttpStatus.OK))
-        )
-        .sessionManagement(sm -> sm.invalidSessionUrl("/login"))
-        .build();
-  }
+    /**
+     * Основная конфигурация безопасности, настраивающая фильтры и защиту.
+     *
+     * @param http объект конфигурации безопасности HTTP.
+     * @return {@link SecurityFilterChain} объект с конфигурацией безопасности.
+     * @throws Exception исключения при настройке безопасности.
+     */
+    @Bean
+    public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
+        // Настройка CORS
+        corsCustomizer.corsCustomizer(http);
+
+        // Добавление фильтра для логирования запросов в режиме разработки и staging
+        if (environment.acceptsProfiles(Profiles.of("local", "staging"))) {
+            http.addFilterBefore(new SpecificRequestDumperFilter(
+                    new RequestDumperFilter(),
+                    "/login", "/oauth2/.*"
+            ), DisableEncodeUrlFilter.class);
+        }
+
+        // Основная настройка безопасности HTTP
+        return http.authorizeHttpRequests(customizer -> customizer
+                        .requestMatchers(
+                                antMatcher("/register"),
+                                antMatcher("/images/**"),
+                                antMatcher("/styles/**"),
+                                antMatcher("/fonts/**"),
+                                antMatcher("/actuator/health")
+                        ).permitAll()  // Разрешить доступ без аутентификации
+                        .anyRequest()
+                        .authenticated()  // Все остальные запросы требуют аутентификации
+                )
+                // Настройка защиты от CSRF
+                .csrf(csrf -> csrf
+                        .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())  // Использование токенов CSRF в cookie
+                        .csrfTokenRequestHandler(new CsrfTokenRequestAttributeHandler())  // Обработчик CSRF токенов
+                )
+                .addFilterAfter(new CookieCsrfFilter(), BasicAuthenticationFilter.class)  // Фильтр для обработки CSRF
+                // Настройка страницы логина
+                .formLogin(login -> login
+                        .loginPage("/login")
+                        .permitAll())  // Разрешить доступ к странице логина
+                // Настройка выхода из системы
+                .logout(logout -> logout
+                        .logoutRequestMatcher(
+                                antMatcher("/logout"))  // Настройка маршрута для выхода
+                        .deleteCookies("JSESSIONID", "XSRF-TOKEN")  // Удалить cookies после выхода
+                        .invalidateHttpSession(true)  // Инвалидировать сессию
+                        .clearAuthentication(true)  // Очистить аутентификацию
+                        .logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler(HttpStatus.OK))  // Обработчик успешного выхода
+                )
+                // Настройка управления сессиями
+                .sessionManagement(sm -> sm.invalidSessionUrl("/login"))  // Настройка страницы для недействительной сессии
+                .build();
+    }
 }

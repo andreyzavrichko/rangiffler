@@ -1,6 +1,5 @@
 package rangiffler.data.repository;
 
-
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 import org.springframework.data.domain.Example;
@@ -17,27 +16,47 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Function;
 
+/**
+ * Репозиторий для работы с сущностями пользователя в базе данных.
+ * Реализует стандартные CRUD операции и поиск пользователей.
+ */
 public interface UserRepository extends JpaRepository<UserEntity, UUID> {
 
+  /**
+   * Ищет пользователя по имени.
+   *
+   * @param username имя пользователя.
+   * @return сущность пользователя или null, если не найдено.
+   */
   @Nullable
   UserEntity findByUsername(@Nonnull String username);
 
+  /**
+   * Фейковая реализация репозитория для тестирования или имитации работы с данными.
+   */
   final class Fake implements UserRepository {
 
+    // Список пользователей для фейковой реализации
     private List<UserEntity> userEntities = new ArrayList<>();
 
+    /**
+     * Ищет пользователя по имени в фейковой базе данных.
+     *
+     * @param username имя пользователя.
+     * @return сущность пользователя или null, если не найдено.
+     */
     @Nullable
     @Override
     public UserEntity findByUsername(@Nonnull String username) {
       return userEntities.stream()
-          .filter(s -> username.equals(s.getUsername()))
-          .findFirst()
-          .orElse(null);
+              .filter(s -> username.equals(s.getUsername()))
+              .findFirst()
+              .orElse(null);
     }
 
     @Override
     public void flush() {
-
+      // Ничего не делает, так как это фейковая реализация
     }
 
     @Override
@@ -52,17 +71,17 @@ public interface UserRepository extends JpaRepository<UserEntity, UUID> {
 
     @Override
     public void deleteAllInBatch(Iterable<UserEntity> entities) {
-
+      // Фейковая реализация, не выполняет удаление
     }
 
     @Override
     public void deleteAllByIdInBatch(Iterable<UUID> uuids) {
-
+      // Фейковая реализация, не выполняет удаление
     }
 
     @Override
     public void deleteAllInBatch() {
-
+      // Фейковая реализация, не выполняет удаление
     }
 
     @Override
@@ -112,7 +131,7 @@ public interface UserRepository extends JpaRepository<UserEntity, UUID> {
 
     @Override
     public <S extends UserEntity, R> R findBy(Example<S> example,
-        Function<FetchableFluentQuery<S>, R> queryFunction) {
+                                              Function<FetchableFluentQuery<S>, R> queryFunction) {
       return null;
     }
 
@@ -153,27 +172,27 @@ public interface UserRepository extends JpaRepository<UserEntity, UUID> {
 
     @Override
     public void deleteById(UUID uuid) {
-
+      // Фейковая реализация, не выполняет удаление
     }
 
     @Override
     public void delete(UserEntity entity) {
-
+      // Фейковая реализация, не выполняет удаление
     }
 
     @Override
     public void deleteAllById(Iterable<? extends UUID> uuids) {
-
+      // Фейковая реализация, не выполняет удаление
     }
 
     @Override
     public void deleteAll(Iterable<? extends UserEntity> entities) {
-
+      // Фейковая реализация, не выполняет удаление
     }
 
     @Override
     public void deleteAll() {
-
+      // Фейковая реализация, не выполняет удаление
     }
 
     @Override
@@ -186,6 +205,11 @@ public interface UserRepository extends JpaRepository<UserEntity, UUID> {
       return null;
     }
 
+    /**
+     * Устанавливает список пользователей для фейковой базы данных.
+     *
+     * @param userEntities список пользователей.
+     */
     public void withUserEntities(List<UserEntity> userEntities) {
       this.userEntities = userEntities;
     }

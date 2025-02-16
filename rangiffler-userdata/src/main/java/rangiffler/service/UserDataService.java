@@ -24,18 +24,33 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+/**
+ * gRPC сервис для управления данными пользователей и действиями дружбы.
+ * Этот сервис предоставляет методы для получения информации о пользователях, управления дружбами,
+ * а также обновления данных пользователей.
+ */
 @GrpcService
 public class UserDataService extends RangifflerUserdataServiceGrpc.RangifflerUserdataServiceImplBase {
 
   private final UserRepository userRepository;
   private final FriendshipRepository friendshipRepository;
 
+  /**
+   * Конструктор для UserDataService, инициализирующий репозитории.
+   * @param userRepository репозиторий пользователей для управления данными
+   * @param friendshipRepository репозиторий дружбы для управления дружбами
+   */
   @Autowired
   public UserDataService(UserRepository userRepository, FriendshipRepository friendshipRepository) {
     this.userRepository = userRepository;
     this.friendshipRepository = friendshipRepository;
   }
 
+  /**
+   * Получает всех пользователей, кроме запрашивающего, с возможностью фильтрации по запросу поиска.
+   * @param request запрос, содержащий имя пользователя, информацию для пагинации и запрос поиска
+   * @param responseObserver наблюдатель для отправки ответа
+   */
   @Override
   public void getAllUsers(AllUsersRequest request, StreamObserver<AllUsersResponse> responseObserver) {
     var user = userRepository.findByUsername(request.getUsername())
@@ -62,6 +77,11 @@ public class UserDataService extends RangifflerUserdataServiceGrpc.RangifflerUse
     responseObserver.onCompleted();
   }
 
+  /**
+   * Получает информацию о пользователе по его имени.
+   * @param request запрос, содержащий имя пользователя
+   * @param responseObserver наблюдатель для отправки ответа
+   */
   @Override
   public void getUser(UserRequest request, StreamObserver<User> responseObserver) {
     var userEntity = userRepository.findByUsername(request.getUsername())
@@ -72,6 +92,11 @@ public class UserDataService extends RangifflerUserdataServiceGrpc.RangifflerUse
     responseObserver.onCompleted();
   }
 
+  /**
+   * Получает информацию о пользователе по его ID.
+   * @param request запрос, содержащий ID пользователя
+   * @param responseObserver наблюдатель для отправки ответа
+   */
   @Override
   public void getUserById(UserByIdRequest request, StreamObserver<User> responseObserver) {
     var userEntity = userRepository.findById(UUID.fromString(request.getId()))
@@ -82,6 +107,11 @@ public class UserDataService extends RangifflerUserdataServiceGrpc.RangifflerUse
     responseObserver.onCompleted();
   }
 
+  /**
+   * Получает список друзей пользователя.
+   * @param request запрос, содержащий имя пользователя, информацию для пагинации и запрос поиска
+   * @param responseObserver наблюдатель для отправки ответа
+   */
   @Override
   public void getUserFriends(AllUsersRequest request, StreamObserver<AllUsersResponse> responseObserver) {
     var userEntity = userRepository.findByUsername(request.getUsername())
@@ -101,6 +131,11 @@ public class UserDataService extends RangifflerUserdataServiceGrpc.RangifflerUse
     responseObserver.onCompleted();
   }
 
+  /**
+   * Получает список ID друзей пользователя.
+   * @param request запрос, содержащий имя пользователя
+   * @param responseObserver наблюдатель для отправки ответа
+   */
   @Override
   public void getUserFriendsIds(UserRequest request, StreamObserver<UserIdsResponse> responseObserver) {
     var userEntity = userRepository.findByUsername(request.getUsername())
@@ -115,6 +150,11 @@ public class UserDataService extends RangifflerUserdataServiceGrpc.RangifflerUse
     responseObserver.onCompleted();
   }
 
+  /**
+   * Получает входящие дружеские запросы для пользователя.
+   * @param request запрос, содержащий имя пользователя, информацию для пагинации и запрос поиска
+   * @param responseObserver наблюдатель для отправки ответа
+   */
   @Override
   public void getFriendshipRequests(AllUsersRequest request, StreamObserver<AllUsersResponse> responseObserver) {
     var userEntity = userRepository.findByUsername(request.getUsername())
@@ -134,6 +174,11 @@ public class UserDataService extends RangifflerUserdataServiceGrpc.RangifflerUse
     responseObserver.onCompleted();
   }
 
+  /**
+   * Получает исходящие дружеские запросы для пользователя.
+   * @param request запрос, содержащий имя пользователя, информацию для пагинации и запрос поиска
+   * @param responseObserver наблюдатель для отправки ответа
+   */
   @Override
   public void getFriendshipAddresses(AllUsersRequest request, StreamObserver<AllUsersResponse> responseObserver) {
     var userEntity = userRepository.findByUsername(request.getUsername())
@@ -153,6 +198,11 @@ public class UserDataService extends RangifflerUserdataServiceGrpc.RangifflerUse
     responseObserver.onCompleted();
   }
 
+  /**
+   * Обновляет данные пользователя.
+   * @param request запрос с обновленными данными пользователя
+   * @param responseObserver наблюдатель для отправки ответа
+   */
   @Transactional
   @Override
   public void updateUser(User request, StreamObserver<User> responseObserver) {
@@ -170,6 +220,11 @@ public class UserDataService extends RangifflerUserdataServiceGrpc.RangifflerUse
     responseObserver.onCompleted();
   }
 
+  /**
+   * Обновляет состояние дружбы между двумя пользователями.
+   * @param request запрос с данными для обновления состояния дружбы
+   * @param responseObserver наблюдатель для отправки ответа
+   */
   @Transactional
   @Override
   public void updateUserFriendship(UpdateUserFriendshipRequest request, StreamObserver<User> responseObserver) {
@@ -225,6 +280,12 @@ public class UserDataService extends RangifflerUserdataServiceGrpc.RangifflerUse
     responseObserver.onCompleted();
   }
 
+  /**
+   * Метод для получения статуса дружбы между пользователями.
+   * @param actor текущий пользователь
+   * @param users все пользователи
+   * @return карта с ID пользователя и его статусом дружбы
+   */
   private Map<UUID, FriendStatus> getPeopleFriendStatuses(UserEntity actor, List<UserEntity> users) {
     var friendships = friendshipRepository.findFriendships(users, actor);
     return users.stream()
