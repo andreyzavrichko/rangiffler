@@ -1,59 +1,51 @@
 package gateway.controller;
 
-import java.util.Set;
-import java.util.UUID;
-
-import gateway.model.PhotoDto;
-import gateway.service.api.PhotoGrpcClient;
+import com.onehundredtwentyninth.rangiffler.client.PhotoClient;
+import com.onehundredtwentyninth.rangiffler.model.GqlFeed;
+import com.onehundredtwentyninth.rangiffler.model.GqlPhoto;
+import com.onehundredtwentyninth.rangiffler.model.PhotoInput;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Slice;
+import org.springframework.graphql.data.method.annotation.Argument;
+import org.springframework.graphql.data.method.annotation.MutationMapping;
+import org.springframework.graphql.data.method.annotation.QueryMapping;
+import org.springframework.graphql.data.method.annotation.SchemaMapping;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
 
-@RestController
+import java.util.UUID;
+
+@Controller
 public class PhotoController {
 
-    private final PhotoGrpcClient photoGrpcClient;
+  private final PhotoClient photoClient;
 
-    @Autowired
-    public PhotoController(PhotoGrpcClient photoGrpcClient) {
-        this.photoGrpcClient = photoGrpcClient;
-    }
+  @Autowired
+  public PhotoController(PhotoClient photoClient) {
+    this.photoClient = photoClient;
+  }
 
-    @GetMapping("/photos")
-    public Set<PhotoDto> getPhotosForUser(@AuthenticationPrincipal Jwt principal) {
-        String username = principal.getClaim("sub");
-        return photoGrpcClient.getUserPhotos(username);
-    }
+  @QueryMapping
+  public GqlFeed feed(@AuthenticationPrincipal Jwt principal,
+      @Argument Boolean withFriends) {
+    return new GqlFeed(principal.getClaim("sub"), withFriends, null, null);
+  }
 
-    @GetMapping("/friends/photos")
-    public Set<PhotoDto> getAllFriendsPhotos(@AuthenticationPrincipal Jwt principal) {
-        String username = principal.getClaim("sub");
-        return photoGrpcClient.getaAllFriendsPhotos(username);
-    }
+  @SchemaMapping(typeName = "Feed", field = "photos")
+  public Slice<GqlPhoto> photos(GqlFeed feed, @AuthenticationPrincipal Jwt principal,
+      @Argument int page,
+      @Argument int size) {
+    return photoClient.getPhotos(principal.getClaim("sub"), page, size, feed.withFriends());
+  }
 
-    @PostMapping("/photos")
-    public PhotoDto addPhoto(@AuthenticationPrincipal Jwt principal,
-                             @RequestBody PhotoDto photoDto) {
-        String username = principal.getClaim("sub");
-        photoDto.setUsername(username);
-        return photoGrpcClient.addPhoto(photoDto);
-    }
+  @MutationMapping
+  public GqlPhoto photo(@AuthenticationPrincipal Jwt principal, @Argument PhotoInput input) {
+    return photoClient.photo(principal.getClaim("sub"), input);
+  }
 
-    @PatchMapping("/photos/{id}")
-    public PhotoDto editPhoto(@RequestBody PhotoDto photoDto) {
-        return photoGrpcClient.editPhoto(photoDto);
-    }
-
-    @DeleteMapping("/photos")
-    public void deletePhoto(@RequestParam UUID photoId) {
-        photoGrpcClient.deletePhoto(photoId);
-    }
-
+  @MutationMapping
+  public boolean deletePhoto(@AuthenticationPrincipal Jwt principal, @Argument UUID id) {
+    return photoClient.deletePhoto(principal.getClaim("sub"), id);
+  }
 }

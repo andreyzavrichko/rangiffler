@@ -43,9 +43,9 @@ spring:
 logging:
   level:
     root: INFO
-    org.springframework.web: DEBUG
-    org.apache.kafka: DEBUG
-    org.springframework.kafka: DEBUG
+    org.springframework.web: INFO
+    org.apache.kafka: INFO
+    org.springframework.kafka: INFO
 
 ---
 spring:
