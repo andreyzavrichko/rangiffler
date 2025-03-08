@@ -47,36 +47,25 @@ public class UserService {
    * @return имя сохраненного пользователя
    */
   @Transactional
-  public @Nonnull String registerUser(@Nonnull String username, @Nonnull String password, @Nonnull String countryCode) {
-    try {
-      // Создаем нового пользователя
-      UserEntity userEntity = new UserEntity();
-      userEntity.setEnabled(true);
-      userEntity.setAccountNonExpired(true);
-      userEntity.setCredentialsNonExpired(true);
-      userEntity.setAccountNonLocked(true);
-      userEntity.setUsername(username);
-      userEntity.setPassword(passwordEncoder.encode(password)); // Шифруем пароль
+  public @Nonnull
+  String registerUser(@Nonnull String username, @Nonnull String password, @Nonnull String countryCode) {
+    UserEntity userEntity = new UserEntity();
+    userEntity.setEnabled(true);
+    userEntity.setAccountNonExpired(true);
+    userEntity.setCredentialsNonExpired(true);
+    userEntity.setAccountNonLocked(true);
+    userEntity.setUsername(username);
+    userEntity.setPassword(passwordEncoder.encode(password));
 
-      // Назначаем права доступа пользователю
-      AuthorityEntity readAuthorityEntity = new AuthorityEntity();
-      readAuthorityEntity.setAuthority(Authority.read);
-      AuthorityEntity writeAuthorityEntity = new AuthorityEntity();
-      writeAuthorityEntity.setAuthority(Authority.write);
-      userEntity.addAuthorities(readAuthorityEntity, writeAuthorityEntity);
+    AuthorityEntity readAuthorityEntity = new AuthorityEntity();
+    readAuthorityEntity.setAuthority(Authority.read);
+    AuthorityEntity writeAuthorityEntity = new AuthorityEntity();
+    writeAuthorityEntity.setAuthority(Authority.write);
 
-      // Сохраняем пользователя в базе данных
-      String savedUser = userRepository.save(userEntity).getUsername();
-
-      // Отправляем информацию о пользователе в Kafka
-      kafkaTemplate.send("users", new UserJson(savedUser, countryCode));
-      LOG.info("### Kafka topic [users] sent message: {}", savedUser);
-
-      return savedUser; // Возвращаем имя сохраненного пользователя
-    } catch (Exception e) {
-      // Логируем ошибку, если что-то пошло не так
-      LOG.error("Ошибка при регистрации пользователя: {}", username, e);
-      throw new RuntimeException("Не удалось зарегистрировать пользователя: " + username, e);
-    }
+    userEntity.addAuthorities(readAuthorityEntity, writeAuthorityEntity);
+    String savedUser = userRepository.save(userEntity).getUsername();
+    kafkaTemplate.send("users", new UserJson(savedUser, countryCode));
+    LOG.info("### Kafka topic [users] sent message: {}", savedUser);
+    return savedUser;
   }
 }
