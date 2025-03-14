@@ -24,7 +24,7 @@ import java.util.UUID;
 import static io.qameta.allure.SeverityLevel.BLOCKER;
 import static org.junit.jupiter.api.Assertions.*;
 
-@DisplayName("Photo")
+@DisplayName("[GRPC] Photo")
 class UpdateOtherUserPhotoTest extends GrpcPhotoTestBase {
 
     @Inject
@@ -37,7 +37,7 @@ class UpdateOtherUserPhotoTest extends GrpcPhotoTestBase {
     @CreateUser(
             friends = @Friend(
                     photos = {
-                            @WithPhoto(countryCode = CountryCodes.CN, image = PhotoFiles.FRANCE)
+                            @WithPhoto(countryCode = CountryCodes.CN, image = PhotoFiles.CHINA)
                     }
             )
     )
@@ -46,7 +46,7 @@ class UpdateOtherUserPhotoTest extends GrpcPhotoTestBase {
     @Feature("Фото")
     @Severity(BLOCKER)
     @Tags({@Tag("grpc"), @Tag("photo"), @Tag("smoke")})
-    @DisplayName("Проверка изменения фотокарточки другого пользователя")
+    @DisplayName("[GRPC] Проверка изменения фотокарточки другого пользователя")
     void shouldFailWhenAttemptingToUpdateOtherUserPhoto(TestUser user) {
         var country = countryRepository.findRequiredCountryByCode("ru");
         var friendPhoto = user.getFriends().getFirst().getPhotos().getFirst();

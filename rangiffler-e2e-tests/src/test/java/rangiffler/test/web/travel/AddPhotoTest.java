@@ -19,7 +19,7 @@ import static io.qameta.allure.SeverityLevel.BLOCKER;
 
 
 @WebTest
-@DisplayName("Путешествия")
+@DisplayName("[WEB] Путешествия")
 public class AddPhotoTest {
     @Inject
     private MyTravelsPage myTravelsPage;
@@ -37,7 +37,7 @@ public class AddPhotoTest {
     @Feature("Добавление фотокарточки")
     @Severity(BLOCKER)
     @Tags({@Tag("web"), @Tag("travel"), @Tag("smoke")})
-    @DisplayName("Проверка создания карточки без фотографии")
+    @DisplayName("[WEB] Проверка создания карточки без фотографии")
     void shouldAddCardWithoutPhotoTest() {
         myTravelsPage.open()
                 .clickAddPhotoButton()
@@ -53,11 +53,11 @@ public class AddPhotoTest {
     @Feature("Добавление фотокарточки")
     @Severity(BLOCKER)
     @Tags({@Tag("web"), @Tag("travel"), @Tag("smoke")})
-    @DisplayName("Проверка успешного создания карточки с фотографией")
+    @DisplayName("[WEB] Проверка успешного создания карточки с фотографией")
     void shouldSuccessAddCardTest() {
         final var country = countryRepository.findRequiredCountryByCode("us");
         myTravelsPage.open()
-                .addPhoto("image/Amsterdam.png", country.getCode(), "test");
+                .addPhoto("image/California.jpg", country.getCode(), "test");
     }
 
 

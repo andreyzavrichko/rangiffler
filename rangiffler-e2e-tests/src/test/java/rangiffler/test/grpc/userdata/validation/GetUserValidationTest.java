@@ -19,7 +19,7 @@ import static io.qameta.allure.SeverityLevel.MINOR;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
-@DisplayName("Userdata")
+@DisplayName("[GRPC] Userdata")
 class GetUserValidationTest extends GrpcUserdataTestBase {
 
 
@@ -28,7 +28,7 @@ class GetUserValidationTest extends GrpcUserdataTestBase {
     @Feature("Пользователи")
     @Severity(MINOR)
     @Tags({@Tag("grpc"), @Tag("userdata"), @Tag("regress")})
-    @DisplayName("Проверка запроса пользователя с пустым username")
+    @DisplayName("[GRPC] Проверка запроса пользователя с пустым username")
     void shouldReturnErrorForEmptyUsernameTest() {
         var request = UserRequest.newBuilder().setUsername("").build();
 
@@ -41,7 +41,7 @@ class GetUserValidationTest extends GrpcUserdataTestBase {
     @Feature("Пользователи")
     @Severity(MINOR)
     @Tags({@Tag("grpc"), @Tag("userdata"), @Tag("regress")})
-    @DisplayName("Проверка запроса пользователя с несуществующим username")
+    @DisplayName("[GRPC] Проверка запроса пользователя с несуществующим username")
     void shouldReturnErrorForUnknownUsernameTest() {
         var request = UserRequest.newBuilder().setUsername("unknownUser").build();
 
@@ -55,7 +55,7 @@ class GetUserValidationTest extends GrpcUserdataTestBase {
     @Feature("Пользователи")
     @Severity(MINOR)
     @Tags({@Tag("grpc"), @Tag("userdata"), @Tag("regress")})
-    @DisplayName("Проверка запроса пользователя с пустым ID")
+    @DisplayName("[GRPC] Проверка запроса пользователя с пустым ID")
     void shouldReturnErrorForEmptyUserIdTest() {
         var request = UserByIdRequest.newBuilder().setId("").build();
 
@@ -68,7 +68,7 @@ class GetUserValidationTest extends GrpcUserdataTestBase {
     @Feature("Пользователи")
     @Severity(MINOR)
     @Tags({@Tag("grpc"), @Tag("userdata"), @Tag("regress")})
-    @DisplayName("Проверка запроса пользователя с null username")
+    @DisplayName("[GRPC] Проверка запроса пользователя с null username")
     void shouldReturnErrorForNullUsernameTest() {
         var request = UserRequest.newBuilder().build();
 
@@ -82,7 +82,7 @@ class GetUserValidationTest extends GrpcUserdataTestBase {
     @Feature("Пользователи")
     @Severity(MINOR)
     @Tags({@Tag("grpc"), @Tag("userdata"), @Tag("regress")})
-    @DisplayName("Проверка запроса пользователя с несуществующим id")
+    @DisplayName("[GRPC] Проверка запроса пользователя с несуществующим id")
     void shouldReturnErrorForNonExistentUserIdTest() {
         var request = UserByIdRequest.newBuilder().setId(UUID.randomUUID().toString()).build();
 
@@ -96,7 +96,7 @@ class GetUserValidationTest extends GrpcUserdataTestBase {
     @Feature("Пользователи")
     @Severity(MINOR)
     @Tags({@Tag("grpc"), @Tag("userdata"), @Tag("regress")})
-    @DisplayName("Проверка запроса пользователя с id, состоящим из пробелов")
+    @DisplayName("[GRPC] Проверка запроса пользователя с id, состоящим из пробелов")
     void shouldReturnErrorForWhitespaceUserIdTest() {
         var request = UserByIdRequest.newBuilder().setId("   ").build();
 
@@ -110,7 +110,7 @@ class GetUserValidationTest extends GrpcUserdataTestBase {
     @Feature("Пользователи")
     @Severity(MINOR)
     @Tags({@Tag("grpc"), @Tag("userdata"), @Tag("regress")})
-    @DisplayName("Проверка запроса пользователя с очень длинным username")
+    @DisplayName("[GRPC] Проверка запроса пользователя с очень длинным username")
     void shouldReturnErrorForOverlyLongUsernameTest() {
         var request = UserRequest.newBuilder()
                 .setUsername("a".repeat(300))
@@ -125,7 +125,7 @@ class GetUserValidationTest extends GrpcUserdataTestBase {
     @Feature("Пользователи")
     @Severity(MINOR)
     @Tags({@Tag("grpc"), @Tag("userdata"), @Tag("regress")})
-    @DisplayName("Проверка запроса пользователя с некорректным id")
+    @DisplayName("[GRPC] Проверка запроса пользователя с некорректным id")
     void shouldReturnErrorForInvalidUserIdTest() {
         var request = UserByIdRequest.newBuilder().setId("invalid_uuid").build();
 
@@ -138,7 +138,7 @@ class GetUserValidationTest extends GrpcUserdataTestBase {
     @Feature("Пользователи")
     @Severity(MINOR)
     @Tags({@Tag("grpc"), @Tag("userdata"), @Tag("regress")})
-    @DisplayName("Проверка запроса пользователя с id, содержащим спецсимволы")
+    @DisplayName("[GRPC] Проверка запроса пользователя с id, содержащим спецсимволы")
     void shouldReturnErrorForUserIdWithSpecialCharactersTest() {
         var request = UserByIdRequest.newBuilder().setId("!@#$%^&*()").build();
 

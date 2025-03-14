@@ -27,7 +27,7 @@ import static io.qameta.allure.SeverityLevel.BLOCKER;
 import static org.junit.jupiter.api.Assertions.*;
 
 
-@DisplayName("Photo")
+@DisplayName("[GRPC] Photo")
 class LikePhotoTest extends GrpcPhotoTestBase {
 
     @Inject
@@ -35,14 +35,14 @@ class LikePhotoTest extends GrpcPhotoTestBase {
 
     @CreateUser(
             photos = {
-                    @WithPhoto(countryCode = CountryCodes.CN, image = PhotoFiles.FRANCE)
+                    @WithPhoto(countryCode = CountryCodes.CN, image = PhotoFiles.CHINA)
             })
     @Test
     @Story("Проставление лайка")
     @Feature("Фото")
     @Severity(BLOCKER)
     @Tags({@Tag("grpc"), @Tag("photo"), @Tag("smoke")})
-    @DisplayName("Проверка проставление лайка")
+    @DisplayName("[GRPC] Проверка проставление лайка")
     void shouldLikeUserPhotoTest(TestUser user) {
         final LikePhotoRequest likeRequest = LikePhotoRequest.newBuilder()
                 .setUserId(user.getId().toString())
@@ -68,14 +68,14 @@ class LikePhotoTest extends GrpcPhotoTestBase {
 
     @CreateUser(
             photos = {
-                    @WithPhoto(countryCode = CountryCodes.CN, image = PhotoFiles.FRANCE)
+                    @WithPhoto(countryCode = CountryCodes.CN, image = PhotoFiles.CHINA)
             })
     @Test
     @Story("Проставление лайка")
     @Feature("Фото")
     @Severity(BLOCKER)
     @Tags({@Tag("grpc"), @Tag("photo"), @Tag("smoke")})
-    @DisplayName("Проверка снятия лайка")
+    @DisplayName("[GRPC] Проверка снятия лайка")
     void shouldRemoveLikeFromPhotoTest(TestUser user) {
         final LikePhotoRequest likeRequest = LikePhotoRequest.newBuilder()
                 .setUserId(user.getId().toString())

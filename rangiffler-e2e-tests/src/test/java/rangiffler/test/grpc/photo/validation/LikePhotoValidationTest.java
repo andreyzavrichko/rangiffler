@@ -20,20 +20,20 @@ import static io.qameta.allure.SeverityLevel.MINOR;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@DisplayName("Photo")
+@DisplayName("[GRPC] Photo")
 public class LikePhotoValidationTest extends GrpcPhotoTestBase {
 
 
     @CreateUser(
             photos = {
-                    @WithPhoto(countryCode = CountryCodes.CN, image = PhotoFiles.FRANCE)
+                    @WithPhoto(countryCode = CountryCodes.CN, image = PhotoFiles.CHINA)
             })
     @Test
     @Story("Удаление фотокарточки")
     @Feature("Фото")
     @Severity(MINOR)
     @Tags({@Tag("grpc"), @Tag("photo"), @Tag("regress")})
-    @DisplayName("Проверка проставление лайка с несуществующим Photo ID")
+    @DisplayName("[GRPC] Проверка проставление лайка с несуществующим Photo ID")
     void shouldFailWhenLikingNonExistentPhotoTest(TestUser user) {
         final LikePhotoRequest likeRequest = LikePhotoRequest.newBuilder()
                 .setUserId(user.getId().toString())

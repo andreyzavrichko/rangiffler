@@ -24,7 +24,7 @@ import static rangiffler.utils.RandomDataUtils.randomPassword;
 import static rangiffler.utils.RandomDataUtils.randomUsername;
 
 
-@DisplayName("Регистрация")
+@DisplayName("[WEB] Регистрация")
 @ExtendWith({
         GuiceExtension.class,
         AllureJunit5.class,
@@ -39,7 +39,7 @@ public class RegistrationTest {
     @Feature("Неудачная регистрация")
     @Severity(BLOCKER)
     @Tags({@Tag("web"), @Tag("register"), @Tag("smoke")})
-    @DisplayName("Проверка регистрации на существующий username")
+    @DisplayName("[WEB] Проверка регистрации на существующий username")
     void shouldNotRegisterUserWithExistingUsernameTest(TestUser user) {
         LoginPage loginPage = Selenide.open(LoginPage.URL, LoginPage.class);
         loginPage.doRegister()
@@ -53,7 +53,7 @@ public class RegistrationTest {
     @Feature("Неудачная регистрация")
     @Severity(CRITICAL)
     @Tags({@Tag("web"), @Tag("register"), @Tag("regress")})
-    @DisplayName("Проверка регистрации с разными паролями")
+    @DisplayName("[WEB] Проверка регистрации с разными паролями")
     void shouldShowErrorIfPasswordAndConfirmPasswordAreNotEqualTest() {
         String newUsername = randomUsername();
         String password = "12345";
@@ -70,7 +70,7 @@ public class RegistrationTest {
     @Feature("Неудачная регистрация")
     @Severity(CRITICAL)
     @Tags({@Tag("web"), @Tag("register"), @Tag("regress")})
-    @DisplayName("Проверка регистрации с паролем 2 символа")
+    @DisplayName("[WEB] Проверка регистрации с паролем 2 символа")
     void shouldShowErrorIfPasswordAndConfirmMinLengthPasswordTest() {
         String newUsername = randomUsername();
         String password = randomPassword(1, 2);
@@ -87,7 +87,7 @@ public class RegistrationTest {
     @Feature("Неудачная регистрация")
     @Severity(CRITICAL)
     @Tags({@Tag("web"), @Tag("register"), @Tag("regress")})
-    @DisplayName("Проверка регистрации с паролем 13 символов")
+    @DisplayName("[WEB] Проверка регистрации с паролем 13 символов")
     void shouldShowErrorIfPasswordAnd5ConfirmMaxLengthPasswordTest() {
         String newUsername = randomUsername();
         String password = randomPassword(13, 14);

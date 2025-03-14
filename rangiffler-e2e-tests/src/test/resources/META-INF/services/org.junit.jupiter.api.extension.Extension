@@ -1,2 +1,3 @@
 rangiffler.jupiter.extension.CookieJarExtension
 rangiffler.jupiter.extension.TestMethodContextExtension
+rangiffler.jupiter.extension.KafkaExtension

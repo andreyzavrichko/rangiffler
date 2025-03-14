@@ -20,7 +20,7 @@ import static rangiffler.utils.RandomDataUtils.*;
 
 
 @WebTest
-@DisplayName("Обновление пользователя")
+@DisplayName("[WEB] Обновление пользователя")
 class UpdateUserTest {
 
     @Inject
@@ -34,7 +34,7 @@ class UpdateUserTest {
     @Feature("Изменение профиля")
     @Severity(BLOCKER)
     @Tags({@Tag("web"), @Tag("user"), @Tag("smoke")})
-    @DisplayName("Проверка успешного обновления пользователя")
+    @DisplayName("[WEB] Проверка успешного обновления пользователя")
     void shouldUpdateUserTest() {
         myProfilePage.open()
                 .setFirstname(randomName())
@@ -53,7 +53,7 @@ class UpdateUserTest {
     @Feature("Изменение профиля")
     @Severity(NORMAL)
     @Tags({@Tag("web"), @Tag("user"), @Tag("regress")})
-    @DisplayName("Обновление пользователя - FirstName 51 символ")
+    @DisplayName("[WEB] Обновление пользователя - FirstName 51 символ")
     void shouldUpdateUserWithFirstName51Test() {
         myProfilePage.open()
                 .setFirstname(randomPassword(51, 52))
@@ -73,7 +73,7 @@ class UpdateUserTest {
     @Feature("Изменение профиля")
     @Severity(NORMAL)
     @Tags({@Tag("web"), @Tag("user"), @Tag("regress")})
-    @DisplayName("Обновление пользователя - Password 101 символ")
+    @DisplayName("[WEB] Обновление пользователя - Password 101 символ")
     void shouldUpdateUserWithPassword101Test() {
         myProfilePage.open()
                 .setFirstname(randomUsername())

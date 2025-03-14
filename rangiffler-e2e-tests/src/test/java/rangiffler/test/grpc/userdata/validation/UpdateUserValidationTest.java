@@ -17,7 +17,7 @@ import static io.qameta.allure.SeverityLevel.MINOR;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
-@DisplayName("Userdata")
+@DisplayName("[GRPC] Userdata")
 class UpdateUserValidationTest extends GrpcUserdataTestBase {
 
 
@@ -27,7 +27,7 @@ class UpdateUserValidationTest extends GrpcUserdataTestBase {
     @Feature("Пользователи")
     @Severity(MINOR)
     @Tags({@Tag("grpc"), @Tag("userdata"), @Tag("regress")})
-    @DisplayName("Проверка обновления пользователя с пустым именем пользователя")
+    @DisplayName("[GRPC] Проверка обновления пользователя с пустым именем пользователя")
     void shouldFailUpdatingWithEmptyUsername(TestUser existingUser) {
         User updateRequest = User.newBuilder()
                 .setUsername("")

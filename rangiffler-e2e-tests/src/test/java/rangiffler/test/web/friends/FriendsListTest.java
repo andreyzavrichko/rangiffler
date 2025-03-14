@@ -18,7 +18,7 @@ import rangiffler.page.PeoplePage;
 import static io.qameta.allure.SeverityLevel.*;
 
 @WebTest
-@DisplayName("Список друзей")
+@DisplayName("[WEB] Список друзей")
 class FriendsListTest {
 
     @Inject
@@ -40,7 +40,7 @@ class FriendsListTest {
     @Feature("Получение списка друзей")
     @Severity(BLOCKER)
     @Tags({@Tag("web"), @Tag("friends"), @Tag("smoke")})
-    @DisplayName("Проверка отображения списка друзей")
+    @DisplayName("[WEB] Проверка отображения списка друзей")
     void shouldFriendsListTest(TestUser user) {
         peoplePage.open()
                 .openFriendsTab()
@@ -61,7 +61,7 @@ class FriendsListTest {
     @Feature("Получение списка друзей с фильтром")
     @Severity(CRITICAL)
     @Tags({@Tag("web"), @Tag("friends"), @Tag("regress")})
-    @DisplayName("Проверка получения друзей пользователя с фильтрацией по username")
+    @DisplayName("[WEB] Проверка получения друзей пользователя с фильтрацией по username")
     void shouldFriendsWithUsernameFilterTest(TestUser user) {
         peoplePage.open()
                 .openFriendsTab()
@@ -83,7 +83,7 @@ class FriendsListTest {
     @Feature("Получение списка друзей с фильтром")
     @Severity(NORMAL)
     @Tags({@Tag("web"), @Tag("friends"), @Tag("regress")})
-    @DisplayName("Проверка получения друзей пользователя с фильтрацией по firstname")
+    @DisplayName("[WEB] Проверка получения друзей пользователя с фильтрацией по firstname")
     void shouldFriendsWithFirstnameFilterTest(TestUser user) {
         peoplePage.open()
                 .openFriendsTab()
@@ -105,7 +105,7 @@ class FriendsListTest {
     @Feature("Получение списка друзей с фильтром")
     @Severity(MINOR)
     @Tags({@Tag("web"), @Tag("friends"), @Tag("regress")})
-    @DisplayName("Проверка получения друзей пользователя с фильтрацией по lastname")
+    @DisplayName("[WEB] Проверка получения друзей пользователя с фильтрацией по lastname")
     void shouldFriendsWithLastnameFilterTest(TestUser user) {
         peoplePage.open()
                 .openFriendsTab()
@@ -127,7 +127,7 @@ class FriendsListTest {
     @Feature("Получение списка друзей с фильтром")
     @Severity(NORMAL)
     @Tags({@Tag("web"), @Tag("friends"), @Tag("regress")})
-    @DisplayName("Проверка отсутствия неподтвержденных друзей в списке друзей пользователя")
+    @DisplayName("[WEB] Проверка отсутствия неподтвержденных друзей в списке друзей пользователя")
     void shouldFriendsPendingListTest(TestUser user) {
         peoplePage.open()
                 .openFriendsTab()
@@ -143,7 +143,7 @@ class FriendsListTest {
     @Feature("Получение списка друзей с фильтром")
     @Severity(NORMAL)
     @Tags({@Tag("web"), @Tag("friends"), @Tag("regress")})
-    @DisplayName("Проверка пустого списка друзей")
+    @DisplayName("[WEB] Проверка пустого списка друзей")
     void shouldEmptyFriendsListTest() {
         peoplePage.open()
                 .openFriendsTab()

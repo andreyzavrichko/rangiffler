@@ -18,7 +18,7 @@ import java.util.List;
 import static io.qameta.allure.SeverityLevel.MINOR;
 import static org.junit.jupiter.api.Assertions.*;
 
-@DisplayName("Photo")
+@DisplayName("[GRPC] Photo")
 public class GetAllPhotosValidationTest extends GrpcPhotoTestBase {
 
     @Inject
@@ -29,7 +29,7 @@ public class GetAllPhotosValidationTest extends GrpcPhotoTestBase {
     @Feature("Фото")
     @Severity(MINOR)
     @Tags({@Tag("grpc"), @Tag("photo"), @Tag("regress")})
-    @DisplayName("Проверка получения фото с невалидным User ID")
+    @DisplayName("[GRPC] Проверка получения фото с невалидным User ID")
     void shouldFetchPhotosWithInvalidUserIdTest() {
         final PhotoRequest request = PhotoRequest.newBuilder()
                 .addAllUserIds(List.of("invalid-user-id"))
@@ -46,7 +46,7 @@ public class GetAllPhotosValidationTest extends GrpcPhotoTestBase {
     @Feature("Фото")
     @Severity(MINOR)
     @Tags({@Tag("grpc"), @Tag("photo"), @Tag("regress")})
-    @DisplayName("Проверка получения фото с пустым User ID")
+    @DisplayName("[GRPC] Проверка получения фото с пустым User ID")
     void shouldFetchPhotosWithEmptyRequestTest() {
         final PhotoRequest request = PhotoRequest.newBuilder()
                 .setPage(0)
@@ -65,7 +65,7 @@ public class GetAllPhotosValidationTest extends GrpcPhotoTestBase {
     @Feature("Фото")
     @Severity(MINOR)
     @Tags({@Tag("grpc"), @Tag("photo"), @Tag("regress")})
-    @DisplayName("Проверка получения фото с page size 10000")
+    @DisplayName("[GRPC] Проверка получения фото с page size 10000")
     void shouldFetchPhotosWithTooLargePageSizeTest() {
         final PhotoRequest request = PhotoRequest.newBuilder()
                 .addAllUserIds(List.of("valid-user-id"))
@@ -83,7 +83,7 @@ public class GetAllPhotosValidationTest extends GrpcPhotoTestBase {
     @Feature("Фото")
     @Severity(MINOR)
     @Tags({@Tag("grpc"), @Tag("photo"), @Tag("regress")})
-    @DisplayName("Проверка получения фото с несуществующим friend ID")
+    @DisplayName("[GRPC] Проверка получения фото с несуществующим friend ID")
     void shouldFetchPhotosWithNonExistingFriendIdTest() {
         final PhotoRequest request = PhotoRequest.newBuilder()
                 .addAllUserIds(List.of("valid-user-id", "non-existing-friend-id"))

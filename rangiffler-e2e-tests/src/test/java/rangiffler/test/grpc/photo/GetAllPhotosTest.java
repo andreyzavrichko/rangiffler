@@ -25,7 +25,7 @@ import static io.qameta.allure.SeverityLevel.BLOCKER;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
-@DisplayName("Photo")
+@DisplayName("[GRPC] Photo")
 class GetAllPhotosTest extends GrpcPhotoTestBase {
 
     @Inject
@@ -33,14 +33,14 @@ class GetAllPhotosTest extends GrpcPhotoTestBase {
 
     @CreateUser(
             photos = {
-                    @WithPhoto(countryCode = CountryCodes.CN, image = PhotoFiles.FRANCE, likes = 1)
+                    @WithPhoto(countryCode = CountryCodes.CN, image = PhotoFiles.CHINA, likes = 1)
             })
     @Test
     @Story("Получение списка фотокарточек")
     @Feature("Фото")
     @Severity(BLOCKER)
     @Tags({@Tag("grpc"), @Tag("photo"), @Tag("smoke")})
-    @DisplayName("Проверка получения всех фотокарточек пользователя")
+    @DisplayName("[GRPC] Проверка получения всех фотокарточек пользователя")
     void shouldFetchUserPhotosTest(TestUser user) {
         final PhotoRequest request = PhotoRequest.newBuilder()
                 .addAllUserIds(List.of(user.getId().toString()))
@@ -67,22 +67,22 @@ class GetAllPhotosTest extends GrpcPhotoTestBase {
             friends = {
                     @Friend(
                             photos = {
-                                    @WithPhoto(countryCode = CountryCodes.MX, image = PhotoFiles.FRANCE, description = "insertedDescriptionFriend")
+                                    @WithPhoto(countryCode = CountryCodes.MX, image = PhotoFiles.CHINA, description = "insertedDescriptionFriend")
                             }),
                     @Friend(
                             photos = {
-                                    @WithPhoto(countryCode = CountryCodes.CA, image = PhotoFiles.AMSTERDAM, description = "insertedDescriptionFriend2")
+                                    @WithPhoto(countryCode = CountryCodes.CA, image = PhotoFiles.CALIFORNIA, description = "insertedDescriptionFriend2")
                             })
             },
             photos = {
-                    @WithPhoto(countryCode = CountryCodes.CN, image = PhotoFiles.FRANCE)
+                    @WithPhoto(countryCode = CountryCodes.CN, image = PhotoFiles.CHINA)
             })
     @Test
     @Story("Получение списка фотокарточек")
     @Feature("Фото")
     @Severity(BLOCKER)
     @Tags({@Tag("grpc"), @Tag("photo"), @Tag("smoke")})
-    @DisplayName("Проверка получения всех фотокарточек друзей пользователя")
+    @DisplayName("[GRPC] Проверка получения всех фотокарточек друзей пользователя")
     void shouldFetchPhotosWithFriendsTest(TestUser user) {
         final PhotoRequest request = PhotoRequest.newBuilder()
                 .addAllUserIds(List.of(

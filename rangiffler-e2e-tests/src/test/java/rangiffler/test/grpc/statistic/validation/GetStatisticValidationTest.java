@@ -20,7 +20,7 @@ import static io.qameta.allure.SeverityLevel.NORMAL;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-@DisplayName("Statistic")
+@DisplayName("[GRPC] Statistic")
 class GetStatisticValidationTest extends GrpcStatisticTestBase {
 
     @Inject
@@ -31,7 +31,7 @@ class GetStatisticValidationTest extends GrpcStatisticTestBase {
     @Feature("Статистика")
     @Severity(NORMAL)
     @Tags({@Tag("grpc"), @Tag("statistic"), @Tag("regress")})
-    @DisplayName("Проверка получения статистики с неверным ID пользователя")
+    @DisplayName("[GRPC] Проверка получения статистики с неверным ID пользователя")
     void shouldGetStatisticWithInvalidUserIdTest() {
         final StatisticRequest request = StatisticRequest.newBuilder()
                 .addAllUserIds(List.of("invalid-user-id"))
@@ -48,7 +48,7 @@ class GetStatisticValidationTest extends GrpcStatisticTestBase {
     @Feature("Статистика")
     @Severity(NORMAL)
     @Tags({@Tag("grpc"), @Tag("statistic"), @Tag("regress")})
-    @DisplayName("Проверка получения статистики с пустым списком пользователя")
+    @DisplayName("[GRPC] Проверка получения статистики с пустым списком пользователя")
     void shouldGetStatisticWithEmptyUserListTest() {
         final StatisticRequest request = StatisticRequest.newBuilder()
                 .addAllUserIds(List.of())
@@ -67,7 +67,7 @@ class GetStatisticValidationTest extends GrpcStatisticTestBase {
     @Feature("Статистика")
     @Severity(NORMAL)
     @Tags({@Tag("grpc"), @Tag("statistic"), @Tag("regress")})
-    @DisplayName("Проверка получения статистики без списка пользователей")
+    @DisplayName("[GRPC] Проверка получения статистики без списка пользователей")
     void shouldGetStatisticWithEmptyTest() {
         final StatisticRequest request = StatisticRequest.newBuilder().build();
 

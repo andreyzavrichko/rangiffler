@@ -18,7 +18,7 @@ public @interface CreateUser {
 
     CountryCodes countryCode() default CountryCodes.US;
 
-    UserAvatars avatar() default UserAvatars.BEE;
+    UserAvatars avatar() default UserAvatars.DOG;
 
     Friend[] friends() default {};
 

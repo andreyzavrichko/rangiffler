@@ -17,7 +17,7 @@ import rangiffler.page.MyProfilePage;
 import static io.qameta.allure.SeverityLevel.BLOCKER;
 
 @WebTest
-@DisplayName("Информация о пользователе")
+@DisplayName("[WEB] Информация о пользователе")
 class CurrentUserInfoTest {
 
     @Inject
@@ -31,7 +31,7 @@ class CurrentUserInfoTest {
     @Feature("Изменение фотокарточки")
     @Severity(BLOCKER)
     @Tags({@Tag("web"), @Tag("user"), @Tag("smoke")})
-    @DisplayName("Проверка отображения данных пользователя")
+    @DisplayName("[WEB] Проверка отображения данных пользователя")
     void shouldCurrentUserInfoTest(TestUser user) {
         myProfilePage.open()
                 .pageHeaderShouldBeVisible()

@@ -27,7 +27,7 @@ import static io.qameta.allure.SeverityLevel.CRITICAL;
 import static org.junit.jupiter.api.Assertions.*;
 
 
-@DisplayName("Userdata")
+@DisplayName("[GRPC] Userdata")
 class UpdateUserTest extends GrpcUserdataTestBase {
 
     @Inject
@@ -45,7 +45,7 @@ class UpdateUserTest extends GrpcUserdataTestBase {
     @Feature("Пользователи")
     @Severity(CRITICAL)
     @Tags({@Tag("grpc"), @Tag("userdata"), @Tag("smoke")})
-    @DisplayName("Проверка успешного обновления данных пользователя")
+    @DisplayName("[GRPC] Проверка успешного обновления данных пользователя")
     void shouldUpdateUserDetailsTest(TestUser existingUser) {
         CountryEntity differentCountry = countryRepository.findRequiredCountryByIdNot(existingUser.getCountry().getId());
 
@@ -93,7 +93,7 @@ class UpdateUserTest extends GrpcUserdataTestBase {
     @Feature("Пользователи")
     @Severity(CRITICAL)
     @Tags({@Tag("grpc"), @Tag("userdata"), @Tag("smoke")})
-    @DisplayName("Проверка невозможности изменения идентификатора пользователя")
+    @DisplayName("[GRPC] Проверка невозможности изменения идентификатора пользователя")
     void shouldNotAllowChangingUserIdTest(TestUser existingUser) {
         User updateRequest = User.newBuilder()
                 .setId(UUID.randomUUID().toString())
@@ -121,7 +121,7 @@ class UpdateUserTest extends GrpcUserdataTestBase {
     @Feature("Пользователи")
     @Severity(CRITICAL)
     @Tags({@Tag("grpc"), @Tag("userdata"), @Tag("smoke")})
-    @DisplayName("Проверка невозможности обновления несуществующего пользователя")
+    @DisplayName("[GRPC] Проверка невозможности обновления несуществующего пользователя")
     void shouldFailUpdatingNonExistingUserTest() {
         User updateRequest = User.newBuilder()
                 .setUsername(faker.name().username())

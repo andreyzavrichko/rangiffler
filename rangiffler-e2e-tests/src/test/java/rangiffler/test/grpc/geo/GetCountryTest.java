@@ -13,7 +13,7 @@ import rangiffler.grpc.GetCountryByCodeRequest;
 import static io.qameta.allure.SeverityLevel.BLOCKER;
 import static io.qameta.allure.SeverityLevel.NORMAL;
 
-@DisplayName("Geo")
+@DisplayName("[GRPC] Geo")
 class GetCountryTest extends GrpcGeoTestBase {
 
 
@@ -22,7 +22,7 @@ class GetCountryTest extends GrpcGeoTestBase {
     @Feature("Гео")
     @Severity(BLOCKER)
     @Tags({@Tag("grpc"), @Tag("geo"), @Tag("smoke")})
-    @DisplayName("Проверка получения страны по коду")
+    @DisplayName("[GRPC] Проверка получения страны по коду")
     void shouldGetCountryByCodeTest() {
         final Country response = blockingStub.getCountryByCode(
                 GetCountryByCodeRequest.newBuilder()

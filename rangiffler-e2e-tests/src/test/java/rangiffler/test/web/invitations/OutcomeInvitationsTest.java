@@ -19,7 +19,7 @@ import static io.qameta.allure.SeverityLevel.BLOCKER;
 import static io.qameta.allure.SeverityLevel.MINOR;
 
 @WebTest
-@DisplayName("Исходящие заявки в друзья")
+@DisplayName("[WEB] Исходящие заявки в друзья")
 class OutcomeInvitationsTest {
 
     @Inject
@@ -38,7 +38,7 @@ class OutcomeInvitationsTest {
     @Feature("Входящие заявки")
     @Severity(BLOCKER)
     @Tags({@Tag("web"), @Tag("friends"), @Tag("smoke")})
-    @DisplayName("Проверка получения всех исходящих заявок в друзья")
+    @DisplayName("[WEB] Проверка получения всех исходящих заявок в друзья")
     void shouldOutcomeInvitationsListTest(TestUser user) {
         peoplePage.open()
                 .openOutcomeInvitationsTab()
@@ -59,7 +59,7 @@ class OutcomeInvitationsTest {
     @Feature("Входящие заявки")
     @Severity(MINOR)
     @Tags({@Tag("web"), @Tag("friends"), @Tag("regress")})
-    @DisplayName("Проверка получения исходящих заявок в друзья пользователя с фильтрацией по username")
+    @DisplayName("[WEB] Проверка получения исходящих заявок в друзья пользователя с фильтрацией по username")
     void shouldOutcomeInvitationsWithUsernameFilterTest(TestUser user) {
         peoplePage.open()
                 .openOutcomeInvitationsTab()
@@ -80,7 +80,7 @@ class OutcomeInvitationsTest {
     @Feature("Входящие заявки")
     @Severity(MINOR)
     @Tags({@Tag("web"), @Tag("friends"), @Tag("regress")})
-    @DisplayName("Проверка получения исходящих заявок в друзья пользователя с фильтрацией по firstname")
+    @DisplayName("[WEB] Проверка получения исходящих заявок в друзья пользователя с фильтрацией по firstname")
     void shouldOutcomeInvitationsWithFirstnameFilterTest(TestUser user) {
         peoplePage.open()
                 .openOutcomeInvitationsTab()
@@ -101,7 +101,7 @@ class OutcomeInvitationsTest {
     @Feature("Входящие заявки")
     @Severity(MINOR)
     @Tags({@Tag("web"), @Tag("friends"), @Tag("regress")})
-    @DisplayName("Проверка получения исходящих заявок в друзья пользователя с фильтрацией по lastname")
+    @DisplayName("[WEB] Проверка получения исходящих заявок в друзья пользователя с фильтрацией по lastname")
     void shouldOutcomeInvitationsWithLastnameFilterTest(TestUser user) {
         peoplePage.open()
                 .openOutcomeInvitationsTab()
@@ -123,7 +123,7 @@ class OutcomeInvitationsTest {
     @Feature("Входящие заявки")
     @Severity(MINOR)
     @Tags({@Tag("web"), @Tag("friends"), @Tag("regress")})
-    @DisplayName("Проверка отсутствия друзей и исходящих заявок в списке исходящих заявок в друзья")
+    @DisplayName("[WEB] Проверка отсутствия друзей и исходящих заявок в списке исходящих заявок в друзья")
     void shouldOutcomeInvitationFriendsListTest(TestUser user) {
         peoplePage.open()
                 .openOutcomeInvitationsTab()

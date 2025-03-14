@@ -17,7 +17,7 @@ import static io.qameta.allure.SeverityLevel.MINOR;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@DisplayName("Photo")
+@DisplayName("[GRPC] Photo")
 class UpdateUserPhotoValidationTest extends GrpcPhotoTestBase {
 
 
@@ -26,7 +26,7 @@ class UpdateUserPhotoValidationTest extends GrpcPhotoTestBase {
     @Feature("Фото")
     @Severity(MINOR)
     @Tags({@Tag("grpc"), @Tag("photo"), @Tag("regress")})
-    @DisplayName("Проверка обновления несуществующей фотокарточки")
+    @DisplayName("[GRPC] Проверка обновления несуществующей фотокарточки")
     void shouldUpdateNonExistentPhotoTest() {
         var request = UpdatePhotoRequest.newBuilder()
                 .setId(new UUID(0, 0).toString())

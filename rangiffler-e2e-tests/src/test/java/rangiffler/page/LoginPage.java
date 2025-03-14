@@ -25,45 +25,45 @@ public class LoginPage extends BasePage<LoginPage> {
         return new RegisterPage();
     }
 
-    @Step("Fill login page with credentials: username: {0}, password: {1}")
     @Nonnull
+    @Step("Заполнить форму авторизации: username: {0}, password: {1}")
     public LoginPage fillLoginPage(String login, String password) {
         setUsername(login);
         setPassword(password);
         return this;
     }
 
-    @Step("Set username: {0}")
     @Nonnull
+    @Step("Заполнить username: {0}")
     public LoginPage setUsername(String username) {
         usernameInput.setValue(username);
         return this;
     }
 
-    @Step("Set password: {0}")
     @Nonnull
+    @Step("Заполнить password: {0}")
     public LoginPage setPassword(String password) {
         passwordInput.setValue(password);
         return this;
     }
 
-    @Step("Submit login")
     @Nonnull
+    @Step("Нажать кнопку войти")
     public <T extends BasePage<?>> T submit(T expectedPage) {
         submitButton.click();
         return expectedPage;
     }
 
-    @Step("Check error on page: {error}")
     @Nonnull
+    @Step("Проверить ошибку: {error}")
     public LoginPage checkError(String error) {
         errorContainer.shouldHave(text(error));
         return this;
     }
 
-    @Step("Check that page is loaded")
     @Override
     @Nonnull
+    @Step("Проверить загрузку страницы")
     public LoginPage checkThatPageLoaded() {
         usernameInput.should(visible);
         passwordInput.should(visible);

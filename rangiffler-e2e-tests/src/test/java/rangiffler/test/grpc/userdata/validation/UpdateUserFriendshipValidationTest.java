@@ -22,7 +22,7 @@ import rangiffler.test.grpc.userdata.GrpcUserdataTestBase;
 import static io.qameta.allure.SeverityLevel.MINOR;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-@DisplayName("Userdata")
+@DisplayName("[GRPC] Userdata")
 class UpdateUserFriendshipValidationTest extends GrpcUserdataTestBase {
 
     @Inject
@@ -37,7 +37,7 @@ class UpdateUserFriendshipValidationTest extends GrpcUserdataTestBase {
     @Feature("Пользователи")
     @Severity(MINOR)
     @Tags({@Tag("grpc"), @Tag("userdata"), @Tag("regress")})
-    @DisplayName("Проверка отправки заявки в друзья с несуществующим получателем")
+    @DisplayName("[GRPC] Проверка отправки заявки в друзья с несуществующим получателем")
     void shouldSendFriendRequestToNonExistentUserTest(TestUser mainUser) {
         String nonExistentUserId = "00000000-0000-0000-0000-000000000000";
 
@@ -58,7 +58,7 @@ class UpdateUserFriendshipValidationTest extends GrpcUserdataTestBase {
     @Feature("Пользователи")
     @Severity(MINOR)
     @Tags({@Tag("grpc"), @Tag("userdata"), @Tag("regress")})
-    @DisplayName("Проверка отправки заявки в друзья от несуществующего пользователя")
+    @DisplayName("[GRPC] Проверка отправки заявки в друзья от несуществующего пользователя")
     void shouldSendFriendRequestFromNonExistentUserTest(@Extras TestUser[] additionalUsers) {
         String nonExistentUserId = "00000000-0000-0000-0000-000000000001";
 
@@ -79,7 +79,7 @@ class UpdateUserFriendshipValidationTest extends GrpcUserdataTestBase {
     @Feature("Пользователи")
     @Severity(MINOR)
     @Tags({@Tag("grpc"), @Tag("userdata"), @Tag("regress")})
-    @DisplayName("Проверка принятия заявки, когда приглашение отсутствует")
+    @DisplayName("[GRPC] Проверка принятия заявки, когда приглашение отсутствует")
     void shouldAcceptFriendRequestWithoutInvitationTest(TestUser user) {
         String randomInviterId = "00000000-0000-0000-0000-000000000002";
 
@@ -100,7 +100,7 @@ class UpdateUserFriendshipValidationTest extends GrpcUserdataTestBase {
     @Feature("Пользователи")
     @Severity(MINOR)
     @Tags({@Tag("grpc"), @Tag("userdata"), @Tag("regress")})
-    @DisplayName("Проверка отклонения заявки, когда приглашение отсутствует")
+    @DisplayName("[GRPC] Проверка отклонения заявки, когда приглашение отсутствует")
     void shouldRejectFriendRequestWithoutInvitationTest(TestUser user) {
         String randomInviterId = "00000000-0000-0000-0000-000000000003";
 
@@ -121,7 +121,7 @@ class UpdateUserFriendshipValidationTest extends GrpcUserdataTestBase {
     @Feature("Пользователи")
     @Severity(MINOR)
     @Tags({@Tag("grpc"), @Tag("userdata"), @Tag("regress")})
-    @DisplayName("Проверка удаления несуществующей дружбы")
+    @DisplayName("[GRPC] Проверка удаления несуществующей дружбы")
     void shouldDeleteFriendWhenNotFriendsTest(TestUser user) {
         String nonFriendId = "00000000-0000-0000-0000-000000000004";
 

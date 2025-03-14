@@ -25,14 +25,14 @@ import java.util.UUID;
 import static io.qameta.allure.SeverityLevel.MINOR;
 import static org.junit.jupiter.api.Assertions.*;
 
-@DisplayName("Photo")
+@DisplayName("[GRPC] Photo")
 public class DeleteOtherUserPhotoTest extends GrpcPhotoTestBase {
     @Inject
     private PhotoRepository photoRepository;
 
     @CreateUser(
             photos = {
-                    @WithPhoto(countryCode = CountryCodes.CN, image = PhotoFiles.FRANCE)
+                    @WithPhoto(countryCode = CountryCodes.CN, image = PhotoFiles.CHINA)
             }
     )
     @Test
@@ -40,7 +40,7 @@ public class DeleteOtherUserPhotoTest extends GrpcPhotoTestBase {
     @Feature("Фото")
     @Severity(MINOR)
     @Tags({@Tag("grpc"), @Tag("photo"), @Tag("regress")})
-    @DisplayName("Проверка удаления фото с некорректным userId")
+    @DisplayName("[GRPC] Проверка удаления фото с некорректным userId")
     void shouldFailWhenUserIdIsInvalidTest(TestUser user) {
         DeletePhotoRequest deleteRequest = DeletePhotoRequest.newBuilder()
                 .setUserId("invalid-user-id")  // Некорректный ID
@@ -57,7 +57,7 @@ public class DeleteOtherUserPhotoTest extends GrpcPhotoTestBase {
 
     @CreateUser(
             photos = {
-                    @WithPhoto(countryCode = CountryCodes.CN, image = PhotoFiles.FRANCE)
+                    @WithPhoto(countryCode = CountryCodes.CN, image = PhotoFiles.CHINA)
             }
     )
     @Test
@@ -65,7 +65,7 @@ public class DeleteOtherUserPhotoTest extends GrpcPhotoTestBase {
     @Feature("Фото")
     @Severity(MINOR)
     @Tags({@Tag("grpc"), @Tag("photo"), @Tag("regress")})
-    @DisplayName("Проверка удаления фото с некорректным PhotoId")
+    @DisplayName("[GRPC] Проверка удаления фото с некорректным PhotoId")
     void shouldFailWhenPhotoIdIsInvalidTest(TestUser user) {
         DeletePhotoRequest deleteRequest = DeletePhotoRequest.newBuilder()
                 .setUserId(user.getId().toString())
@@ -82,7 +82,7 @@ public class DeleteOtherUserPhotoTest extends GrpcPhotoTestBase {
 
     @CreateUser(
             photos = {
-                    @WithPhoto(countryCode = CountryCodes.CN, image = PhotoFiles.FRANCE)
+                    @WithPhoto(countryCode = CountryCodes.CN, image = PhotoFiles.CHINA)
             }
     )
     @Test
@@ -90,7 +90,7 @@ public class DeleteOtherUserPhotoTest extends GrpcPhotoTestBase {
     @Feature("Фото")
     @Severity(MINOR)
     @Tags({@Tag("grpc"), @Tag("photo"), @Tag("regress")})
-    @DisplayName("Проверка удаления фото")
+    @DisplayName("[GRPC] Проверка удаления фото")
     void shouldDeletePhotoSuccessfullyTest(TestUser user) {
         DeletePhotoRequest deleteRequest = DeletePhotoRequest.newBuilder()
                 .setUserId(user.getId().toString())

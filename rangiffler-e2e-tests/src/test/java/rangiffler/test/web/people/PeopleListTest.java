@@ -19,7 +19,7 @@ import static io.qameta.allure.SeverityLevel.BLOCKER;
 import static io.qameta.allure.SeverityLevel.TRIVIAL;
 
 @WebTest
-@DisplayName("Список людей")
+@DisplayName("[WEB] Список людей")
 class PeopleListTest {
 
     @Inject
@@ -33,7 +33,7 @@ class PeopleListTest {
     @Feature("Список людей")
     @Severity(BLOCKER)
     @Tags({@Tag("web"), @Tag("people"), @Tag("smoke")})
-    @DisplayName("Проверка получения всех пользователей по переданному username")
+    @DisplayName("[WEB] Проверка получения всех пользователей по переданному username")
     void shouldAllPeopleWithUsernameTest(TestUser user) {
         peoplePage.open()
                 .openAllPeopleTab()
@@ -49,7 +49,7 @@ class PeopleListTest {
     @Feature("Список людей")
     @Severity(TRIVIAL)
     @Tags({@Tag("web"), @Tag("people"), @Tag("regress")})
-    @DisplayName("Проверка получения пользователей при передаче SearchQuery username автора запроса")
+    @DisplayName("[WEB] Проверка получения пользователей при передаче SearchQuery username автора запроса")
     void shouldCurrentUserWithUsernameTest(TestUser user) {
         peoplePage.open()
                 .openAllPeopleTab()
@@ -65,7 +65,7 @@ class PeopleListTest {
     @Feature("Список людей")
     @Severity(TRIVIAL)
     @Tags({@Tag("web"), @Tag("people"), @Tag("regress")})
-    @DisplayName("Проверка получения пользователей при передаче SearchQuery username пробел")
+    @DisplayName("[WEB] Проверка получения пользователей при передаче SearchQuery username пробел")
     void shouldCurrentUserWithSpaceTest() {
         peoplePage.open()
                 .openAllPeopleTab()
@@ -81,7 +81,7 @@ class PeopleListTest {
     @Feature("Список людей")
     @Severity(TRIVIAL)
     @Tags({@Tag("web"), @Tag("people"), @Tag("regress")})
-    @DisplayName("Проверка получения пользователей при передаче SearchQuery username с числами")
+    @DisplayName("[WEB] Проверка получения пользователей при передаче SearchQuery username с числами")
     void shouldCurrentUserWithNumbersTest() {
         peoplePage.open()
                 .openAllPeopleTab()

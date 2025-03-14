@@ -13,7 +13,7 @@ public @interface WithPhoto {
 
   CountryCodes countryCode() default CountryCodes.US;
 
-  PhotoFiles image() default PhotoFiles.AMSTERDAM;
+  PhotoFiles image() default PhotoFiles.CALIFORNIA;
 
   String description() default "";
 

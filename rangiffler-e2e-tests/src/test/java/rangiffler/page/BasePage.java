@@ -24,19 +24,5 @@ public abstract class BasePage<T extends BasePage<?>> {
 
     public abstract T checkThatPageLoaded();
 
-    @Step("Check that alert message appears: {expectedText}")
-    @SuppressWarnings("unchecked")
-    @Nonnull
-    public T checkAlertMessage(String expectedText) {
-        alert.should(Condition.visible).should(Condition.text(expectedText));
-        return (T) this;
-    }
 
-    @Step("Check that form error message appears: {expectedText}")
-    @SuppressWarnings("unchecked")
-    @Nonnull
-    public T checkFormErrorMessage(String... expectedText) {
-        formErrors.should(CollectionCondition.textsInAnyOrder(expectedText));
-        return (T) this;
-    }
 }

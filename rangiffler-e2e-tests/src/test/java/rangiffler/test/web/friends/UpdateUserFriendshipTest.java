@@ -16,7 +16,7 @@ import rangiffler.page.PeoplePage;
 import static io.qameta.allure.SeverityLevel.BLOCKER;
 
 @WebTest
-@DisplayName("Дружба")
+@DisplayName("[WEB] Дружба")
 class UpdateUserFriendshipTest {
 
     @Inject
@@ -30,7 +30,7 @@ class UpdateUserFriendshipTest {
     @Feature("Заявка в друзья")
     @Severity(BLOCKER)
     @Tags({@Tag("web"), @Tag("friends"), @Tag("smoke")})
-    @DisplayName("Проверка отправки заявки в друзья")
+    @DisplayName("[WEB] Проверка отправки заявки в друзья")
     void shouldSentFriendshipTest(@Extras TestUser[] users) {
         peoplePage.open()
                 .openAllPeopleTab()
@@ -51,7 +51,7 @@ class UpdateUserFriendshipTest {
     @Feature("Заявка в друзья")
     @Severity(BLOCKER)
     @Tags({@Tag("web"), @Tag("friends"), @Tag("smoke")})
-    @DisplayName("Проверка принятия заявки в друзья")
+    @DisplayName("[WEB] Проверка принятия заявки в друзья")
     void shouldAcceptFriendshipTest(TestUser user) {
         peoplePage.open()
                 .openIncomeInvitationsTab()
@@ -72,7 +72,7 @@ class UpdateUserFriendshipTest {
     @Feature("Заявка в друзья")
     @Severity(BLOCKER)
     @Tags({@Tag("web"), @Tag("friends"), @Tag("smoke")})
-    @DisplayName("Проверка отклонения заявки в друзья")
+    @DisplayName("[WEB] Проверка отклонения заявки в друзья")
     void shouldRejectFriendshipTest(TestUser user) {
         peoplePage.open()
                 .openIncomeInvitationsTab()
@@ -93,7 +93,7 @@ class UpdateUserFriendshipTest {
     @Feature("Заявка в друзья")
     @Severity(BLOCKER)
     @Tags({@Tag("web"), @Tag("friends"), @Tag("smoke")})
-    @DisplayName("Проверка удаления из друзей")
+    @DisplayName("[WEB] Проверка удаления из друзей")
     void shouldDeleteFriendshipTest(TestUser user) {
         peoplePage.open()
                 .openFriendsTab()

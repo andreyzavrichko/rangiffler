@@ -14,7 +14,7 @@ import rangiffler.test.grpc.userdata.GrpcUserdataTestBase;
 
 import static io.qameta.allure.SeverityLevel.NORMAL;
 
-@DisplayName("Userdata")
+@DisplayName("[GRPC] Userdata")
 class GetUserFriendsValidationTest extends GrpcUserdataTestBase {
 
 
@@ -23,7 +23,7 @@ class GetUserFriendsValidationTest extends GrpcUserdataTestBase {
     @Feature("Пользователи")
     @Severity(NORMAL)
     @Tags({@Tag("grpc"), @Tag("userdata"), @Tag("regress")})
-    @DisplayName("Проверка валидации пустого имени пользователя")
+    @DisplayName("[GRPC] Проверка валидации пустого имени пользователя")
     void shouldReturnErrorForEmptyUsernameTest() {
         final AllUsersRequest request = AllUsersRequest.newBuilder()
                 .setUsername("")
@@ -47,7 +47,7 @@ class GetUserFriendsValidationTest extends GrpcUserdataTestBase {
     @Feature("Пользователи")
     @Severity(NORMAL)
     @Tags({@Tag("grpc"), @Tag("userdata"), @Tag("regress")})
-    @DisplayName("Проверка валидации некорректного фильтра по имени")
+    @DisplayName("[GRPC] Проверка валидации некорректного фильтра по имени")
     void shouldReturnErrorForInvalidFirstnameFilterTest(TestUser user) {
         final AllUsersRequest request = AllUsersRequest.newBuilder()
                 .setUsername(user.getUsername())
@@ -75,7 +75,7 @@ class GetUserFriendsValidationTest extends GrpcUserdataTestBase {
     @Feature("Пользователи")
     @Severity(NORMAL)
     @Tags({@Tag("grpc"), @Tag("userdata"), @Tag("regress")})
-    @DisplayName("Проверка валидации некорректного фильтра по фамилии")
+    @DisplayName("[GRPC] Проверка валидации некорректного фильтра по фамилии")
     void shouldReturnErrorForInvalidLastnameFilterTest(TestUser user) {
         final AllUsersRequest request = AllUsersRequest.newBuilder()
                 .setUsername(user.getUsername())
@@ -103,7 +103,7 @@ class GetUserFriendsValidationTest extends GrpcUserdataTestBase {
     @Feature("Пользователи")
     @Severity(NORMAL)
     @Tags({@Tag("grpc"), @Tag("userdata"), @Tag("regress")})
-    @DisplayName("Проверка валидации некорректного размера страницы")
+    @DisplayName("[GRPC] Проверка валидации некорректного размера страницы")
     void shouldReturnErrorForInvalidPageSizeTest(TestUser user) {
         final AllUsersRequest request = AllUsersRequest.newBuilder()
                 .setUsername(user.getUsername())
@@ -128,7 +128,7 @@ class GetUserFriendsValidationTest extends GrpcUserdataTestBase {
     @Feature("Пользователи")
     @Severity(NORMAL)
     @Tags({@Tag("grpc"), @Tag("userdata"), @Tag("regress")})
-    @DisplayName("Проверка валидации страницы с нулевым значением")
+    @DisplayName("[GRPC] Проверка валидации страницы с нулевым значением")
     void shouldReturnErrorForZeroPageSizeTest(TestUser user) {
         final AllUsersRequest request = AllUsersRequest.newBuilder()
                 .setUsername(user.getUsername())

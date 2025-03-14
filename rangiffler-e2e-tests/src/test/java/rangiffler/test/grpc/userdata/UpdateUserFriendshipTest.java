@@ -28,7 +28,7 @@ import java.util.Optional;
 import static io.qameta.allure.SeverityLevel.CRITICAL;
 import static org.junit.jupiter.api.Assertions.*;
 
-@DisplayName("Userdata")
+@DisplayName("[GRPC] Userdata")
 class UpdateUserFriendshipTest extends GrpcUserdataTestBase {
 
     @Inject
@@ -44,7 +44,7 @@ class UpdateUserFriendshipTest extends GrpcUserdataTestBase {
     @Feature("Пользователи")
     @Severity(CRITICAL)
     @Tags({@Tag("grpc"), @Tag("userdata"), @Tag("smoke")})
-    @DisplayName("Проверка отправка заявки в друзья")
+    @DisplayName("[GRPC] Проверка отправка заявки в друзья")
     void shouldSendFriendTest(TestUser mainUser, @Extras TestUser[] additionalUsers) {
         UpdateUserFriendshipRequest request = UpdateUserFriendshipRequest.newBuilder()
                 .setActionAuthorUserId(mainUser.getId().toString())
@@ -86,7 +86,7 @@ class UpdateUserFriendshipTest extends GrpcUserdataTestBase {
     @Feature("Пользователи")
     @Severity(CRITICAL)
     @Tags({@Tag("grpc"), @Tag("userdata"), @Tag("smoke")})
-    @DisplayName("Проверка принятия заявки в друзья")
+    @DisplayName("[GRPC] Проверка принятия заявки в друзья")
     void shouldAcceptFriendTest(TestUser userWithInvitation) {
         TestUser inviter = userWithInvitation.getIncomeInvitations().getFirst();
         UpdateUserFriendshipRequest request = UpdateUserFriendshipRequest.newBuilder()
@@ -130,7 +130,7 @@ class UpdateUserFriendshipTest extends GrpcUserdataTestBase {
     @Feature("Пользователи")
     @Severity(CRITICAL)
     @Tags({@Tag("grpc"), @Tag("userdata"), @Tag("smoke")})
-    @DisplayName("Проверка отклонения заявки в друзья")
+    @DisplayName("[GRPC] Проверка отклонения заявки в друзья")
     void shouldRejectFriendTest(TestUser userWithInvitation) {
         TestUser inviter = userWithInvitation.getIncomeInvitations().getFirst();
         UpdateUserFriendshipRequest request = UpdateUserFriendshipRequest.newBuilder()
@@ -174,7 +174,7 @@ class UpdateUserFriendshipTest extends GrpcUserdataTestBase {
     @Feature("Пользователи")
     @Severity(CRITICAL)
     @Tags({@Tag("grpc"), @Tag("userdata"), @Tag("smoke")})
-    @DisplayName("Проверка удаления из друзей")
+    @DisplayName("[GRPC] Проверка удаления из друзей")
     void shouldDeleteFriendTest(TestUser userWithFriend) {
         TestUser friend = userWithFriend.getFriends().getFirst();
         UpdateUserFriendshipRequest request = UpdateUserFriendshipRequest.newBuilder()

@@ -20,7 +20,7 @@ import rangiffler.page.MyTravelsPage;
 import static io.qameta.allure.SeverityLevel.BLOCKER;
 
 @WebTest
-@DisplayName("Лайки")
+@DisplayName("[WEB] Лайки")
 class LikePhotoTest {
 
     @Inject
@@ -29,14 +29,14 @@ class LikePhotoTest {
 
     @ApiLogin
     @CreateUser(
-            friends = @Friend(photos = @WithPhoto(countryCode = CountryCodes.CN, image = PhotoFiles.FRANCE))
+            friends = @Friend(photos = @WithPhoto(countryCode = CountryCodes.CN, image = PhotoFiles.CHINA))
     )
     @Test
     @Story("Путешествия")
     @Feature("Проставление лайка")
     @Severity(BLOCKER)
     @Tags({@Tag("web"), @Tag("travel"), @Tag("smoke")})
-    @DisplayName("Проверка успешной установки лайка")
+    @DisplayName("[WEB] Проверка успешной установки лайка")
     void shouldLikePhotoTest() {
         myTravelsPage.open()
                 .clickWithFriendsButton()
@@ -48,14 +48,14 @@ class LikePhotoTest {
 
     @ApiLogin
     @CreateUser(
-            friends = @Friend(photos = @WithPhoto(countryCode = CountryCodes.CN, image = PhotoFiles.FRANCE))
+            friends = @Friend(photos = @WithPhoto(countryCode = CountryCodes.CN, image = PhotoFiles.CHINA))
     )
     @Test
     @Story("Путешествия")
     @Feature("Проставление лайка")
     @Severity(BLOCKER)
     @Tags({@Tag("web"), @Tag("travel"), @Tag("smoke")})
-    @DisplayName("Проверка успешного снятия лайка с фото")
+    @DisplayName("[WEB] Проверка успешного снятия лайка с фото")
     void shouldDislikePhotoTest() {
         myTravelsPage.open()
                 .clickWithFriendsButton()

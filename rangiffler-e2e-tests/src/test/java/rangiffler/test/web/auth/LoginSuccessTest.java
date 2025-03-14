@@ -21,7 +21,7 @@ import rangiffler.page.MainPage;
 import static io.qameta.allure.SeverityLevel.BLOCKER;
 
 
-@DisplayName("Авторизация")
+@DisplayName("[WEB] Авторизация")
 @ExtendWith({
         GuiceExtension.class,
         AllureJunit5.class,
@@ -36,7 +36,7 @@ public class LoginSuccessTest {
     @Severity(BLOCKER)
     @Tags({@Tag("web"), @Tag("auth"), @Tag("smoke")})
     @CreateUser
-    @DisplayName("Проверка успешной авторизации")
+    @DisplayName("[WEB] Проверка успешной авторизации")
     void shouldUserSuccessAuthenticationTest(TestUser user) {
         Selenide.open(LoginPage.URL, LoginPage.class)
                 .fillLoginPage(user.getUsername(), user.getTestData().password())

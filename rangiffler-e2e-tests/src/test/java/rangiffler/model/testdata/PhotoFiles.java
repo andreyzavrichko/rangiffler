@@ -7,8 +7,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum PhotoFiles {
 
-  AMSTERDAM("Amsterdam.png"),
-  FRANCE("France.png");
+  CALIFORNIA("California.jpg"),
+  CHINA("China.jpg");
 
   private final String fileName;
 }

@@ -25,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static rangiffler.utils.RandomDataUtils.randomName;
 
 
-@DisplayName("Photo")
+@DisplayName("[GRPC] Photo")
 class CreatePhotoValidationTest extends GrpcPhotoTestBase {
 
     @Inject
@@ -39,7 +39,7 @@ class CreatePhotoValidationTest extends GrpcPhotoTestBase {
     @Feature("Фото")
     @Severity(MINOR)
     @Tags({@Tag("grpc"), @Tag("photo"), @Tag("regress")})
-    @DisplayName("Проверка создания фотокарточки с пустым userId")
+    @DisplayName("[GRPC] Проверка создания фотокарточки с пустым userId")
     void shouldCreatePhotoWithEmptyIdTest() {
         var country = countryRepository.findRequiredCountryByCode("ru");
         final String description = randomName();
@@ -63,7 +63,7 @@ class CreatePhotoValidationTest extends GrpcPhotoTestBase {
     @Feature("Фото")
     @Severity(MINOR)
     @Tags({@Tag("grpc"), @Tag("photo"), @Tag("regress")})
-    @DisplayName("Проверка создания фотокарточки с пробелом в userId")
+    @DisplayName("[GRPC] Проверка создания фотокарточки с пробелом в userId")
     void shouldCreatePhotoWithSpaceIdTest() {
         var country = countryRepository.findRequiredCountryByCode("ru");
         final String description = randomName();
@@ -87,7 +87,7 @@ class CreatePhotoValidationTest extends GrpcPhotoTestBase {
     @Feature("Фото")
     @Severity(MINOR)
     @Tags({@Tag("grpc"), @Tag("photo"), @Tag("regress")})
-    @DisplayName("Проверка создания фотокарточки с пустым CountryId")
+    @DisplayName("[GRPC] Проверка создания фотокарточки с пустым CountryId")
     void shouldCreatePhotoWithEmptyCountryIdTest(TestUser user) {
         final String description = randomName();
         final CreatePhotoRequest request = CreatePhotoRequest.newBuilder()
@@ -110,7 +110,7 @@ class CreatePhotoValidationTest extends GrpcPhotoTestBase {
     @Feature("Фото")
     @Severity(MINOR)
     @Tags({@Tag("grpc"), @Tag("photo"), @Tag("regress")})
-    @DisplayName("Проверка создания фотокарточки с пробелом в CountryId")
+    @DisplayName("[GRPC] Проверка создания фотокарточки с пробелом в CountryId")
     void shouldCreatePhotoWithSpaceCountryIdTest(TestUser user) {
         final String description = randomName();
         final CreatePhotoRequest request = CreatePhotoRequest.newBuilder()

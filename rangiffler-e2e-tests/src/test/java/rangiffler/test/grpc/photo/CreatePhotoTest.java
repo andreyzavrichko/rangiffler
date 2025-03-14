@@ -25,7 +25,7 @@ import static io.qameta.allure.SeverityLevel.BLOCKER;
 import static org.junit.jupiter.api.Assertions.*;
 
 
-@DisplayName("Photo")
+@DisplayName("[GRPC] Photo")
 class CreatePhotoTest extends GrpcPhotoTestBase {
 
     @Inject
@@ -41,7 +41,7 @@ class CreatePhotoTest extends GrpcPhotoTestBase {
     @Feature("Фото")
     @Severity(BLOCKER)
     @Tags({@Tag("grpc"), @Tag("photo"), @Tag("smoke")})
-    @DisplayName("Проверка добавления фотокарточки")
+    @DisplayName("[GRPC] Проверка добавления фотокарточки")
     void shouldCreatePhotoTest(TestUser user) {
         var country = countryRepository.findRequiredCountryByCode("ru");
         final String description = UUID.randomUUID().toString();

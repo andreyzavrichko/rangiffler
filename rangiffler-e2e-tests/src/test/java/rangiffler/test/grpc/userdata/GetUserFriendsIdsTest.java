@@ -15,7 +15,7 @@ import java.util.List;
 
 import static io.qameta.allure.SeverityLevel.CRITICAL;
 
-@DisplayName("Userdata")
+@DisplayName("[GRPC] Userdata")
 class GetUserFriendsIdsTest extends GrpcUserdataTestBase {
 
     @CreateUser(
@@ -29,7 +29,7 @@ class GetUserFriendsIdsTest extends GrpcUserdataTestBase {
     @Feature("Пользователи")
     @Severity(CRITICAL)
     @Tags({@Tag("grpc"), @Tag("userdata"), @Tag("smoke")})
-    @DisplayName("Проверка получения списка всех друзей")
+    @DisplayName("[GRPC] Проверка получения списка всех друзей")
     void shouldReturnAllUserFriendIdsTest(TestUser user) {
         final UserRequest request = UserRequest.newBuilder()
                 .setUsername(user.getUsername())
@@ -57,7 +57,7 @@ class GetUserFriendsIdsTest extends GrpcUserdataTestBase {
     @Feature("Пользователи")
     @Severity(CRITICAL)
     @Tags({@Tag("grpc"), @Tag("userdata"), @Tag("smoke")})
-    @DisplayName("Проверка отсутствия неподтвержденных друзей в списке")
+    @DisplayName("[GRPC] Проверка отсутствия неподтвержденных друзей в списке")
     void shouldExcludePendingFriendsIdsTest(TestUser user) {
         final UserRequest request = UserRequest.newBuilder()
                 .setUsername(user.getUsername())

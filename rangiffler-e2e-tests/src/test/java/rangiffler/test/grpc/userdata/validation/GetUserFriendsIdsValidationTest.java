@@ -14,7 +14,7 @@ import rangiffler.test.grpc.userdata.GrpcUserdataTestBase;
 
 import static io.qameta.allure.SeverityLevel.NORMAL;
 
-@DisplayName("Userdata")
+@DisplayName("[GRPC] Userdata")
 class GetUserFriendsIdsValidationTest extends GrpcUserdataTestBase {
 
 
@@ -24,7 +24,7 @@ class GetUserFriendsIdsValidationTest extends GrpcUserdataTestBase {
     @Feature("Пользователи")
     @Severity(NORMAL)
     @Tags({@Tag("grpc"), @Tag("userdata"), @Tag("regress")})
-    @DisplayName("Проверка получения пустого списка друзей пользователя")
+    @DisplayName("[GRPC] Проверка получения пустого списка друзей пользователя")
     void shouldReturnEmptyListForUserWithoutFriendsTest(TestUser user) {
         final UserRequest request = UserRequest.newBuilder()
                 .setUsername(user.getUsername())
@@ -48,7 +48,7 @@ class GetUserFriendsIdsValidationTest extends GrpcUserdataTestBase {
     @Feature("Пользователи")
     @Severity(NORMAL)
     @Tags({@Tag("grpc"), @Tag("userdata"), @Tag("regress")})
-    @DisplayName("Проверка исключения недействительных отношений друзей")
+    @DisplayName("[GRPC] Проверка исключения недействительных отношений друзей")
     void shouldExcludeInvalidFriendRelationshipIdsTest(TestUser user) {
         final UserRequest request = UserRequest.newBuilder()
                 .setUsername(user.getUsername())

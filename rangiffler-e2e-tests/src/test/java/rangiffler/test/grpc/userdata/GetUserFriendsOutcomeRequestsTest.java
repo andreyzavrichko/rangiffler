@@ -16,7 +16,7 @@ import static io.qameta.allure.SeverityLevel.CRITICAL;
 import static rangiffler.grpc.FriendStatus.INVITATION_SENT;
 
 
-@DisplayName("Userdata")
+@DisplayName("[GRPC] Userdata")
 class GetUserFriendsOutcomeRequestsTest extends GrpcUserdataTestBase {
 
     @Test
@@ -30,7 +30,7 @@ class GetUserFriendsOutcomeRequestsTest extends GrpcUserdataTestBase {
     @Feature("Пользователи")
     @Severity(CRITICAL)
     @Tags({@Tag("grpc"), @Tag("userdata"), @Tag("smoke")})
-    @DisplayName("Проверка получения всех исходящих запросов в друзья")
+    @DisplayName("[GRPC] Проверка получения всех исходящих запросов в друзья")
     void shouldOutgoingFriendTest(TestUser user) {
         AllUsersRequest request = AllUsersRequest.newBuilder()
                 .setUsername(user.getUsername())
@@ -56,7 +56,7 @@ class GetUserFriendsOutcomeRequestsTest extends GrpcUserdataTestBase {
     @Feature("Пользователи")
     @Severity(CRITICAL)
     @Tags({@Tag("grpc"), @Tag("userdata"), @Tag("smoke")})
-    @DisplayName("Проверка получения всех исходящих запросов в друзья по username")
+    @DisplayName("[GRPC] Проверка получения всех исходящих запросов в друзья по username")
     void shouldFilterRequestsByUsernameTest(TestUser user) {
         AllUsersRequest request = AllUsersRequest.newBuilder()
                 .setUsername(user.getUsername())
@@ -82,7 +82,7 @@ class GetUserFriendsOutcomeRequestsTest extends GrpcUserdataTestBase {
     @Feature("Пользователи")
     @Severity(CRITICAL)
     @Tags({@Tag("grpc"), @Tag("userdata"), @Tag("smoke")})
-    @DisplayName("Проверка получения всех исходящих запросов в друзья по first name")
+    @DisplayName("[GRPC] Проверка получения всех исходящих запросов в друзья по first name")
     void shouldSearchRequestsByFirstNameTest(TestUser user) {
         AllUsersRequest request = AllUsersRequest.newBuilder()
                 .setUsername(user.getUsername())
@@ -109,7 +109,7 @@ class GetUserFriendsOutcomeRequestsTest extends GrpcUserdataTestBase {
     @Feature("Пользователи")
     @Severity(CRITICAL)
     @Tags({@Tag("grpc"), @Tag("userdata"), @Tag("smoke")})
-    @DisplayName("Проверка получения всех исходящих запросов в друзья по last name")
+    @DisplayName("[GRPC] Проверка получения всех исходящих запросов в друзья по last name")
     void shouldFilterRequestsByLastNameTest(TestUser user) {
         AllUsersRequest request = AllUsersRequest.newBuilder()
                 .setUsername(user.getUsername())
@@ -137,7 +137,7 @@ class GetUserFriendsOutcomeRequestsTest extends GrpcUserdataTestBase {
     @Feature("Пользователи")
     @Severity(CRITICAL)
     @Tags({@Tag("grpc"), @Tag("userdata"), @Tag("smoke")})
-    @DisplayName("Проверка исключения друзей и входящие запросы из списка исходящих запросов")
+    @DisplayName("[GRPC] Проверка исключения друзей и входящие запросы из списка исходящих запросов")
     void shouldExcludeFriendsAndIncomeTest(TestUser user) {
         AllUsersRequest request = AllUsersRequest.newBuilder()
                 .setUsername(user.getUsername())

@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static rangiffler.grpc.FriendStatus.*;
 
 
-@DisplayName("Userdata")
+@DisplayName("[GRPC] Userdata")
 class GetUserFriendsIncomeRequestsTest extends GrpcUserdataTestBase {
 
 
@@ -35,7 +35,7 @@ class GetUserFriendsIncomeRequestsTest extends GrpcUserdataTestBase {
     @Feature("Пользователи")
     @Severity(CRITICAL)
     @Tags({@Tag("grpc"), @Tag("userdata"), @Tag("smoke")})
-    @DisplayName("Проверка получения входящих заявок на дружбу")
+    @DisplayName("[GRPC] Проверка получения входящих заявок на дружбу")
     void shouldRetrieveAllFriendshipTest(TestUser user) {
         AllUsersRequest request = AllUsersRequest.newBuilder()
                 .setUsername(user.getUsername())
@@ -62,7 +62,7 @@ class GetUserFriendsIncomeRequestsTest extends GrpcUserdataTestBase {
     @Feature("Пользователи")
     @Severity(CRITICAL)
     @Tags({@Tag("grpc"), @Tag("userdata"), @Tag("smoke")})
-    @DisplayName("Проверка получения входящих заявок на дружбу с фильтром по username")
+    @DisplayName("[GRPC] Проверка получения входящих заявок на дружбу с фильтром по username")
     void shouldGetFilteredFriendshipRequestsByUsernameTest(TestUser user) {
         AllUsersRequest request = AllUsersRequest.newBuilder()
                 .setUsername(user.getUsername())
@@ -91,7 +91,7 @@ class GetUserFriendsIncomeRequestsTest extends GrpcUserdataTestBase {
     @Feature("Пользователи")
     @Severity(CRITICAL)
     @Tags({@Tag("grpc"), @Tag("userdata"), @Tag("smoke")})
-    @DisplayName("Проверка получения входящих заявок на дружбу с фильтром по firstName")
+    @DisplayName("[GRPC] Проверка получения входящих заявок на дружбу с фильтром по firstName")
     void getFilteredFriendshipRequestsByFirstNameTest(TestUser user) {
         AllUsersRequest request = AllUsersRequest.newBuilder()
                 .setUsername(user.getUsername())
@@ -120,7 +120,7 @@ class GetUserFriendsIncomeRequestsTest extends GrpcUserdataTestBase {
     @Feature("Пользователи")
     @Severity(CRITICAL)
     @Tags({@Tag("grpc"), @Tag("userdata"), @Tag("smoke")})
-    @DisplayName("Проверка получения входящих заявок на дружбу с фильтром по lastName")
+    @DisplayName("[GRPC] Проверка получения входящих заявок на дружбу с фильтром по lastName")
     void getFilteredFriendshipRequestsByLastNameTest(TestUser user) {
         AllUsersRequest request = AllUsersRequest.newBuilder()
                 .setUsername(user.getUsername())
@@ -150,7 +150,7 @@ class GetUserFriendsIncomeRequestsTest extends GrpcUserdataTestBase {
     @Feature("Пользователи")
     @Severity(CRITICAL)
     @Tags({@Tag("grpc"), @Tag("userdata"), @Tag("smoke")})
-    @DisplayName("Проверка отсутствия друзей и исходящих заявок в списке входящих")
+    @DisplayName("[GRPC] Проверка отсутствия друзей и исходящих заявок в списке входящих")
     void shouldAbsencePendingFriendsInIncomeInvitationsTest(TestUser user) {
         AllUsersRequest request = AllUsersRequest.newBuilder()
                 .setUsername(user.getUsername())

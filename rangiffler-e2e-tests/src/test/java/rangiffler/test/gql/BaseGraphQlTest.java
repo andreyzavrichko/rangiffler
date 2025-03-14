@@ -1,4 +1,4 @@
-package rangiffler.test.gql.geo;
+package rangiffler.test.gql;
 
 import com.apollographql.adapter.core.DateAdapter;
 import com.apollographql.java.client.ApolloClient;

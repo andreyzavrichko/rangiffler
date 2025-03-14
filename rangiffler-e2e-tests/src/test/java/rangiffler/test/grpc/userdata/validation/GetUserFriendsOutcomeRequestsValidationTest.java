@@ -16,7 +16,7 @@ import rangiffler.test.grpc.userdata.GrpcUserdataTestBase;
 import static io.qameta.allure.SeverityLevel.NORMAL;
 
 
-@DisplayName("Userdata")
+@DisplayName("[GRPC] Userdata")
 class GetUserFriendsOutcomeRequestsValidationTest extends GrpcUserdataTestBase {
 
     @Test
@@ -27,7 +27,7 @@ class GetUserFriendsOutcomeRequestsValidationTest extends GrpcUserdataTestBase {
     @Feature("Пользователи")
     @Severity(NORMAL)
     @Tags({@Tag("grpc"), @Tag("userdata"), @Tag("regress")})
-    @DisplayName("Проверка отсутствия исходящих запросов на дружбу")
+    @DisplayName("[GRPC] Проверка отсутствия исходящих запросов на дружбу")
     void shouldNoOutgoingFriendTest(TestUser user) {
         AllUsersRequest request = AllUsersRequest.newBuilder()
                 .setUsername(user.getUsername())
@@ -50,7 +50,7 @@ class GetUserFriendsOutcomeRequestsValidationTest extends GrpcUserdataTestBase {
     @Feature("Пользователи")
     @Severity(NORMAL)
     @Tags({@Tag("grpc"), @Tag("userdata"), @Tag("regress")})
-    @DisplayName("Проверка отсутствия исходящих запросов на дружбу при поиске по невалидному username")
+    @DisplayName("[GRPC] Проверка отсутствия исходящих запросов на дружбу при поиске по невалидному username")
     void shouldInvalidUsernameFilterTest(TestUser user) {
         AllUsersRequest request = AllUsersRequest.newBuilder()
                 .setUsername(user.getUsername())
@@ -74,7 +74,7 @@ class GetUserFriendsOutcomeRequestsValidationTest extends GrpcUserdataTestBase {
     @Feature("Пользователи")
     @Severity(NORMAL)
     @Tags({@Tag("grpc"), @Tag("userdata"), @Tag("regress")})
-    @DisplayName("Проверка отсутствия исходящих запросов на дружбу при поиске по несуществующему username")
+    @DisplayName("[GRPC] Проверка отсутствия исходящих запросов на дружбу при поиске по несуществующему username")
     void shouldSearchQueryNoMatchTest(TestUser user) {
         AllUsersRequest request = AllUsersRequest.newBuilder()
                 .setUsername(user.getUsername())
@@ -98,7 +98,7 @@ class GetUserFriendsOutcomeRequestsValidationTest extends GrpcUserdataTestBase {
     @Feature("Пользователи")
     @Severity(NORMAL)
     @Tags({@Tag("grpc"), @Tag("userdata"), @Tag("regress")})
-    @DisplayName("Проверка ошибки при Page -1")
+    @DisplayName("[GRPC] Проверка ошибки при Page -1")
     void shouldInvalidPageNumberTest(TestUser user) {
         AllUsersRequest request = AllUsersRequest.newBuilder()
                 .setUsername(user.getUsername())
@@ -126,7 +126,7 @@ class GetUserFriendsOutcomeRequestsValidationTest extends GrpcUserdataTestBase {
     @Feature("Пользователи")
     @Severity(NORMAL)
     @Tags({@Tag("grpc"), @Tag("userdata"), @Tag("regress")})
-    @DisplayName("Проверка отсутствия друзей и исходящих запросов в списке исходящих")
+    @DisplayName("[GRPC] Проверка отсутствия друзей и исходящих запросов в списке исходящих")
     void shouldExcludeFriendsAndIncomeTest(TestUser user) {
         AllUsersRequest request = AllUsersRequest.newBuilder()
                 .setUsername(user.getUsername())
@@ -153,7 +153,7 @@ class GetUserFriendsOutcomeRequestsValidationTest extends GrpcUserdataTestBase {
     @Feature("Пользователи")
     @Severity(NORMAL)
     @Tags({@Tag("grpc"), @Tag("userdata"), @Tag("regress")})
-    @DisplayName("Проверка пустого ответа при несуществующей поисковом параметре")
+    @DisplayName("[GRPC] Проверка пустого ответа при несуществующей поисковом параметре")
     void shouldEmptyResponseForSearchQueryTest(TestUser user) {
         AllUsersRequest request = AllUsersRequest.newBuilder()
                 .setUsername(user.getUsername())

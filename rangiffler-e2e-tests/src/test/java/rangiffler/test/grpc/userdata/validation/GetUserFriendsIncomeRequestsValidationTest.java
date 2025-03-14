@@ -19,7 +19,7 @@ import static io.qameta.allure.SeverityLevel.NORMAL;
 import static org.junit.jupiter.api.Assertions.*;
 
 
-@DisplayName("Userdata")
+@DisplayName("[GRPC] Userdata")
 class GetUserFriendsIncomeRequestsValidationTest extends GrpcUserdataTestBase {
 
 
@@ -29,7 +29,7 @@ class GetUserFriendsIncomeRequestsValidationTest extends GrpcUserdataTestBase {
     @Feature("Пользователи")
     @Severity(NORMAL)
     @Tags({@Tag("grpc"), @Tag("userdata"), @Tag("regress")})
-    @DisplayName("Проверка получения входящих заявок на дружбу")
+    @DisplayName("[GRPC] Проверка получения входящих заявок на дружбу")
     void shouldNoFriendshipRequestsTest(TestUser user) {
 
         AllUsersRequest request = AllUsersRequest.newBuilder()
@@ -56,7 +56,7 @@ class GetUserFriendsIncomeRequestsValidationTest extends GrpcUserdataTestBase {
     @Feature("Пользователи")
     @Severity(NORMAL)
     @Tags({@Tag("grpc"), @Tag("userdata"), @Tag("regress")})
-    @DisplayName("Проверка получения входящих заявок по несуществующему пользователю")
+    @DisplayName("[GRPC] Проверка получения входящих заявок по несуществующему пользователю")
     void shouldFilterUsersByNoneExistUsernameTest(TestUser user) {
         AllUsersRequest request = AllUsersRequest.newBuilder()
                 .setUsername(user.getUsername())
@@ -83,7 +83,7 @@ class GetUserFriendsIncomeRequestsValidationTest extends GrpcUserdataTestBase {
     @Feature("Пользователи")
     @Severity(NORMAL)
     @Tags({@Tag("grpc"), @Tag("userdata"), @Tag("regress")})
-    @DisplayName("Проверка получения входящих заявок по несуществующему имени")
+    @DisplayName("[GRPC] Проверка получения входящих заявок по несуществующему имени")
     void shouldFilterUsersByFirstNameTest(TestUser user) {
         AllUsersRequest request = AllUsersRequest.newBuilder()
                 .setUsername(user.getUsername())
@@ -110,7 +110,7 @@ class GetUserFriendsIncomeRequestsValidationTest extends GrpcUserdataTestBase {
     @Feature("Пользователи")
     @Severity(NORMAL)
     @Tags({@Tag("grpc"), @Tag("userdata"), @Tag("regress")})
-    @DisplayName("Проверка получения входящих заявок по несуществующей фамилии")
+    @DisplayName("[GRPC] Проверка получения входящих заявок по несуществующей фамилии")
     void shouldFilterUsersByLastNameTest(TestUser user) {
         AllUsersRequest request = AllUsersRequest.newBuilder()
                 .setUsername(user.getUsername())
@@ -131,7 +131,7 @@ class GetUserFriendsIncomeRequestsValidationTest extends GrpcUserdataTestBase {
     @Feature("Пользователи")
     @Severity(NORMAL)
     @Tags({@Tag("grpc"), @Tag("userdata"), @Tag("regress")})
-    @DisplayName("Проверка получения входящих заявок по пустому username")
+    @DisplayName("[GRPC] Проверка получения входящих заявок по пустому username")
     void shouldInvalidUsernameTest() {
         AllUsersRequest request = AllUsersRequest.newBuilder()
                 .setUsername("")
@@ -150,7 +150,7 @@ class GetUserFriendsIncomeRequestsValidationTest extends GrpcUserdataTestBase {
     @Feature("Пользователи")
     @Severity(NORMAL)
     @Tags({@Tag("grpc"), @Tag("userdata"), @Tag("regress")})
-    @DisplayName("Проверка получения входящих заявок с большим количеством Size")
+    @DisplayName("[GRPC] Проверка получения входящих заявок с большим количеством Size")
     void shouldRequestWithExcessivePageSizeTest(TestUser user) {
         AllUsersRequest request = AllUsersRequest.newBuilder()
                 .setUsername(user.getUsername())

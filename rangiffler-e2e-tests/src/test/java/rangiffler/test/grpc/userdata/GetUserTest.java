@@ -18,7 +18,7 @@ import static io.qameta.allure.SeverityLevel.CRITICAL;
 import static org.junit.jupiter.api.Assertions.*;
 
 
-@DisplayName("Userdata")
+@DisplayName("[GRPC] Userdata")
 class GetUserTest extends GrpcUserdataTestBase {
 
 
@@ -28,7 +28,7 @@ class GetUserTest extends GrpcUserdataTestBase {
     @Feature("Пользователи")
     @Severity(CRITICAL)
     @Tags({@Tag("grpc"), @Tag("userdata"), @Tag("smoke")})
-    @DisplayName("Проверка получения пользователя по username")
+    @DisplayName("[GRPC] Проверка получения пользователя по username")
     void shouldGetUserByUsernameTest(TestUser user) {
         final UserRequest request = UserRequest.newBuilder()
                 .setUsername(user.getUsername())
@@ -52,7 +52,7 @@ class GetUserTest extends GrpcUserdataTestBase {
     @Feature("Пользователи")
     @Severity(CRITICAL)
     @Tags({@Tag("grpc"), @Tag("userdata"), @Tag("smoke")})
-    @DisplayName("Проверка получения пользователя по id")
+    @DisplayName("[GRPC] Проверка получения пользователя по id")
     void shouldGetUserByIdTest(TestUser user) {
         final UserByIdRequest request = UserByIdRequest.newBuilder()
                 .setId(user.getId().toString())

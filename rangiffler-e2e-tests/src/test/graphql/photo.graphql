@@ -1,0 +1,18 @@
+mutation CreatePhoto($input: PhotoInput!) {
+  photo(input: $input) {
+    id
+    src
+    country {
+      code
+      name
+      flag
+      __typename
+    }
+    description
+    likes {
+      total
+      __typename
+    }
+    __typename
+  }
+}

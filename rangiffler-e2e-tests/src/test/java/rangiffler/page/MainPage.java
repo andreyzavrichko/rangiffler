@@ -9,7 +9,6 @@ import rangiffler.page.component.Header;
 
 import javax.annotation.Nonnull;
 
-import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.*;
 
@@ -19,56 +18,13 @@ public class MainPage extends BasePage<MainPage> {
 
     protected final Header header = new Header();
 
-    // Коллекция всех ячеек статистики
-    private final ElementsCollection statisticCells = $$("#legend-container li");
-    private final SelenideElement statisticCanvas = $("canvas[role='img']");
-    private final SelenideElement addPhotoButton = $x("//button[text()='Add photo']");
     private final SelenideElement loginButton = $x("//button[text()='Login']");
-    private final SelenideElement saveButton = $x("//button[text()='Save']");
-    private final SelenideElement imageRequiredError = $x("//div[text()='Please upload an image']");
-    private final AddNewPhotoForm addNewPhotoForm = new AddNewPhotoForm($x("//form[contains(@class, 'MuiGrid-root')]"));
-    private final SelenideElement profileButton = $("[href='/profile']");
-    private final SelenideElement peopleButton = $("[href='/people']");
-
-
-    @Nonnull
-    public Header getHeader() {
-        return header;
-    }
-
-    @Nonnull
-    public MainPage clickAddPhotoButton() {
-        addPhotoButton.click();
-        return this;
-    }
-
-    @Nonnull
-    public MainPage clickProfileButton() {
-        profileButton.click();
-        return this;
-    }
-
-    @Nonnull
-    public MainPage clickPeopleButton() {
-        peopleButton.click();
-        return this;
-    }
 
 
 
-
-    @Nonnull
-    public MainPage clickSavePhotoButton() {
-        saveButton.click();
-        return this;
-    }
-
-
-
-
-    @Step("Check that page is loaded")
     @Override
     @Nonnull
+    @Step("Проверить загрузку страницы")
     public MainPage checkThatPageLoaded() {
         Selenide.open(URL);
         loginButton.click();
@@ -76,24 +32,10 @@ public class MainPage extends BasePage<MainPage> {
         return this;
     }
 
-    @Step("Check that page is loaded")
-    @Nonnull
-    public MainPage checkThatHeaderPageLoaded() {
 
+    @Step("Проверить загрузку страницы")
+    public void checkThatHeaderPageLoaded() {
         header.getSelf().should(visible);
-        return this;
-    }
-
-    @Nonnull
-    public MainPage checkPhotoError(String value) {
-        imageRequiredError.shouldHave(text(value));
-        return this;
-    }
-
-    public MainPage addPhoto(String fileName, String countryCode, String description) {
-        addNewPhotoForm.addPhoto(fileName, countryCode, description);
-
-        return this;
     }
 
 

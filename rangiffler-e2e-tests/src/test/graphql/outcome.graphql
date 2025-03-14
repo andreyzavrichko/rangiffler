@@ -1,0 +1,31 @@
+query GetOutcomeInvitations {
+  user {
+    outcomeInvitations(page: 0, size: 10, searchQuery: "") {
+      edges {
+        node {
+          id
+          username
+          firstname
+          surname
+          avatar
+          location {
+            code
+            name
+            flag
+            __typename
+          }
+          friendStatus
+          __typename
+        }
+        __typename
+      }
+      pageInfo {
+        hasPreviousPage
+        hasNextPage
+        __typename
+      }
+      __typename
+    }
+    __typename
+  }
+}

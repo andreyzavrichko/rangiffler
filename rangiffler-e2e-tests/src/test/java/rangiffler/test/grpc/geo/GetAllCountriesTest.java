@@ -14,7 +14,7 @@ import java.util.List;
 import static io.qameta.allure.SeverityLevel.BLOCKER;
 
 
-@DisplayName("Geo")
+@DisplayName("[GRPC] Geo")
 class GetAllCountriesTest extends GrpcGeoTestBase {
 
 
@@ -23,7 +23,7 @@ class GetAllCountriesTest extends GrpcGeoTestBase {
     @Feature("Гео")
     @Severity(BLOCKER)
     @Tags({@Tag("grpc"), @Tag("geo"), @Tag("smoke")})
-    @DisplayName("Проверка получения списка всех стран")
+    @DisplayName("[GRPC] Проверка получения списка всех стран")
     void shouldAllCountriesTest() {
         AllCountriesResponse response = blockingStub.getAllCountries(Empty.getDefaultInstance());
 

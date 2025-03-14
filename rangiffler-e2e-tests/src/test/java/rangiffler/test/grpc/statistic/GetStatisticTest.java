@@ -26,7 +26,7 @@ import static io.qameta.allure.SeverityLevel.BLOCKER;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@DisplayName("Statistic")
+@DisplayName("[GRPC] Statistic")
 class GetStatisticTest extends GrpcStatisticTestBase {
 
     @Inject
@@ -37,9 +37,9 @@ class GetStatisticTest extends GrpcStatisticTestBase {
 
     @CreateUser(
             photos = {
-                    @WithPhoto(countryCode = CountryCodes.CN, image = PhotoFiles.FRANCE),
-                    @WithPhoto(countryCode = CountryCodes.CN, image = PhotoFiles.FRANCE),
-                    @WithPhoto(countryCode = CountryCodes.CA, image = PhotoFiles.FRANCE)
+                    @WithPhoto(countryCode = CountryCodes.CN, image = PhotoFiles.CHINA),
+                    @WithPhoto(countryCode = CountryCodes.CN, image = PhotoFiles.CHINA),
+                    @WithPhoto(countryCode = CountryCodes.CA, image = PhotoFiles.CHINA)
             }
     )
     @Test
@@ -47,7 +47,7 @@ class GetStatisticTest extends GrpcStatisticTestBase {
     @Feature("Статистика")
     @Severity(BLOCKER)
     @Tags({@Tag("grpc"), @Tag("statistic"), @Tag("smoke")})
-    @DisplayName("Проверка статистики")
+    @DisplayName("[GRPC] Проверка статистики")
     void shouldGetStatisticTest(TestUser user) {
         final StatisticRequest request = StatisticRequest.newBuilder()
                 .addAllUserIds(List.of(user.getId().toString()))

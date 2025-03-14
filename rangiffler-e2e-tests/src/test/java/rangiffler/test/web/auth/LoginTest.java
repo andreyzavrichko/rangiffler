@@ -14,7 +14,7 @@ import static io.qameta.allure.SeverityLevel.BLOCKER;
 import static rangiffler.utils.RandomDataUtils.randomUsername;
 
 
-@DisplayName("Авторизация")
+@DisplayName("[WEB] Авторизация")
 public class LoginTest {
 
     @Test
@@ -22,7 +22,7 @@ public class LoginTest {
     @Feature("Авторизация")
     @Severity(BLOCKER)
     @Tags({@Tag("web"), @Tag("auth"), @Tag("smoke")})
-    @DisplayName("Проверка неуспешной авторизации с незарегистрированным пользователем")
+    @DisplayName("[WEB] Проверка неуспешной авторизации с незарегистрированным пользователем")
     void shouldUserLoginWithBadCredentialsTest() {
         Selenide.open(LoginPage.URL, LoginPage.class)
                 .fillLoginPage(randomUsername(), "BAD")

@@ -19,7 +19,7 @@ import rangiffler.page.MyTravelsPage;
 import static io.qameta.allure.SeverityLevel.BLOCKER;
 
 @WebTest
-@DisplayName("Удаление фотокарточки")
+@DisplayName("[WEB] Удаление фотокарточки")
 class DeletePhotoTest {
 
     @Inject
@@ -28,14 +28,14 @@ class DeletePhotoTest {
 
     @ApiLogin
     @CreateUser(
-            photos = @WithPhoto(countryCode = CountryCodes.CN, image = PhotoFiles.FRANCE)
+            photos = @WithPhoto(countryCode = CountryCodes.CN, image = PhotoFiles.CHINA)
     )
     @Test
     @Story("Путешествия")
     @Feature("Удаление фотокарточки")
     @Severity(BLOCKER)
     @Tags({@Tag("web"), @Tag("travel"), @Tag("smoke")})
-    @DisplayName("Проверка удаления фотокарточки")
+    @DisplayName("[WEB] Проверка удаления фотокарточки")
     void shouldDeletePhotoCardTest() {
         myTravelsPage.open()
                 .clickDeleteCardButton()

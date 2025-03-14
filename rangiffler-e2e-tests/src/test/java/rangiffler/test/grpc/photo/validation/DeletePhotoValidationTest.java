@@ -18,7 +18,7 @@ import static io.qameta.allure.SeverityLevel.MINOR;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-@DisplayName("Photo")
+@DisplayName("[GRPC] Photo")
 class DeletePhotoValidationTest extends GrpcPhotoTestBase {
 
     @Inject
@@ -30,7 +30,7 @@ class DeletePhotoValidationTest extends GrpcPhotoTestBase {
     @Feature("Фото")
     @Severity(MINOR)
     @Tags({@Tag("grpc"), @Tag("photo"), @Tag("regress")})
-    @DisplayName("Проверка удаления фото с пустым userId")
+    @DisplayName("[GRPC] Проверка удаления фото с пустым userId")
     void shouldDeletePhotoWithEmptyUserIdTest() {
         final DeletePhotoRequest request = DeletePhotoRequest.newBuilder()
                 .setUserId("")
@@ -50,7 +50,7 @@ class DeletePhotoValidationTest extends GrpcPhotoTestBase {
     @Feature("Фото")
     @Severity(MINOR)
     @Tags({@Tag("grpc"), @Tag("photo"), @Tag("regress")})
-    @DisplayName("Проверка удаления фото с пустым photoId")
+    @DisplayName("[GRPC] Проверка удаления фото с пустым photoId")
     void shouldDeletePhotoWithEmptyPhotoIdTest() {
         final DeletePhotoRequest request = DeletePhotoRequest.newBuilder()
                 .setUserId("valid-user-id")
@@ -69,7 +69,7 @@ class DeletePhotoValidationTest extends GrpcPhotoTestBase {
     @Feature("Фото")
     @Severity(MINOR)
     @Tags({@Tag("grpc"), @Tag("photo"), @Tag("regress")})
-    @DisplayName("Проверка удаления фото с несуществующим userId")
+    @DisplayName("[GRPC] Проверка удаления фото с несуществующим userId")
     void shouldDeletePhotoWithNonExistentUserIdTest() {
         final DeletePhotoRequest request = DeletePhotoRequest.newBuilder()
                 .setUserId("non-existent-user-id")
@@ -88,7 +88,7 @@ class DeletePhotoValidationTest extends GrpcPhotoTestBase {
     @Feature("Фото")
     @Severity(MINOR)
     @Tags({@Tag("grpc"), @Tag("photo"), @Tag("regress")})
-    @DisplayName("Проверка удаления фото с несуществующим photoId")
+    @DisplayName("[GRPC] Проверка удаления фото с несуществующим photoId")
     void shouldDeletePhotoWithNonExistentPhotoIdTest() {
         final DeletePhotoRequest request = DeletePhotoRequest.newBuilder()
                 .setUserId("valid-user-id")
@@ -107,7 +107,7 @@ class DeletePhotoValidationTest extends GrpcPhotoTestBase {
     @Feature("Фото")
     @Severity(MINOR)
     @Tags({@Tag("grpc"), @Tag("photo"), @Tag("regress")})
-    @DisplayName("Проверка удаления фото без указания userId и photoId")
+    @DisplayName("[GRPC] Проверка удаления фото без указания userId и photoId")
     void shouldDeletePhotoWithoutUserIdAndPhotoIdTest() {
         final DeletePhotoRequest request = DeletePhotoRequest.newBuilder()
                 .build();

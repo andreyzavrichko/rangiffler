@@ -24,7 +24,7 @@ import java.util.UUID;
 import static io.qameta.allure.SeverityLevel.BLOCKER;
 
 @WebTest
-@DisplayName("Изменение фотокарточки")
+@DisplayName("[WEB] Изменение фотокарточки")
 class UpdatePhotoTest {
 
     @Inject
@@ -37,14 +37,14 @@ class UpdatePhotoTest {
 
     @ApiLogin
     @CreateUser(
-            photos = @WithPhoto(countryCode = CountryCodes.CN, image = PhotoFiles.FRANCE)
+            photos = @WithPhoto(countryCode = CountryCodes.CN, image = PhotoFiles.CHINA)
     )
     @Test
     @Story("Путешествия")
     @Feature("Изменение фотокарточки")
     @Severity(BLOCKER)
     @Tags({@Tag("web"), @Tag("travel"), @Tag("smoke")})
-    @DisplayName("Проверка успешного изменения фото")
+    @DisplayName("[WEB] Проверка успешного изменения фото")
     void shouldUpdatePhotoTest(TestUser user) {
         final var country = countryRepository.findRequiredCountryByCode("ru");
         final var newDescription = UUID.randomUUID().toString();

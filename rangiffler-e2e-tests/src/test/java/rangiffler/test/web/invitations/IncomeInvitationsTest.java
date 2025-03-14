@@ -19,7 +19,7 @@ import static io.qameta.allure.SeverityLevel.BLOCKER;
 import static io.qameta.allure.SeverityLevel.NORMAL;
 
 @WebTest
-@DisplayName("Входящие заявки в друзья")
+@DisplayName("[WEB] Входящие заявки в друзья")
 class IncomeInvitationsTest {
 
     @Inject
@@ -38,7 +38,7 @@ class IncomeInvitationsTest {
     @Feature("Входящие заявки")
     @Severity(BLOCKER)
     @Tags({@Tag("web"), @Tag("friends"), @Tag("smoke")})
-    @DisplayName("Проверка получения всех входящих заявок в друзья")
+    @DisplayName("[WEB] Проверка получения всех входящих заявок в друзья")
     void shouldIncomeInvitationsTest(TestUser user) {
         peoplePage.open()
                 .openIncomeInvitationsTab()
@@ -59,7 +59,7 @@ class IncomeInvitationsTest {
     @Feature("Входящие заявки")
     @Severity(NORMAL)
     @Tags({@Tag("web"), @Tag("friends"), @Tag("regress")})
-    @DisplayName("Проверка получения входящих заявок в друзья пользователя с фильтрацией по username")
+    @DisplayName("[WEB] Проверка получения входящих заявок в друзья пользователя с фильтрацией по username")
     void shouldIncomeInvitationsWithUsernameFilterTest(TestUser user) {
         peoplePage.open()
                 .openIncomeInvitationsTab()
@@ -80,7 +80,7 @@ class IncomeInvitationsTest {
     @Feature("Входящие заявки")
     @Severity(NORMAL)
     @Tags({@Tag("web"), @Tag("friends"), @Tag("regress")})
-    @DisplayName("Проверка получения входящих заявок в друзья пользователя с фильтрацией по firstname")
+    @DisplayName("[WEB] Проверка получения входящих заявок в друзья пользователя с фильтрацией по firstname")
     void shouldIncomeInvitationsWithFirstnameFilterTest(TestUser user) {
         peoplePage.open()
                 .openIncomeInvitationsTab()
@@ -101,7 +101,7 @@ class IncomeInvitationsTest {
     @Feature("Входящие заявки")
     @Severity(NORMAL)
     @Tags({@Tag("web"), @Tag("friends"), @Tag("regress")})
-    @DisplayName("Проверка получения входящих заявок в друзья пользователя с фильтрацией по lastname")
+    @DisplayName("[WEB] Проверка получения входящих заявок в друзья пользователя с фильтрацией по lastname")
     void shouldIncomeInvitationsWithLastnameFilterTest(TestUser user) {
         peoplePage.open()
                 .openIncomeInvitationsTab()
@@ -123,7 +123,7 @@ class IncomeInvitationsTest {
     @Feature("Входящие заявки")
     @Severity(NORMAL)
     @Tags({@Tag("web"), @Tag("friends"), @Tag("regress")})
-    @DisplayName("Проверка отсутствия друзей и исходящих заявок в списке входящих заявок в друзья")
+    @DisplayName("[WEB] Проверка отсутствия друзей и исходящих заявок в списке входящих заявок в друзья")
     void shouldOutcomeInvitationAndFriendsFriendsTest(TestUser user) {
         peoplePage.open()
                 .openIncomeInvitationsTab()

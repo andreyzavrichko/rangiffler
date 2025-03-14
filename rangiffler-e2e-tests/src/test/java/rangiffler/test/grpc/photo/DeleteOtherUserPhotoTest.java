@@ -25,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
-@DisplayName("Photo")
+@DisplayName("[GRPC] Photo")
 class DeleteOtherUserPhotoTest extends GrpcPhotoTestBase {
 
 
@@ -35,7 +35,7 @@ class DeleteOtherUserPhotoTest extends GrpcPhotoTestBase {
     @CreateUser(
             friends = @Friend(
                     photos = {
-                            @WithPhoto(countryCode = CountryCodes.CN, image = PhotoFiles.FRANCE)
+                            @WithPhoto(countryCode = CountryCodes.CN, image = PhotoFiles.CHINA)
                     }
             )
     )
@@ -44,7 +44,7 @@ class DeleteOtherUserPhotoTest extends GrpcPhotoTestBase {
     @Feature("Фото")
     @Severity(BLOCKER)
     @Tags({@Tag("grpc"), @Tag("photo"), @Tag("smoke")})
-    @DisplayName("Проверка удаления фотокарточки друга")
+    @DisplayName("[GRPC] Проверка удаления фотокарточки друга")
     void shouldUserFromDeletingFriendPhotoTest(TestUser user) {
         DeletePhotoRequest deleteRequest = DeletePhotoRequest.newBuilder()
                 .setUserId(user.getId().toString())

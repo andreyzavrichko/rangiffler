@@ -23,21 +23,21 @@ import java.time.Duration;
 import static io.qameta.allure.SeverityLevel.BLOCKER;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-@DisplayName("Photo")
+@DisplayName("[GRPC] Photo")
 class DeletePhotoTest extends GrpcPhotoTestBase {
 
     @Inject
     private PhotoRepository photoRepository;
 
     @CreateUser(
-            photos = @WithPhoto(countryCode = CountryCodes.CA, image = PhotoFiles.AMSTERDAM)
+            photos = @WithPhoto(countryCode = CountryCodes.CA, image = PhotoFiles.CALIFORNIA)
     )
     @Test
     @Story("Удаление своей фотокарточки")
     @Feature("Фото")
     @Severity(BLOCKER)
     @Tags({@Tag("grpc"), @Tag("photo"), @Tag("smoke")})
-    @DisplayName("Проверка успешного удаления фотокарточки")
+    @DisplayName("[GRPC] Проверка успешного удаления фотокарточки")
     void shouldDeletePhotoTest(TestUser user) {
         final DeletePhotoRequest request = DeletePhotoRequest.newBuilder()
                 .setUserId(user.getId().toString())
