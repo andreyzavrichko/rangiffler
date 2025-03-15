@@ -1,449 +1,466 @@
-# Rangiffler
-
-  Приветствую тебя, мой дорогой студент!
-Если ты это читаешь - то ты собираешься сделать первый шаг в написании диплома QA.GURU Advanced.
-
-  Это один из двух вариантов дипломной работы - второй расположен [тут, называется Rococo](https://github.com/qa-guru/rococo)
-Проекты отличаются как по своей механике, так и технологиям (Rococo использует классический REST на frontend,
-тогда как Rangiffler использует GraphQL). Следует сказать, что Rangiffler может отказаться немного сложнее именно из-за GraphQL, но,
-в качестве компенсации за сложность, даст тебе больше интересного опыта.
-Выбор за тобой!
-
-  Далее я опишу основные направления работы, но помни, что этот диплом - не шаблонная работа, а место
-для творчества - прояви себя!
-
-  Кстати, Rangiffler - произошло от названия северных оленей - Rangifer. Мы выбрали именно такое
-название для этого проекта - потому, что он про путешествия, а северный олень - рекордсмен по
-преодолеваемым расстояниям на суше. Путешествуй, be like Rangiffler! (это девиз этого проекта)
-
-# Что будет являться готовым дипломом?
-
-  Тут все просто, диплом глобально требует от тебя реализовать три вещи:
-
-- Реализовать бэкенд на микросервисах (Spring boot, но если вдруг есть желание использовать что-то другое - мы не против)
-- Реализовать полноценное покрытие тестами микросервисов и frontend (если будут какие-то
-  unit-тесты - это большой плюс!)
-- Красиво оформить репозиторий на гихабе, что бы любой, кто зайдет на твою страничку, смог понять,
-  как все запустить, как прогнать тесты. Удели внимание этому пункту. Если я не смогу все запустить по твоему README - диплом останется без проверки
+## :cherry_blossom:	Содержание
 
 
-# С чего начать?
+> ➠ [О проекте](#earth_africa-О-проекте)> 
+> ➠ [Технологический стек](#classical_building-технологии-использованные-в-rangiffler)
+> ➠ [Схема проекта](#robot-схема-проекта-rangiffler)
+> ➠ [Минимальные предусловия для работы с проектом Rangiffler](#skier-минимальные-предусловия-для-работы-с-проектом-rangiffler)
+> ➠ [Запуск Rangiffler локально в IDE:](#frog-Запуск-Rangiffler-локально-в-IDE)
+> ➠ [Создание своего docker repository для форка Rangiffler и сборка своих докер контейнеров](#skier-Создание-своего-docker-repository-для-форка-Rangiffler-и-сборка-своих-докер-контейнеров)
+> ➠ [Структура проекта](#robot-структура-проекта)
+> ➠ [Структура тестового проекта](#frog-структура-тестового-проекта)>
+> ➠ [Запуск кастомных задач](#robot-запуск-кастомных-задач)
+> ➠ [Отчет о результатах тестирования в Allure Report](#skier-отчет-о-результатах-тестирования-в-allure-report)
 
-  Мы подготовили для тебя полностью рабочий frontend, а так же страницы регистрации и логина для сервиса auth.
-Так как данный проект использует GraphQL, а frontend уже написан под конкретный API, то так же в проекте есть файл
-`query.graphqls` - он должен использовать бэкендом, куда будут прилетать все запросы с фронта (назовем его здесь и далее, условно, `rangiffler-gateway`).
-  Т.к. механика проекта сложнее, чем в Niffler и в Rococo, а именно, подразумевает хранение фоток, лайков, статистики, дружбы с другими юзерами и т.д.
-я добавил в проект некоторую абстрактную схему базы данных - `V1__schema_init.sql`. 
-  Обрати внимание, что он написан так, как будто весь бэкенд Rangiffler - один мнолитный сервис с мнолитной же базой данных. В то время как диплом подразумевает сикросервисную архитектуру,
-и каждый из сервисов будет использовать 1-2 таблицы из этого скрипта. Но, на первом этапе, вы можете создать "монолитную" базу как есть ээтим скриптом,
-и уже потом думать, как ее разбивать на сервисы.
 
 
-  Кроме того, у тебя есть и набор моков для [Wiremock](https://wiremock.org/docs/standalone/docker/) - благодаря этому, даже не приступая к написанию кода, ты сможешь посмотреть механику проекта Rangiffler.
-В этом наборе моков есть все query и mutations, которые тебе в конце концов, придется реализовать в своем бэкенде (и которые, конечно, описаны в `query.graphqls`).
-Важно понимать, что несмотря на наличие моков mutation запросов (например, удаление фото), никакого реального удаления не произойдет, и при обновлении страницы 
-Wiremock отдаст тот же набор фотографий, что и до удаления.
-  И самое главное - у тебя есть проект Niffler, который будет выступать образцом для подражания в разработке микросервисов.
-Тестовое покрытие niffler, которого мы с тобой добились на настоящий момент, однако, является достаточно слабым - учтите это при написании тестов на Rangiffler - это,
-все-таки, диплом для SDET / Senior QA Automation и падать в грязь лицом с десятком тестов на весь сервис
-точно не стоит. Итак, приступим!
+## :earth_africa: О проекте
+Rangiffler — это увлекательный проект о путешествиях, где можно отмечать любимые места на карте, делиться впечатлениями с друзьями, находить новых единомышленников и сохранять яркие моменты в фотографиях.
+<img src="img/main-screen.png" alt="Главная страница проекта">
 
-#### 1. Обнови зависимости и запускай фронт:
+
+
+## :classical_building: **Технологии, использованные в Rangiffler**
+
+- [Spring Authorization Server](https://spring.io/projects/spring-authorization-server)
+- [Spring OAuth 2.0 Resource Server](https://docs.spring.io/spring-security/reference/servlet/oauth2/resource-server/index.html)
+- [Spring data JPA](https://spring.io/projects/spring-data-jpa)
+- [Spring Web](https://docs.spring.io/spring-framework/docs/current/reference/html/web.html#spring-web)
+- [Spring actuator](https://docs.spring.io/spring-boot/docs/current/reference/html/actuator.html)
+- [Spring gRPC by https://github.com/yidongnan](https://yidongnan.github.io/grpc-spring-boot-starter/en/server/getting-started.html)
+- [Spring web-services](https://docs.spring.io/spring-ws/docs/current/reference/html/)
+- [Apache Kafka](https://developer.confluent.io/quickstart/kafka-docker/)
+- [Docker](https://www.docker.com/resources/what-container/)
+- [Docker-compose](https://docs.docker.com/compose/)
+- [Postgres](https://www.postgresql.org/about/)
+- [React](https://ru.reactjs.org/docs/getting-started.html)
+- [GraphQL](https://graphql.org/)
+- [Thymeleaf](https://www.thymeleaf.org/)
+- [Jakarta Bean Validation](https://beanvalidation.org/)
+- [Jakarta JAXB](https://eclipse-ee4j.github.io/jaxb-ri/)
+- [JUnit 5 (Extensions, Resolvers, etc)](https://junit.org/junit5/docs/current/user-guide/)
+- [Retrofit 2](https://square.github.io/retrofit/)
+- [Allure](https://docs.qameta.io/allure/)
+- [Selenide](https://selenide.org/)
+- [Selenoid & Selenoid-UI](https://aerokube.com/selenoid/latest/)
+- [Allure-docker-service](https://github.com/fescobar/allure-docker-service)
+- [Java 21](https://adoptium.net/en-GB/temurin/releases/)
+- [Gradle 8.6](https://docs.gradle.org/8.6/release-notes.html)
+- [GHA](https://docs.github.com/en/actions)
+- И многие другие
+
+Рекомендуемые материалы к просмотру (прочтению):
+
+- [Implementing an OAuth 2 authorization server with Spring Security - the new way! by Laurentiu Spilca](https://youtu.be/DaUGKnA7aro)
+- [Full Stack OAuth 2 - With Spring Security / React / Angular Part 1](https://youtu.be/SfNIjS_2H4M)
+- [Full Stack OAuth 2 - With Spring Security / React / Angular Part 2](https://youtu.be/3bGer6-6mdY)
+- [Spring Data? Да, та! by Евгений Борисов](https://youtu.be/nwM7A4TwU3M)
+- [Spring – Глубоко и не очень by Евгений Борисов](https://youtu.be/nGfeSo52_8A)
+- [Spring-потрошитель, часть 1 by Евгений Борисов](https://youtu.be/BmBr5diz8WA)
+- [Spring-потрошитель, часть 2 by Евгений Борисов](https://youtu.be/cou_qomYLNU)
+- [Spring-построитель by Евгений Борисов](https://youtu.be/rd6wxPzXQvo)
+- [Перенимаем опыт Google в построении микросервисов с gRPC by Александр Борисов](https://youtu.be/zPbaKUIcFx0)
+- [Designing a friendships database structure: Should I use a multivalued column?](https://dba.stackexchange.com/questions/135941/designing-a-friendships-database-structure-should-i-use-a-multivalued-column)
+- [Гонсалвес Э.: Изучаем Java EE 7, глава "Глава 4. Java.Persistence.API"](https://www.litres.ru/book/entoni-gonsalves/izuchaem-java-ee-7-8480934/otzivi/)
+- [(Hopefully) the final article about equals and hashCode for JPA entities with DB-generated IDs](https://jpa-buddy.com/blog/hopefully-the-final-article-about-equals-and-hashcode-for-jpa-entities-with-db-generated-ids/)
+-
+
+##  :robot: **Схема проекта Rangiffler**
+
+<img src="img/rangiffler-diagram.png" alt="Схема проекта">
+Приложение Rangiffler построено на основе микросервисной архитектуры:
+
+- [X] auth — управление процессами аутентификации и авторизации.
+- [X] gateway — централизованная обработка клиентских запросов и маршрутизация к нужным микросервисам.
+- [X] userdata — хранение информации о пользователях, включая имя, фамилию, аватар и другие данные.
+- [X] geo — информация о странах и местах путешествий.
+- [X] photo — управление фотографиями, загружаемыми путешественниками.
+- [X] frontend — пользовательский интерфейс приложения.
+
+Пользователь взаимодействует с системой исключительно через **auth** и **gateway**, используя **GraphQL** для запроса данных через gateway, а REST API — для auth. Прямого доступа к другим микросервисам нет: gateway выполняет роль единой точки входа, а auth отвечает за аутентификацию и передачу информации о пользователях в userdata.
+
+## :skier: **Минимальные предусловия для работы с проектом Rangiffler**
+
+#### 0. Если у вас ОС Windows
+
+Необходимо использовать bash terminal, а не powershell.
+
+#### 1. Установить docker (Если не установлен)
+
+Мы будем использовать docker для БД (Postgres), кроме того, будем запускать микросервисы в едином docker network при
+помощи docker-compose
+
+[Установка на Windows](https://docs.docker.com/desktop/install/windows-install/)
+
+[Установка на Mac](https://docs.docker.com/desktop/install/mac-install/) (Для ARM и Intel разные пакеты)
+
+[Установка на Linux](https://docs.docker.com/desktop/install/linux-install/)
+
+После установки и запуска docker daemon необходимо убедиться в работе команд docker, например `docker -v`:
 
 ```posh
-Dmitriis-MacBook-Pro rangiffler % cd rangiffler-gql-client
-Dmitriis-MacBook-Pro rangiffler-client % npm i
-Dmitriis-MacBook-Pro rangiffler-client % npm run dev
+$ docker -v
+Docker version 20.10.14, build a224086
 ```
 
-  Фронт стартанет в твоем браузере на порту 3001: http://127.0.0.1:3001/
-Обрати внимание! Надо использовать именно 127.0.0.1, а не localhost, но даже если ты по ошибке перейдешь на localhost,
-front автоматически тебя перенаправит.
-
-#### 2. Запустите Wiremock, он заменит собо потенциальный сервис rangiffler-gateway, который только предстоит написать
+#### 2. Спуллить контейнеры postgres:15.1, zookeeper и kafka версии 7.3.2
 
 ```posh
-docker pull wiremock/wiremock:2.35.0
-docker run --name rangiffler-mock -p 8080:8080 -v ./wiremock/rest:/home/wiremock -d wiremock/wiremock:2.35.0 --global-response-templating --enable-stub-cors
-```
-  Эти команды надо запускать в корне проекта, там же есть скрипт `wiremock.sh`, делающий ровно то же самое. Можно просто запустить его.
-
-  Wiremock стартанет на порту 8080: http://127.0.0.1:8080/ и будет готов отдавать тебе статические ответы на все GraphQL query/mutations, уходящие
-с фронта rangiffler. Кнопка "Войти" пока что не работает, что логично, ведь у нас нет сервиса auth.
-Однако, наш Wiremock понимает некоторые запросы с oauth token, при чем ему не важно - какой именно это токен.
-Поэтому, что бы смоделировать ситуация "я залогинился", то просто зайди в dev tools браузера,
-перейди в Application, там - в LocalStorage и добавь туда токен:
-- ключ id_token
-- значение - любая строка, например "faketoken"
-
-  После этого обнови страницу фронта и убедись, что вместо кнопки "Войти" ты попал на главную страницу Rangiffler.
-
-
-# Что дальше?
-
-#### 1. В первую очередь, необходимо подумать над сервисами - какие тебе понадобятся.
-
-  Например, можно предложить вот такую структуру сервисов:
-
-<img src="services.png" width="600">
-
-  ВАЖНО! Картинка - не догма, а лишь один из вариантов для примера. 
-Например, для хранения статистики можно отдельный сервис сделать.
-Взаимодействие между gateway и всеми остальными сервисами можно сделать с помощью
-REST, gRPC или SOAP. Я бы посоветовал отдать предпочтение gRPC.
-
-#### 2. Далее, необходимо реализовать сервис rangiffler-auth
-
-  Фронтенд полностью готов к использованию сервиса на порту 9000,
-твоя задача взять сервис niffler-auth и аккуратно переделать его для работы с rangiffler.
-Страницы логина / регистрации, а так же стили и графику мы даем:
-
-- eye.svg
-- eye-active.svg
-- deer-logo.svg
-- favicon.ico
-- styles.css
-- forest.jpg
-- forest_small.jpg
-- login.html
-- register.html
-
-  Основная задача - аккуратно заменить упоминания о niffler в этом сервисе, а в идеале - еще и
-разобраться, как он работает. В этом будет полезно видео:
-[Implementing an OAuth 2 authorization server with Spring Security - the new way! by Laurentiu Spilca](https://youtu.be/DaUGKnA7aro)
-[Full Stack OAuth 2 - With Spring Security / React / Angular Part 1](https://youtu.be/SfNIjS_2H4M)
-[Full Stack OAuth 2 - With Spring Security / React / Angular Part 2](https://youtu.be/3bGer6-6mdY)
-
-#### 3. Как только у вас появилось уже 2 сервиса, есть смысл подумать о докеризации
-
-  Чем раньше у ваc получится запустить в докере фронт и все бэкенды, тем проще будет дальше.
-На самом деле, докеризация не является строго обязательным требованием, но если вы хотите в будущем
-задеплоить свой сервис на прод, прикрутить CI/CD, без этого никак не обойдется.
-
-  Я советую использовать плагин jib - как в niffler, для бэкендов, и самописный dockerfile для фронта.
-Фронтенд использует React, докеризация там работает ровно так же, как и в Niffler.
-
-#### 4. Выбрать протоколо взаимодействия между сервисами
-
-  В поставляемом фронтенде используется [GraphQL](https://graphql.org/). А вот взаимодействие между микросервисами можно
-делать как угодно! REST, gRPC, SOAP. Делай проект я, однозначно взял бы gRPC - не писать руками кучу
-model-классов, получить перформанс и простое написание тестов. Стоит сказать, что здесь не
-понадобятся streaming rpc, и все ограничится простыми унарными запросами. Однако если вы хотите
-использовать REST или SOAP - мы не будем возражать.
-
-#### 5. Реализовать микросервисный бэкенд
-
-  Это место где, внезапно, СОВА НАРИСОВАНА!
-На самом деле, концептуально и технически каждый сервис будет похож на что-то из niffler, поэтому
-главное внимательность и аккуратность. Любые отхождения от niffler возможны - ты можешь захотеть
-использовать, например, NoSQL базы или по другому организовать конфигурацию / структуру проекта -
-никаких ограничений, лишь бы сервис выполнял свое прямое назначение
-
-##### Особенности реализации backend
-
-###### Connection-mипы данных для GraphQL, пагинация
-
-  В отличие от Niffler, в поставляемом файле `query.graphqls` есть несколько используемых типов `type` - которые не описаны в этом файле!
-Это типы `UserConnection` и `PhotoConnection`. Даже IDEA отобразит их красным: 
-
-<img src="IDEA-error.png" width="600">
-
-  **Однако, это не ошибка.** Дело в том, что типы с именем `{Typename}Connection` генерируются автоматически и представляют собой ни что иное,
-как реализацию пагинации для GraphQL. То есть все типы `{Typename}Connection` можно упрошенно считать "Коробочкой, в которой есть список {Typename}
-и механизмы навигации к следующей и предыдущей страницам". Поэтому, эти типы описывать в файле `query.graphqls` руками не нужно, обращать внимание
-на "красноту" в IDEA тоже не нужно. Почитать о том, что они действительно генерируются автоматически, [можно тут](https://docs.spring.io/spring-graphql/reference/request-execution.html#execution.pagination)
-
-  Как ты понял из вышесказанного пункта, Rangiffler действительно использует пагинацию для фоток и пользователей. Это значит, что вам надо концептуально понять, как решается две задачи:
-    - Что вернуть из контроллеров в качестве ответа с типом `{Typename}Connection` - с учетом что мы его не описываем руками и классы для него не создаем
-    - Как сделать запрос в БД с пагинацией, что бы было, что возвращать. Ответы будут ниже
-
-###### Pageble контроллеры (дата-фетчеры) для GraphQL
-
-  Пусть у нас есть тип User:
-```graphql
-type User {
-    id: ID!
-    username: String!
-}
-```
-  и есть query с пагинацией на запрос всех юзеров:
-```graphql
-type Query {
-  users(page:Int, size:Int, searchQuery:String): UserConnection
-}
-```
-  Тогда создадим java-класс **только для типа User**, не создавая для UserConnection:
-```java
-public record UserGql(UUID id, String username) {}
-```
-  И опишем контроллер, возвращающий UserConnection. С точки зрения Spring-graphql типы `{Typename}Connection` не что иное, как `Slice<Typename>`
-из пакета `org.springframework.data.domain`.
-Таким образом в нашем примере контроллер для query `users` вернет `Slice<UserGql>`:
-```java
-  @QueryMapping
-  public Slice<UserGql> users(@AuthenticationPrincipal Jwt principal,
-                              @Argument int page,
-                              @Argument int size,
-                              @Argument @Nullable String searchQuery) {
-  return userService.allUsers(
-          principal.getClaim("sub"),
-          PageRequest.of(page, size),
-          searchQuery
-  );
-}
-```
-  Здесь первый аргумент - это просто сессия (как и в Niffler), `int page, int size` - два обязательных аргумента пагинации, они прилетят с фронта.
-Третий аргумент `String searchQuery` - необязательный аргумент, который фронт отправляет при использовании поиска в таблицах.
-Обратите внимение на конструкцию `PageRequest.of(page, size)` - она создает объект `Pageable` - и именно используя его мы можем получить `Slice<UserEntity>`
-```java
-public interface UserRepository extends JpaRepository<UserEntity, UUID> {
-
-  @Query("select u from UserEntity u where u.username <> :username" +
-          " and (u.username like %:searchQuery% or u.firstname like %:searchQuery% or u.surname like %:searchQuery%)")
-  Slice<UserEntity> findByUsernameNotAndSearchQuery(@Param("username") String username,
-                                                    @Nonnull Pageable pageable,
-                                                    @Param("searchQuery") String searchQuery);
-}
-```
-  Тип `Slice` - это ровно то, что ожидает от вас получит фронт, вам лишь придется преобразовать его в `Slice<UserGql>`,
-для этого надо воспользоваться методом `map()`, имеющимся в классе `Slice`.
-Обратите внимание, что этот вариант метода требует обязательного `@Param("searchQuery") String searchQuery` - поэтому нужно
-реализовать и второй метод в репозитории, без searchQuery. А логика, какой из них вызвать, будет на уровне сервиса, в зависимости от того,
-придет в контроллер с фронта этот searchQuery или нет.
-
-  Почитать про пагинацию в JPA Repository, дополнительно, тут: https://www.baeldung.com/spring-data-jpa-pagination-sorting
-
-###### Pageble в JpaRepository
-
-  Вы, вероятно, заметили аннотацию `@Query` над методом в примере, содержащую JPQL запрос. Это не спроста.
-Дело в том, что единственный способ получить функционал пагинации - это доставать данные из БД **одним запросом**.
-
-  Это значит, что если нам нужны допустим фотографии юзера с пагинацией, мы не можем сделать так:
-```java
-UserEntity user = findById(id);
-return user.getPhotos();
-```
-  В этом коде _просто нет возможности использовать пагинацию._ Но что если нам нужно запросить фотографии юзера с пагинацией?
-
-```java
-  Slice<PhotoEntity> findByUser(@Nonnull UserEntity user,
-                                @Nonnull Pageable pageable);
-
-```
-  Вот так уже сработает - тут всего один запрос, и поэтому он работает с `Pageable`.
-
-  Я предлагаю вам свой вариант получения друзей и заявок на дружбу одним запросом:
-
-```java
-public interface UserRepository extends JpaRepository<UserEntity, UUID> {
-
-  Optional<UserEntity> findByUsername(@Nonnull String username);
-
-  Slice<UserEntity> findByUsernameNot(@Nonnull String username,
-                                      @Nonnull Pageable pageable);
-
-  @Query("select u from UserEntity u where u.username <> :username" +
-          " and (u.username like %:searchQuery% or u.firstname like %:searchQuery% or u.surname like %:searchQuery%)")
-  Slice<UserEntity> findByUsernameNotAndSearchQuery(@Param("username") String username,
-                                                    @Nonnull Pageable pageable,
-                                                    @Param("searchQuery") String searchQuery);
-
-  @Query("select u from UserEntity u join FriendshipEntity f on u = f.addressee" +
-          " where f.status = org.rangiffler.data.FriendshipStatus.ACCEPTED and f.requester = :requester")
-  Slice<UserEntity> findFriends(@Param("requester") UserEntity requester,
-                                @Nonnull Pageable pageable);
-
-  @Query("select u from UserEntity u join FriendshipEntity f on u = f.addressee" +
-          " where f.status = org.rangiffler.data.FriendshipStatus.ACCEPTED and f.requester = :requester" +
-          " and (u.username like %:searchQuery% or u.firstname like %:searchQuery% or u.surname like %:searchQuery%)")
-  Slice<UserEntity> findFriends(@Param("requester") UserEntity requester,
-                                @Nonnull Pageable pageable,
-                                @Param("searchQuery") String searchQuery);
-
-  @Query("select u from UserEntity u join FriendshipEntity f on u = f.addressee" +
-          " where f.status = org.rangiffler.data.FriendshipStatus.ACCEPTED and f.requester = :requester")
-  List<UserEntity> findFriends(@Param("requester") UserEntity requester);
-
-  @Query("select u from UserEntity u join FriendshipEntity f on u = f.addressee" +
-          " where f.status = org.rangiffler.data.FriendshipStatus.ACCEPTED and f.requester = :requester" +
-          " and (u.username like %:searchQuery% or u.firstname like %:searchQuery% or u.surname like %:searchQuery%)")
-  Slice<UserEntity> findFriends(@Param("requester") UserEntity requester,
-                                @Param("searchQuery") String searchQuery);
-
-  @Query("select u from UserEntity u join FriendshipEntity f on u = f.addressee" +
-          " where f.status = org.rangiffler.data.FriendshipStatus.PENDING and f.requester = :requester")
-  Slice<UserEntity> findOutcomeInvitations(@Param("requester") UserEntity requester,
-                                           @Nonnull Pageable pageable);
-
-  @Query("select u from UserEntity u join FriendshipEntity f on u = f.addressee" +
-          " where f.status = org.rangiffler.data.FriendshipStatus.PENDING and f.requester = :requester" +
-          " and (u.username like %:searchQuery% or u.firstname like %:searchQuery% or u.surname like %:searchQuery%)")
-  Slice<UserEntity> findOutcomeInvitations(@Param("requester") UserEntity requester,
-                                           @Nonnull Pageable pageable,
-                                           @Param("searchQuery") String searchQuery);
-
-  @Query("select u from UserEntity u join FriendshipEntity f on u = f.addressee" +
-          " where f.status = org.rangiffler.data.FriendshipStatus.PENDING and f.requester = :requester")
-  List<UserEntity> findOutcomeInvitations(@Param("requester") UserEntity requester);
-
-  @Query("select u from UserEntity u join FriendshipEntity f on u = f.addressee" +
-          " where f.status = org.rangiffler.data.FriendshipStatus.PENDING and f.requester = :requester" +
-          " and (u.username like %:searchQuery% or u.firstname like %:searchQuery% or u.surname like %:searchQuery%)")
-  List<UserEntity> findOutcomeInvitations(@Param("requester") UserEntity requester,
-                                          @Param("searchQuery") String searchQuery);
-
-  @Query("select u from UserEntity u join FriendshipEntity f on u = f.requester" +
-          " where f.status = org.rangiffler.data.FriendshipStatus.PENDING and f.addressee = :addressee")
-  Slice<UserEntity> findIncomeInvitations(@Param("addressee") UserEntity addressee,
-                                          @Nonnull Pageable pageable);
-
-  @Query("select u from UserEntity u join FriendshipEntity f on u = f.requester" +
-          " where f.status = org.rangiffler.data.FriendshipStatus.PENDING and f.addressee = :addressee" +
-          " and (u.username like %:searchQuery% or u.firstname like %:searchQuery% or u.surname like %:searchQuery%)")
-  Slice<UserEntity> findIncomeInvitations(@Param("addressee") UserEntity addressee,
-                                          @Nonnull Pageable pageable,
-                                          @Param("searchQuery") String searchQuery);
-
-  @Query("select u from UserEntity u join FriendshipEntity f on u = f.requester" +
-          " where f.status = org.rangiffler.data.FriendshipStatus.PENDING and f.addressee = :addressee")
-  List<UserEntity> findIncomeInvitations(@Param("addressee") UserEntity addressee);
-
-  @Query("select u from UserEntity u join FriendshipEntity f on u = f.requester" +
-          " where f.status = org.rangiffler.data.FriendshipStatus.PENDING and f.addressee = :addressee" +
-          " and (u.username like %:searchQuery% or u.firstname like %:searchQuery% or u.surname like %:searchQuery%)")
-  List<UserEntity> findIncomeInvitations(@Param("addressee") UserEntity addressee,
-                                         @Param("searchQuery") String searchQuery);
-
-}
-```
-  Обратите внимание, что вместо поля pending, здесь используется enum с двумя статусами `FriendshipStatus.PENDING`/`FriendshipStatus.ACCEPTED`.
-
-###### Передача информации о пагинации по gRPC (для примера) между сервисами, возврат `Slice` из сервисов
-
-  Тут все просто. Вам с фронта приходят `int page, int size` + не забыть про третий опциональный парметр - `searchQuery`. 
-Тогда, к примеру, gRPC сообщение в сервис с пользователями будет таким:
-```protobuf
-message UsersRequest {
-  string searchQuery = 1;
-  int32 page = 2;
-  int32 size = 3;
-}
-
-message UsersResponse {
-  repeated User users = 1;
-  boolean hasNext = 2;
-}
-```
-  Тогда мы сможем вернуть на фронт созданный руками Slice
-```java
-            List<UserGql> userGqlList = response.getUsersList()
-                    .stream()
-                    .map(UserGql::fromGrpcMessage)
-                    .toList();
-            return new SliceImpl<>(userGqlList, PageRequest.of(page, size), response.hasNext());
+docker pull postgres:15.1
+docker pull confluentinc/cp-zookeeper:7.3.2
+docker pull confluentinc/cp-kafka:7.3.2
 ```
 
-  Здесь объект `PageRequest.of(page, size)` - это изначальные параметры int page, int size, а `response.hasNext()` - получаем
-в самом микросервисе из объекта Slice, который вернет JpaRepository.
+После `pull` вы увидите спуленный image командой `docker images`
 
-###### Security config
+```posh
+$ docker images            
+REPOSITORY                 TAG              IMAGE ID       CREATED         SIZE
+postgres                   15.1             9f3ec01f884d   10 days ago     379MB
+confluentinc/cp-kafka      7.3.2            db97697f6e28   12 months ago   457MB
+confluentinc/cp-zookeeper  7.3.2            6fe5551964f5   7 years ago     451MB
 
-   Для локального тестирования вы можете открыть доступ к antMatcher("/graphiql/**"), в конфиге `rangiffler-gateway`, но все запросы
-на /graphql должны быть запрещены:
-```java
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        corsCustomizer.corsCustomizer(http);
-
-        http.authorizeHttpRequests(customizer ->
-                customizer.requestMatchers(antMatcher("/graphiql/**"))
-                        .permitAll()
-                        .anyRequest()
-                        .authenticated()
-        ).oauth2ResourceServer((oauth2) -> oauth2.jwt(Customizer.withDefaults()));
-        return http.build();
-    }
 ```
 
-###### GraphQL контроллеры совместно с record
+#### 3. Создать volume для сохранения данных из БД в docker на вашем компьютере
 
-   Несмотря на то, что record - immutable тип без сеттеров, последние версии Spring-graphql корректно позволяют "наполнять" его данными с помощью
-`@SchemaMapping` Такис образом если клиент запрашивает:
-```json
-     query user {
-     user {
-       id
-       username
-       friends(page: 0, size: 10) {
-         edges {
-           node {
-             id
-             username
-           }
-         }
-         pageInfo {
-           hasPreviousPage
-           hasNextPage
-         }
-       }
-     }
-   }
+```posh
+docker volume create pgdata
 ```
-  То бэкенд соберет ему ответ вот так: 
-```java
-  @QueryMapping
-  public UserGql user(@AuthenticationPrincipal Jwt principal) {
-    return userService.currentUser(principal.getClaim("sub")); // Здесь будет null в полe friends
-  }
-  
-    @SchemaMapping(typeName = "User", field = "friends") // будет вызван автоматически, т.к. в запросе фронт попросил friends
-    public Slice<UserGql> friends(UserGql user, @Argument int page, @Argument int size, @Argument @Nullable String searchQuery) {
-      // получит на вход UserGql user и добавит внутрь него Slice<UserGql> с друзьями
-      return userService.friends(
-              user.username(),
-              PageRequest.of(page, size),
-              searchQuery
-      );
+
+#### 4. Запустить БД, zookeeper и kafka 3-мя последовательными командами:
+
+Запустив скрипт
+
+```posh
+$ bash localenv.sh
+```
+
+Или выполнив последовательно команды, для *nix:
+
+```posh
+docker run --name rangiffler-db -p 5432:5432 -e POSTGRES_PASSWORD=secret -v pgdata:/var/lib/postgresql/data -d postgres:15.1
+
+docker run --name rangiffler-zookeeper -e ZOOKEEPER_CLIENT_PORT=2181 -e ZOOKEEPER_TICK_TIME=2000 -p 2181:2181 -d confluentinc/cp-zookeeper:7.3.2
+
+docker run --name rangiffler-kafka -e KAFKA_BROKER_ID=1 \
+-e KAFKA_ZOOKEEPER_CONNECT=$(docker inspect rangiffler-zookeeper --format='{{ .NetworkSettings.IPAddress }}'):2181 \
+-e KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://localhost:9092 \
+-e KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR=1 \
+-e KAFKA_TRANSACTION_STATE_LOG_MIN_ISR=1 \
+-e KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR=1 \
+-p 9092:9092 -d confluentinc/cp-kafka:7.3.2
+```
+
+Для Windows:
+
+```posh
+docker run --name rangiffler-db -p 5432:5432 -e POSTGRES_PASSWORD=secret -v pgdata:/var/lib/postgresql/data -d postgres:15.1
+
+docker run --name rangiffler-zookeeper -e ZOOKEEPER_CLIENT_PORT=2181 -e ZOOKEEPER_TICK_TIME=2000 -p 2181:2181 -d confluentinc/cp-zookeeper:7.3.2
+
+docker run --name rangiffler-kafka -e KAFKA_BROKER_ID=1 -e KAFKA_ZOOKEEPER_CONNECT=$(docker inspect rangiffler-zookeeper --format='{{ .NetworkSettings.IPAddress }}'):2181 -e KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://localhost:9092 -e KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR=1 -e KAFKA_TRANSACTION_STATE_LOG_MIN_ISR=1 -e KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR=1 -p 9092:9092 -d confluentinc/cp-kafka:7.3.2
+```
+
+https://github.com/confluentinc/cp-docker-images/issues/801#issuecomment-692085103
+
+#### 5. Установить одну из программ для визуальной работы с Postgres
+
+Например, DBeaver или Datagrip
+
+#### 6. Подключиться к БД postgres (host: localhost, port: 5432, user: postgres, pass: secret, database name: postgres) и создать пустые БД микросервисов
+
+```sql
+create
+    database "rangiffler-auth" with owner postgres;
+create
+    database "rangiffler-userdata" with owner postgres;
+create
+    database "rangiffler-geo" with owner postgres;
+create
+    database "rangiffler-photo" with owner postgres;
+```
+
+#### 5. Установить Java версии 21. Это необходимо, т.к. проект использует синтаксис Java 21
+
+Версию установленной Java необходимо проверить командой `java -version`
+
+```posh
+User-MacBook-Pro ~ % java -version
+openjdk version "21.0.1" 2023-10-17 LTS
+OpenJDK Runtime Environment Temurin-21.0.1+12 (build 21.0.1+12-LTS)
+OpenJDK 64-Bit Server VM Temurin-21.0.1+12 (build 21.0.1+12-LTS, mixed mode)
+```
+
+Если у вас несколько версий Java одновременно - то хотя бы одна из них должна быть 21
+Если java не установлена вовсе, то рекомендую установить OpenJDK (например,
+из https://adoptium.net/en-GB/temurin/releases/)
+
+#### 8. Установить пакетый менеджер для сборки front-end npm
+
+[Инструкция](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm).
+
+## :frog: Запуск Rangiffler локально в IDE:
+
+#### 1. Перейти в каталог rangiffler-gql-client
+
+```posh
+$ cd rangiffler-gql-client
+```
+
+#### 2. Запустить фронтенд (сначала обновить зависимости)
+
+```posh
+$ npm i
+$ npm run dev
+```
+
+Фронт стартанет в твоем браузере на порту 3001: http://127.0.0.1:3001/ Обрати внимание! Надо использовать именно 127.0.0.1, а не localhost, но даже если ты по ошибке перейдешь на localhost, front автоматически тебя перенаправит.
+
+#### 3. Прописать run конфигурацию для всех сервисов rangiffler-* - Active profiles local
+
+Для этого зайти в меню Run -> Edit Configurations -> выбрать main класс -> указать Active profiles: local
+[Инструкция](https://stackoverflow.com/questions/39738901/how-do-i-activate-a-spring-boot-profile-when-running-from-intellij).
+
+#### 4 Запустить сервис Rangiffler-auth c помощью gradle или командой Run в IDE:
+
+- Запустить сервис auth
+
+```posh
+$ cd rangiffler-auth
+$ gradle bootRun --args='--spring.profiles.active=local'
+```
+
+Или просто перейдя к main-классу приложения RangifflerAuthApplication выбрать run в IDEA (предварительно удостовериться что
+выполнен предыдущий пункт)
+
+#### 5  Запустить в любой последовательности другие сервисы: rangiffler-geo, rangiffler-gateway, rangiffler-photo, rangiffler-userdata
+
+# Запуск Rangiffler в докере:
+
+#### 1. Создать бесплатную учетную запись на https://hub.docker.com/ (если отсутствует)
+
+#### 2. Создать в настройках своей учетной записи access_token
+
+[Инструкция](https://docs.docker.com/docker-hub/access-tokens/).
+
+#### 3. Выполнить docker login с созданным access_token (в инструкции это описано)
+
+#### 4. Прописать в etc/hosts элиас для Docker-имени
+
+#### frontend:  127.0.0.1 frontend.rangiffler.dc,
+
+#### auth:      127.0.0.1 auth.rangiffler.dc
+
+#### gateway:   127.0.0.1 gateway.rangiffler.dc
+
+```posh
+##
+# Host Database
+#
+# localhost is used to configure the loopback interface
+# when the system is booting.  Do not change this entry.
+##
+127.0.0.1       localhost
+127.0.0.1       frontend.rangiffler.dc
+127.0.0.1       auth.rangiffler.dc
+127.0.0.1       gateway.rangiffler.dc
+```
+
+#### 5. Перейти в корневой каталог проекта
+
+```posh
+$ cd rangiffler
+```
+
+#### 6. Запустить все сервисы
+
+```posh
+$ bash docker-compose-dev.sh
+```
+
+Rangiffler при запуске в докере будет работать для вас по адресу http://frontend.rangiffler.dc:80, этот порт НЕ НУЖНО
+указывать
+в браузере, таким образом переходить напрямую по ссылке http://frontend.rangiffler.dc
+
+Если при выполнении скрипта вы получили ошибку
+
+```
+* What went wrong:
+Execution failed for task ':rangiffler-auth:jibDockerBuild'.
+> com.google.cloud.tools.jib.plugins.common.BuildStepsExecutionException: 
+Build to Docker daemon failed, perhaps you should make sure your credentials for 'registry-1.docker.io...
+```
+
+То необходимо убедиться, что в `$USER/.docker/config.json` файле отсутствует запись `"credsStore": "desktop"`
+При наличии такого ключа в json, его надо удалить
+
+## :skier: Создание своего docker repository для форка Rangiffler и сборка своих докер контейнеров
+
+#### 1. Войти в свою учетную запись на https://hub.docker.com/ и последовательно создать публичные репозитории
+
+- rangiffler-gql-client-docker
+- rangiffler-userdata-docker
+- rangiffler-photo-docker
+- rangiffler-gateway-docker
+- rangiffler-geo-docker
+- rangiffler-auth-docker
+
+Допустим, что ваш username на https://hub.docker.com - *foobazz*
+
+#### 2. заменить в файле docker.properties (в корне проекта) IMAGE_PREFIX=7423848291787895 на IMAGE_PREFIX=foobazz
+
+- где foobazz - ваш юзернэйм на https://hub.docker.com/
+
+#### 3. заменить в файле build.gradle (в корне проекта) dockerHubName = "7423848291787895" на dockerHubName = "foobazz"
+
+- где foobazz - ваш юзернэйм на https://hub.docker.com/
+
+#### 4. Перейти в корневой каталог проекта
+
+```posh
+$ cd rangiffler
+```
+
+#### 5. Собрать все images, запушить и запустить rangiffler одной командой:
+
+```posh
+$ bash docker-compose-dev.sh push
+```
+
+# Запуск e2e тестов в Docker network изолированно Rangiffler в докере:
+
+#### 1. Перейти в корневой каталог проекта
+
+```posh
+$ cd rangiffler
+```
+
+#### 2. Запустить все сервисы и тесты:
+
+```posh
+$ bash docker-compose-test.sh
+```
+
+#### 3. Selenoid UI доступен по адресу: http://localhost:9090/
+
+#### 4. Allure доступен по адресу: http://localhost:5050/allure-docker-service/projects/default/reports/latest/index.html
+
+![Enjoy the Rangiffler](/rangiffler-gql-client/public/deer-logo.svg)
+
+
+## :robot: Структура-проекта
+<img src="img/project.png" alt="Структура проекта">
+
+-[X] .github - настройка интеграции с CI Github Actions
+-[X] .gradle - директория сборщика проекта Gradle
+-[X] .idea - системная директория IDE
+-[X] build - директория корневого проекта
+-[X] gradle - директория с gradle wrapper
+-[X] img - изображения для README.md
+-[X] logs - сохраненные логи микросервисов
+-[X] postgres - директория инициализации базы данных
+-[X] rangiffler-auth - микросервис регистрации и авторизации
+-[X] rangiffler-e-2-e-tests - проект с автотестами
+-[X] rangiffler-gateway - микросервис для отправки запросов к другим микросервисам
+-[X] rangiffler-geo - микросервис геолокации
+-[X] rangiffler-gql-client - фронтенд приложения
+-[X] rangiffler-grpc-common - микросервис grpc
+-[X] rangiffler-photo - микросервис работы с фотокарточками
+-[X] rangiffler-userdata - микросервис работы с пользователями
+-[X] selenoid - настройка браузеров
+-[X] wiremock - настройка моков
+-[X] .gitignore - настройка игнорирования файлов и директорий
+-[X] build.gradle - основной файл сборщика проекта
+-[X] docker.properties - файл настройки докера
+-[X] docker-compose.local.yml - локальный запуск проекта в докере
+-[X] docker-compose.yml - основной файл настройки запуска в докере
+-[X] docker-compose-dev.sh - shell скрипт для разворачивания приложения без запуска тестов
+-[X] docker-compose-e2e.sh - shell скрипт для разворачивания приложения, инфраструктуры и запуском тестов
+-[X] docker-compose-local.sh - shell скрипт локального разворачивания приложения в докере
+-[X] gradle.properties - настройка сборщика проекта
+-[X] gradlew - враппер сборщика проекта
+-[X] gradlew.bat - файл запуска враппера сборщика проекта
+-[X] localenv.sh - shell скрипт локального запуска приложения
+-[X] README.md - текущий файл
+-[X] settings.gradle - настройки сборщика проекта
+
+
+## :frog: Структура тестового проекта
+<img src="img/test-project.png" alt="Структура тестового проекта">
+
+-[X] build - директория сборки тестового проекта
+-[X] graphql - директория со схемой graphql и файлами для генерации клиента
+-[X] api - директория для создания базового апи клиента
+-[X] condition - методы проверок условий
+-[X] config - настройка конфигурации
+-[X] data - клиент для работы с базой данных
+-[X] grpc - клиент для работы с grpc
+-[X] guicebinding - клиент для работы с инъекциями
+-[X] jupiter - директория с Junit Extensions и аннотациями
+-[X] mapper - методы для работы с таблицами
+-[X] model - модели для работы с апи, Allure, gql
+-[X] page - методы для работы с веб-страницами
+-[X] service - сервисы для работы с пользователями через апи и базу данных
+-[X] tests - тестовые методы для проверки слоя GraphQL, Grpc, Kafka, Web
+-[X] utils - утилитарные классы для генерации тестовых данных, работы со скриншотами и авторизацией
+-[X] resources/image - изображения для тестовых методов
+-[X] resources/META-ING - настройка работы с Junit Extensions и базой данных
+-[X] resources/tpl - настройка шаблонов для Allure Report
+-[X] jndi.properties - настройка работы с базой
+-[X] junit-platform.properties - настройка параллельного запуска автотестов
+-[X] logback.xml - настройка логирования
+-[X] spy.properties - настройка работы с базой
+
+## :robot: Запуск кастомных задач
+<img src="img/tags.png" alt="Структура тестового проекта">
+
+В проекте реализованы тэги для удобного запуска отдельных слоев автотестов, либо функциональности.
+```
+// Универсальная задача для запуска тестов с тегами
+def createTagTask(String name, String tag) {
+    tasks.register(name, Test) {
+        useJUnitPlatform {
+            includeTags(tag)
+        }
+        testLogging {
+            events "passed", "skipped", "failed", "standardOut", "standardError"
+            exceptionFormat "short"
+        }
     }
 }
 ```
-  Таким образом, ни при каких обстоятельствах, вызывать явно в своем коде методы, аннотированные как `@SchemaMapping` - не нужно!
 
-###### Контроль доступа:
+Пример запуска только web тестов:
 
-  Логика проекта подразумевает массу операций, таких как удаление фото, простановка лайков, рекдактирование и так далее.
-В общем случае, с фронта уходит ID изменяемого объекта. Поэтому особое внимание необходимо уделить контролю доступа к объекту - не пытается 
-ли пользователь отредактировать чужое фото, или поставить второй лайк под фото, которое уже лайкнул ранее.
-
-#### 6. Подготовить структуру тестового "фреймворка", подумать о том какие прекондишены и как вы будете создавать
-
-Здесь однозначно понадобится возможность API-логина и работы со всеми возможными preconditions проекта - фотками,
-пользователями и т.д. Например, было бы хорошо иметь тесты примерно такого вида:
-```java
-@Test
-@DisplayName("...")
-@Tag("...")
-@ApiLogin(user = @User(photos = @Photo(country = RUSSIA)))
-void exampleTest(UserGql createdUser) { ... }
-
-@Test
-@DisplayName("...")
-@Tag("...")
-@ApiLogin(user = @TestUser(photos = @Photo(country = INDIA), partners = {
-        @Partner(status = FRIEND, photos = @Photo(country = CANADA, imageClasspath = "cat.jpeg")),
-        @Partner(status = INCOME_INVITATION, photos = @Photo(country = CANADA, imageClasspath = "dog.jpeg")),
-        @Partner(status = OUTCOME_INVITATION, photos = @Photo(country = AUSTRALIA, imageClasspath = "fish.jpeg"))}))
-void exampleTest2(UserGql createdUser) { ... }
+```
+gradle clean web
 ```
 
-#### 7. Реализовать достаточное, на твой взгляд, покрытие e-2-e тестами
+Список всех доступных тэгов:
+-[X] graphql - запуск всех тестов на GraphQl
+-[X] geo - запуск тестов на геолокацию
+-[X] friends - запуск тестов на друзей
+-[X] invitations - запуск тестов на приглашения
+-[X] people - запуск тестов на людей
+-[X] photo - запуск тестов на фотокарточки
+-[X] user - запуск тестов на пользователя
+-[X] grpc - запуск всех grpc тестов
+-[X] statistic - запуск тестов на статистику
+-[X] auth - запуск тестов на авторизацию
+-[X] kafka - запуск тестов на Kafka
+-[X] web - запуск всех веб тестов
+-[X] register - запуск тестов на регистрацию
+-[X] map - запуск тестов на карту
+-[X] travel - запуск тестов путешествий
+-[X] userdata - запуск тестов с пользователями
+-[X] smoke - запуск основных сценариев
+-[X] regress - запуск регрессионных тестов (кроме smoke)
 
-  На наш взгляд, только основны позитивных сценариев тут не менее трех десятков.
-А если не забыть про API-тесты (будь то REST или gRPC), то наберется еще столько же.
 
-#### 8. Оформить все красиво!
+## :skier: Отчет о результатах тестирования в Allure Report
 
-  Да, тут еще раз намекну про важность ридми, важность нарисовать топологию (схему) твоих сервисов, важность скриншотиков и прочих красот.
-Очень важно думать о том, что если чего-то не будет описано в README, то и проверить я это что-то не смогу.
-
-<img src="rangiffler.png" width="800">
+<img src="img/overview.png" alt="Overview Allure Report">
+<img src="img/suites.png" alt="Suites Allure Report">
+<img src="img/graphs.png" alt="Graphs Allure Report">
+<img src="img/allure-niffler.png" alt="Allure Niffler Allure Report">
