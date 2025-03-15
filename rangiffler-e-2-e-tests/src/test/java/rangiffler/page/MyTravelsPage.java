@@ -34,7 +34,7 @@ public class MyTravelsPage extends BasePage<MyTravelsPage> {
   private final SelenideElement deletePhotoButton = $x("//button[text()='Delete']");
   private final SelenideElement imageRequiredError = $x("//div[text()='Please upload an image']");
   private final PhotoCardsBar photoCardsBar = new PhotoCardsBar($x("//div[contains(@class,'MuiGrid-root MuiGrid-container')]"));
-  private final AddNewPhotoForm addNewPhotoForm = new AddNewPhotoForm($x("//form[contains(@class, 'MuiBox-root')]"));
+  private final AddNewPhotoForm addNewPhotoForm = new AddNewPhotoForm($x("//form[contains(@class, 'MuiGrid-root')]"));
   private final SelenideElement worldMap = $x("//figure[contains(@class, 'worldmap__figure-container')]");
 
   SelenideElement likeCount = $x("//button[@aria-label='like']/preceding-sibling::p");

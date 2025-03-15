@@ -3,6 +3,7 @@ package rangiffler.config;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import org.springframework.boot.ssl.SslBundles;
 import org.springframework.context.annotation.Bean;
@@ -24,10 +25,12 @@ public class RangifflerUserdataConsumerConfiguration {
         this.kafkaProperties = kafkaProperties;
     }
 
+
     @Bean
-    public ConsumerFactory<String, UserJson> consumerFactory(SslBundles sslBundles) {
+    public ConsumerFactory<String, UserJson> consumerFactory(SslBundles sslBundles,
+                                                             @Value("${spring.kafka.bootstrap-servers}") String bootstrapServers) {
         var props = kafkaProperties.getConsumer().buildProperties(sslBundles);
-        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
+        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers); // Используем значение из конфигурации
         props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, ErrorHandlingDeserializer.class);
         props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, ErrorHandlingDeserializer.class);
         props.put(ErrorHandlingDeserializer.KEY_DESERIALIZER_CLASS, StringDeserializer.class);
@@ -37,10 +40,11 @@ public class RangifflerUserdataConsumerConfiguration {
     }
 
     @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, UserJson> kafkaListenerContainerFactory(SslBundles sslBundles) {
+    public ConcurrentKafkaListenerContainerFactory<String, UserJson> kafkaListenerContainerFactory(SslBundles sslBundles,
+                                                                                                   @Value("${spring.kafka.bootstrap-servers}") String bootstrapServers) {
         ConcurrentKafkaListenerContainerFactory<String, UserJson> factory
                 = new ConcurrentKafkaListenerContainerFactory<>();
-        factory.setConsumerFactory(consumerFactory(sslBundles));
+        factory.setConsumerFactory(consumerFactory(sslBundles, bootstrapServers)); // Передаем оба аргумента
         return factory;
     }
 }

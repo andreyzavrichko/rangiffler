@@ -56,3 +56,18 @@ spring:
     url: 'jdbc:postgresql://localhost:5432/rangiffler-photo'
     username: postgres
     password: secret
+
+---
+spring:
+  config:
+    activate:
+      on-profile: 'docker'
+  autoconfigure:
+    exclude:
+      - 'org.springframework.cloud.vault.config.VaultAutoConfiguration'
+      - 'org.springframework.cloud.vault.config.VaultObservationAutoConfiguration'
+      - 'org.springframework.cloud.vault.config.VaultReactiveAutoConfiguration'
+  datasource:
+    url: 'jdbc:postgresql://rangiffler-all-db:5432/rangiffler-photo'
+    username: postgres
+    password: secret

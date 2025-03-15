@@ -44,7 +44,7 @@ public class KafkaService implements Runnable {
     }
 
     public static UserJson getUser(String username) throws InterruptedException {
-        return store.get(username, 5000L);
+        return store.get(username, 10000L);
     }
 
     @Override
