@@ -15,7 +15,7 @@ import static com.codeborne.selenide.Selenide.$x;
 public class PhotoCard extends BaseComponent<PhotoCard> {
 
   private final SelenideElement photo = self.$x(".//img");
-  private final SelenideElement description = self.$x(".//p[contains(@class, 'photo-card__content')]");
+  private final SelenideElement description = self.$x("(//p[contains(@class,'MuiTypography-root MuiTypography-body2')])[2]");
   private final SelenideElement likes = self.$x(".//p[text()=' likes']");
   private final SelenideElement country = self.$x(".//h3");
   private final SelenideElement editButton = self.$x(".//*[text() = 'Edit']");

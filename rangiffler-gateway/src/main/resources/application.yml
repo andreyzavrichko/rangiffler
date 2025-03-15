@@ -10,12 +10,15 @@ spring:
 
 
 logging:
+  file:
+    path: ./logs/rangiffler-gateway
   level:
     root: INFO
-    org.springframework.web: DEBUG
-    org.springframework.security: DEBUG
-    org.springframework.security.oauth2: DEBUG
-    net.devh.boot.grpc: DEBUG
+    org.springframework.web: INFO
+    org.springframework.security: INFO
+    org.springframework.security.oauth2: INFO
+    net.devh.boot.grpc: INFO
+    org.springframework.boot.autoconfigure: INFO
 
 ---
 spring:

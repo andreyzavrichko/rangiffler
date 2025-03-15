@@ -29,6 +29,7 @@ public class AuthKafkaTest {
     @Severity(BLOCKER)
     @Tags({@Tag("kafka"), @Tag("auth"), @Tag("smoke")})
     @DisplayName("[Kafka] Проверка отправки пользователя в очередь")
+    @Order(1)
     void userShouldBeProducedToKafkaTest() throws Exception {
         final String username = RandomDataUtils.randomUsername();
         final String password = "12345";
@@ -54,6 +55,7 @@ public class AuthKafkaTest {
     @Severity(CRITICAL)
     @Tags({@Tag("kafka"), @Tag("auth"), @Tag("smoke")})
     @DisplayName("[Kafka] Проверка отсутствия незарегистрированного пользователя")
+    @Order(2)
     void nonExistentUserShouldNotBeProducedToKafkaTest() throws Exception {
         String nonExistentUser = "randomUser123";
 
@@ -68,6 +70,7 @@ public class AuthKafkaTest {
     @Severity(NORMAL)
     @Tags({@Tag("kafka"), @Tag("auth"), @Tag("smoke")})
     @DisplayName("[Kafka] Проверка отсутствия пользователя в пустым username")
+    @Order(3)
     void invalidUserShouldNotBeProducedToKafkaTest() throws Exception {
         final String username = "";
         final String password = "12345";
