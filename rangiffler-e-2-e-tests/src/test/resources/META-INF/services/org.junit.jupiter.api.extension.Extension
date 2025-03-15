@@ -3,3 +3,4 @@ rangiffler.jupiter.extension.TestMethodContextExtension
 rangiffler.jupiter.extension.KafkaExtension
 rangiffler.jupiter.extension.AllureBackendLogsExtension
 rangiffler.jupiter.extension.AllureResultsExtension
+rangiffler.jupiter.extension.AllureDockerServiceExtension
