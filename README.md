@@ -1,15 +1,23 @@
 ## :cherry_blossom:	Содержание
 
-
-> ➠ [О проекте](#earth_africa-О-проекте)> 
+> ➠ [О проекте](#earth_africa-О-проекте)
+> 
 > ➠ [Технологический стек](#classical_building-технологии-использованные-в-rangiffler)
+> 
 > ➠ [Схема проекта](#robot-схема-проекта-rangiffler)
+> 
 > ➠ [Минимальные предусловия для работы с проектом Rangiffler](#skier-минимальные-предусловия-для-работы-с-проектом-rangiffler)
+> 
 > ➠ [Запуск Rangiffler локально в IDE:](#frog-Запуск-Rangiffler-локально-в-IDE)
+> 
 > ➠ [Создание своего docker repository для форка Rangiffler и сборка своих докер контейнеров](#skier-Создание-своего-docker-repository-для-форка-Rangiffler-и-сборка-своих-докер-контейнеров)
+> 
 > ➠ [Структура проекта](#robot-структура-проекта)
-> ➠ [Структура тестового проекта](#frog-структура-тестового-проекта)>
+> 
+> ➠ [Структура тестового проекта](#frog-структура-тестового-проекта)
+> 
 > ➠ [Запуск кастомных задач](#robot-запуск-кастомных-задач)
+> 
 > ➠ [Отчет о результатах тестирования в Allure Report](#skier-отчет-о-результатах-тестирования-в-allure-report)
 
 
@@ -346,11 +354,10 @@ $ bash docker-compose-test.sh
 
 #### 4. Allure доступен по адресу: http://localhost:5050/allure-docker-service/projects/default/reports/latest/index.html
 
-![Enjoy the Rangiffler](/rangiffler-gql-client/public/deer-logo.svg)
-
 
 ## :robot: Структура-проекта
 <img src="img/project.png" alt="Структура проекта">
+
 
 -[X] .github - настройка интеграции с CI Github Actions
 -[X] .gradle - директория сборщика проекта Gradle
@@ -388,6 +395,7 @@ $ bash docker-compose-test.sh
 
 ## :frog: Структура тестового проекта
 <img src="img/test-project.png" alt="Структура тестового проекта">
+
 
 -[X] build - директория сборки тестового проекта
 -[X] graphql - директория со схемой graphql и файлами для генерации клиента
