@@ -167,3 +167,36 @@ test {
     testLogging.exceptionFormat = 'full'
     useJUnitPlatform()
 }
+
+// Универсальная задача для запуска тестов с тегами
+def createTagTask(String name, String tag) {
+    tasks.register(name, Test) {
+        useJUnitPlatform {
+            includeTags(tag)
+        }
+        testLogging {
+            events "passed", "skipped", "failed", "standardOut", "standardError"
+            exceptionFormat "short"
+        }
+    }
+}
+
+// Задачи для запуска тестов по тегам
+createTagTask('graphql', 'graphql')
+createTagTask('geo', 'geo')
+createTagTask('friends', 'friends')
+createTagTask('invitations', 'invitations')
+createTagTask('people', 'people')
+createTagTask('photo', 'photo')
+createTagTask('user', 'user')
+createTagTask('grpc', 'grpc')
+createTagTask('statistic', 'statistic')
+createTagTask('auth', 'auth')
+createTagTask('kafka', 'kafka')
+createTagTask('web', 'web')
+createTagTask('register', 'register')
+createTagTask('map', 'map')
+createTagTask('travel', 'travel')
+createTagTask('userdata', 'userdata')
+createTagTask('smoke', 'smoke')
+createTagTask('regress', 'regress')

@@ -16,7 +16,6 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 @ExtendWith({
-       // GuiceExtension.class,
         AllureJunit5.class,
         UserExtension.class,
 

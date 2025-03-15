@@ -78,4 +78,13 @@ public class DockerConfig implements Config {
   public String authJdbcUrl() {
     return "jdbc:postgresql://rangiffler-all-db:5432/rangiffler-auth";
   }
+
+  @Override
+  public String allureDockerServiceUrl() {
+    final String url = System.getenv("ALLURE_DOCKER_API");
+    return url == null
+            ? "http://allure:5050/"
+            : url;
+  }
+
 }

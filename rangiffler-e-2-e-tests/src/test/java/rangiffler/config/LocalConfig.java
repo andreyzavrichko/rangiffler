@@ -74,4 +74,10 @@ public class LocalConfig implements Config {
   public String userdataJdbcUrl() {
     return "jdbc:postgresql://127.0.0.1:5432/rangiffler-userdata";
   }
+
+  @Override
+  public String allureDockerServiceUrl() {
+    return null;
+  }
+
 }

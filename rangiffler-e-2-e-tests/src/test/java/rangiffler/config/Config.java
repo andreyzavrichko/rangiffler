@@ -63,4 +63,11 @@ public interface Config {
 
   @Nonnull
   String userdataJdbcUrl();
+
+  @Nonnull
+  default String projectId() {
+    return "rangiffler-zavrichko";
+  }
+
+  String allureDockerServiceUrl();
 }
