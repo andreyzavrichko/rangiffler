@@ -21,7 +21,7 @@ import static org.springframework.security.web.util.matcher.AntPathRequestMatche
  */
 @EnableWebSecurity
 @Configuration
-@Profile("!local") // Конфигурация применяется только в случае, если активен профиль, отличный от "local"
+@Profile({"staging", "prod"})// Конфигурация применяется только в случае, если активен профиль, отличный от "local"
 public class SecurityConfigMain {
 
   private final CorsCustomizer corsCustomizer;

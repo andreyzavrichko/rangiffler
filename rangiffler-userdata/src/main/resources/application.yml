@@ -65,3 +65,29 @@ grpc:
     grpcGeoClient:
       address: 'static://localhost:8091'
       negotiationType: PLAINTEXT
+
+---
+spring:
+  config:
+    activate:
+      on-profile: 'docker'
+  autoconfigure:
+    exclude:
+      - 'org.springframework.cloud.vault.config.VaultAutoConfiguration'
+      - 'org.springframework.cloud.vault.config.VaultObservationAutoConfiguration'
+      - 'org.springframework.cloud.vault.config.VaultReactiveAutoConfiguration'
+  kafka:
+    bootstrap-servers: 'rangiffler-all-kafka:9092'
+    consumer:
+      group-id: 'userdata'
+      auto-offset-reset: earliest
+  datasource:
+    url: 'jdbc:postgresql://rangiffler-all-db:5432/rangiffler-userdata'
+    username: postgres
+    password: secret
+
+grpc:
+  client:
+    grpcGeoClient:
+      address: 'static://geo.rangiffler.dc:8091'
+      negotiationType: PLAINTEXT
