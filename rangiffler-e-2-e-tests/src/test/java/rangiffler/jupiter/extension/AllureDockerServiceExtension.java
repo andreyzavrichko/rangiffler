@@ -1,7 +1,5 @@
 package rangiffler.jupiter.extension;
 
-
-
 import org.junit.jupiter.api.extension.ExtensionContext;
 import rangiffler.config.Config;
 import rangiffler.model.allure.AllureResults;
@@ -45,7 +43,7 @@ public class AllureDockerServiceExtension implements SuiteExtension {
                         );
                         allureApiClient.uploadResults(
                                 CFG.projectId(),
-                                new AllureResults(List.of(encodedResult))
+                                new AllureResults(List.of(encodedResult)) // <-- ОТПРАВЛЯЕМ ПО ОДНОМУ ФАЙЛУ
                         );
                     }
                 }
